@@ -1,6 +1,17 @@
+## Notes
+```
+This project using two different tools. The default tool is Create React App and i added the other tool is Vitejs.
+
+- File index.html in public folder is for default create-react-app. 
+- File index.html in root folder of Frontend is for vite dev server.
+
+Never delete FileChange in root folder! I make it and it's important to transform jsx to js or js to jsx.
+```
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
 
 ## Available Scripts
 
@@ -68,3 +79,15 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `yarn build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+# Getting Started with Vitejs
+
+## Vite Available Scripts
+
+### `yarn vitestart`
+Same as with yarn start, but this is so fast to open localhost from terminal.\
+Recommended for low-end pc.
+
+### `yarn vitebuild`
+Same as with yarn start, but this is so fast to build production from terminal.\
+Recommended for low-end pc.
