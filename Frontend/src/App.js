@@ -1,25 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import { Routes, Route, Link } from "react-router-dom";
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import Homepage from "./routes/homepage/Homepage";
+import About from "./routes/about/About";
+import Login from "./routes/login/Login";
+import SignUp from "./routes/signup/SignUp";
+import Mentor from "./routes/dashboard/mentor/Mentor";
+import Siswa from "./routes/dashboard/siswa/Siswa";
+import NotFound from "./routes/NotFound/NotFound";
 
-function App() {
+export default function App() {
+  const [isMentor, setIsMentor] = useState(true);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Navbar />
+      <Link to="/"> Pusat Ngoding </Link>
+      <Link to="/tentang"> Tentang </Link>
+      <Link to="/masuk"> Masuk </Link>
+      <Link to="/mendaftar"> Daftar Sekarang </Link>
+      <Link to="/acara"> Acara </Link>
+      <br />
+      <br />
+
+      <Routes>
+        <Route index element={<Homepage />} />
+        <Route path="/tentang" element={<About />} />
+        <Route path="/masuk" element={<Login />} />
+        <Route path="/mendaftar" element={<SignUp />} />
+        {isMentor ? (
+          <Route path="/dashboard" element={<Mentor />} />
+        ) : (
+          <Route path="/dashboard" element={<Siswa />} />
+        )}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      <Footer />
     </div>
   );
 }
-
-export default App;
