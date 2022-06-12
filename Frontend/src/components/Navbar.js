@@ -21,7 +21,7 @@ import { Link as LinkTo } from "react-router-dom";
 import Logo from "../assets/logo.svg";
 
 const Links = [
-  { nama: "Peta Jalan", link: "/roadmap" },
+  { nama: "Roadmap", link: "/roadmap" },
   { nama: "Acara", link: "/acara" },
   { nama: "Tentang", link: "/tentang" },
 ];

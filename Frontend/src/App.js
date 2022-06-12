@@ -10,6 +10,8 @@ import Mentor from "./routes/dashboard/mentor/Mentor";
 import Siswa from "./routes/dashboard/siswa/Siswa";
 import NotFound from "./routes/NotFound/NotFound";
 import { Flex, Box } from "@chakra-ui/react";
+import Event from "./routes/event/Event";
+import Roadmap from "./routes/roadmap/Roadmap";
 
 export default function App() {
   const [isMentor, setIsMentor] = useState(true);
@@ -30,6 +32,8 @@ export default function App() {
             <Route path="dashboard" element={<Siswa />}>
             </Route>
           )}
+          <Route path="acara" element={<Event />} />
+          <Route path="roadmap" element={<Roadmap />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Box>

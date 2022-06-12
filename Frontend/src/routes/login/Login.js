@@ -59,7 +59,7 @@ export default function Login(props) {
               align={"start"}
               justify={"space-between"}
             >
-              <Checkbox mr={32} colorSheme={useColorModeValue("accentLight.400", "accentDark.400")}>Ingat Saya</Checkbox>
+              <Checkbox mr={32}>Ingat Saya</Checkbox>
               <Link
                 color={useColorModeValue("accentLight.400", "accentDark.400")}
               >
