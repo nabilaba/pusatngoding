@@ -86,17 +86,20 @@ export default function Navbar() {
                     display={{ base: "none", sm: "block" }}
                   >
                     <Text
-                      color={useColorModeValue("accentLight.300", "accentDark.300")}
+                      color={useColorModeValue("accentLight.400", "accentDark.400")}
                       as={"span"}
                       position={"relative"}
                       _after={{
                         content: "''",
                         width: "full",
-                        height: "10%",
+                        height: "15%",
                         position: "absolute",
                         bottom: 1,
                         left: 0,
-                        bg: useColorModeValue("accentLight.200", "accentDark.800"),
+                        bg: useColorModeValue(
+                          "accentLight.100",
+                          "accentDark.900"
+                        ),
                         zIndex: -1,
                       }}
                     >
@@ -130,9 +133,10 @@ export default function Navbar() {
                 as={LinkTo}
                 to="/masuk"
                 variant={"solid"}
-                bg={useColorModeValue("accentLight.100", "accentDark.500")}
+                color={useColorModeValue("white", "black")}
+                bg={useColorModeValue("accentLight.400", "accentDark.400")}
                 _hover={{
-                  bg: useColorModeValue("accentLight.200", "accentDark.600"),
+                  bg: useColorModeValue("accentLight.500", "accentDark.500"),
                 }}
                 size={"sm"}
               >
