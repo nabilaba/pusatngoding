@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Homepage from "./routes/homepage/Homepage";
@@ -19,14 +19,16 @@ export default function App() {
       <Navbar />
       <Box my={"auto"}>
         <Routes>
-          <Route index element={<Homepage />} />
-          <Route path="/tentang" element={<About />} />
-          <Route path="/masuk" element={<Login />} />
-          <Route path="/mendaftar" element={<SignUp />} />
+          <Route path='/' element={<Homepage />} />
+          <Route path="tentang" element={<About />} />
+          <Route path="masuk" element={<Login setIsMentor={setIsMentor} />} />
+          <Route path="mendaftar" element={<SignUp />} />
           {isMentor ? (
-            <Route path="/dashboard" element={<Mentor />} />
+            <Route path="dashboard" element={<Mentor />}>
+            </Route>
           ) : (
-            <Route path="/dashboard" element={<Siswa />} />
+            <Route path="dashboard" element={<Siswa />}>
+            </Route>
           )}
           <Route path="*" element={<NotFound />} />
         </Routes>
