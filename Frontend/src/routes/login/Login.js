@@ -47,11 +47,11 @@ export default function Login(props) {
         >
           <FormControl id="email">
             <FormLabel>Email</FormLabel>
-            <Input type="email" onChange={(e) => setEmail(e.target.value)} />
+            <Input type="email" focusBorderColor={useColorModeValue("accentLight.400", "accentDark.400")} onChange={(e) => setEmail(e.target.value)} />
           </FormControl>
           <FormControl id="password">
             <FormLabel>Kata Sandi</FormLabel>
-            <Input type="password" />
+            <Input type="password" focusBorderColor={useColorModeValue("accentLight.400", "accentDark.400")} />
           </FormControl>
           <Stack spacing={10}>
             <Stack
