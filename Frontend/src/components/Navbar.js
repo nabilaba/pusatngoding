@@ -21,7 +21,7 @@ import { Link as LinkTo } from "react-router-dom";
 import Logo from "../assets/logo.svg";
 
 const Links = [
-  { nama: "Peta Jalan", link: "/roadmap" },
+  { nama: "Roadmap", link: "/roadmap" },
   { nama: "Acara", link: "/acara" },
   { nama: "Tentang", link: "/tentang" },
 ];
@@ -132,7 +132,6 @@ export default function Navbar() {
               <Button
                 as={LinkTo}
                 to="/masuk"
-                variant={"solid"}
                 color={useColorModeValue("white", "black")}
                 bg={useColorModeValue("accentLight.400", "accentDark.400")}
                 _hover={{
