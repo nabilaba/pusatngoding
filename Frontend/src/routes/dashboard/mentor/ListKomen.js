@@ -159,7 +159,7 @@ export default function ListKomen() {
   return (
     <Stack>
       <Heading size={"md"}>Anda Mendapat 4.6 Rating di Akhir-Akhir ini</Heading>
-      <SimpleGrid w="full" autoRows={"1fr"}>
+      <SimpleGrid w="full" autoRows={"1fr"} spacing={2}>
         {dataKomen.map((item) => (
           <Komen key={item.nama} {...item} />
         ))}

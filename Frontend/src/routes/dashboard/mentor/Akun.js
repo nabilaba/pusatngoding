@@ -61,7 +61,7 @@ export default function Akun() {
           w="full"
           mx="auto"
           bg={useColorModeValue("white", "gray.700")}
-          shadow="lg"
+          shadow="md"
           rounded="lg"
           overflow="hidden"
         >
