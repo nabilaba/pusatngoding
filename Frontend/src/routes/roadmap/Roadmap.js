@@ -46,7 +46,7 @@ const dataRoadmap = [
     warnaTeksDark: "yellow.400",
   },
   {
-    judul: "Go",
+    judul: "Golang",
     warnaTeks: "teal.600",
     warnaTeksDark: "teal.400",
   },
@@ -104,6 +104,7 @@ export default function Event() {
           columns={{ base: 2, lg: 4 }}
           spacing={"1"}
           w={"full"}
+          autoRows={"1fr"}
         >
           {dataRoadmap.map((item) => {
             return <Feature {...item} key={item.judul} />;
