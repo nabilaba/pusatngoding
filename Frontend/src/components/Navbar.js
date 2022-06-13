@@ -132,7 +132,6 @@ export default function Navbar() {
               <Button
                 as={LinkTo}
                 to="/masuk"
-                variant={"solid"}
                 color={useColorModeValue("white", "black")}
                 bg={useColorModeValue("accentLight.400", "accentDark.400")}
                 _hover={{
