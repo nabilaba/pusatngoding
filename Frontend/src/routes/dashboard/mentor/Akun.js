@@ -7,15 +7,13 @@ import {
   Image,
   Heading,
   Icon,
-  Button,
   Tag,
   TagLabel,
   HStack,
 } from "@chakra-ui/react";
-import { MdEmail, MdLocationOn, MdSchool, MdBuild } from "react-icons/md";
+import { MdEmail, MdLocationOn, MdSchool } from "react-icons/md";
 import { BsFillBriefcaseFill, BsStarFill } from "react-icons/bs";
 import { FaChalkboardTeacher, FaDollarSign } from "react-icons/fa";
-import { Link as LinkTo } from "react-router-dom";
 
 const dataAkun = [
   {
@@ -85,7 +83,7 @@ export default function Akun() {
             </Tag>
           </HStack>
 
-          <Stack py={4} px={6} spacing={2}>
+          <Stack pt={4} pb={2} px={6} spacing={2}>
             <Heading
               fontSize="xl"
               fontWeight="bold"
@@ -102,23 +100,6 @@ export default function Akun() {
                 <Profile {...item} key={item.dataName} />
               ))}
             </Stack>
-            <Button
-              leftIcon={<MdBuild />}
-              as={LinkTo}
-              to="akun"
-              w="full"
-              px={8}
-              rounded={"md"}
-              color={useColorModeValue("white", "black")}
-              bg={useColorModeValue("accentLight.400", "accentDark.400")}
-              _hover={{
-                bg: useColorModeValue("accentLight.500", "accentDark.500"),
-                transform: "translateY(-2px)",
-                boxShadow: "lg",
-              }}
-            >
-              Sunting Akun
-            </Button>
           </Stack>
         </Box>
       </Box>
