@@ -13,6 +13,7 @@ import { Flex, Box } from "@chakra-ui/react";
 import Event from "./routes/event/Event";
 import Roadmap from "./routes/roadmap/Roadmap";
 import SuntingAkunMentor from "./routes/dashboard/mentor/SuntingAkunMentor";
+import SuntingAkunSiswa from "./routes/dashboard/siswa/SuntingAkunSiswa";
 
 export default function App() {
   const [isMentor, setIsMentor] = useState(false);
@@ -43,7 +44,12 @@ export default function App() {
               <Route path="sunting-akun" element={<SuntingAkunMentor />} />
             </>
           ) : null}
-          {isSiswa ? <Route path="dashboard" element={<Siswa />} /> : null}
+          {isSiswa ? (
+            <>
+              <Route path="dashboard" element={<Siswa />} />
+              <Route path="sunting-akun" element={<SuntingAkunSiswa />} />
+            </>
+          ) : null}
           <Route path="acara" element={<Event />} />
           <Route path="roadmap" element={<Roadmap />} />
           <Route path="*" element={<NotFound />} />
