@@ -1,4 +1,4 @@
-import { Container, chakra, Flex, Image, Box, useColorModeValue, Stack, Button, SimpleGrid } from '@chakra-ui/react';
+import { Container, chakra, Flex, Image, Box, useColorModeValue, Button, SimpleGrid } from '@chakra-ui/react';
 import './Hero.css';
 import ImgHero from '../../../assets/ImgHero.svg'
 

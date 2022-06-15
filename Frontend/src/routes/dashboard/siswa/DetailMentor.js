@@ -5,14 +5,10 @@ import {
   Text,
   Image,
   Flex,
-  VStack,
   Button,
   Heading,
   SimpleGrid,
-  StackDivider,
   useColorModeValue,
-  List,
-  ListItem,
   HStack,
   Icon,
   TagLabel,
@@ -20,7 +16,6 @@ import {
   Link,
   Avatar,
 } from "@chakra-ui/react";
-import { MdLocalShipping } from "react-icons/md";
 import { FaChalkboardTeacher, FaDollarSign } from "react-icons/fa";
 import { StarIcon } from "@chakra-ui/icons";
 import { BsStarFill } from "react-icons/bs";
