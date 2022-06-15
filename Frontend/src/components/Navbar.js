@@ -14,10 +14,15 @@ import {
   Text,
   Image,
   Heading,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Avatar,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-import { Link as LinkTo } from "react-router-dom";
+import { MoonIcon, SunIcon, EditIcon, ArrowBackIcon } from "@chakra-ui/icons";
+import { Link as LinkTo, useNavigate } from "react-router-dom";
 import Logo from "../assets/logo.svg";
 
 const Links = [
@@ -43,13 +48,26 @@ const NavLink = ({ nama, link, onClick }) => (
   </Text>
 );
 
-export default function Navbar() {
+export default function Navbar(props) {
+  const navigate = useNavigate();
   const bgnavbar = useColorModeValue(
     "rgba(255, 255, 255, 0.8)",
     "rgba(26, 32, 44, 0.8)"
   );
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const navbarSet = {
+    color: useColorModeValue("white", "black"),
+    bg: useColorModeValue("accentLight.400", "accentDark.400"),
+    _hover: {
+      bg: useColorModeValue("accentLight.500", "accentDark.500"),
+    },
+  };
+
+  const HandleLogOut = () => {
+    props.setIsLoggedIn(false);
+    navigate("/");
+  };
 
   return (
     <>
@@ -86,7 +104,10 @@ export default function Navbar() {
                     display={{ base: "none", sm: "block" }}
                   >
                     <Text
-                      color={useColorModeValue("accentLight.400", "accentDark.400")}
+                      color={useColorModeValue(
+                        "accentLight.400",
+                        "accentDark.400"
+                      )}
                       as={"span"}
                       position={"relative"}
                       _after={{
@@ -118,6 +139,13 @@ export default function Navbar() {
                 display={{ base: "none", md: "flex" }}
                 mr={4}
               >
+                {props.isLoggedIn ? (
+                  <NavLink
+                    nama="Dashboard"
+                    link="dashboard"
+                    onClick={onClose}
+                  />
+                ) : null}
                 {Links.map((link) => (
                   <NavLink key={link.nama} {...link} />
                 ))}
@@ -129,24 +157,56 @@ export default function Navbar() {
                 mr={4}
                 onClick={toggleColorMode}
               />
-              <Button
-                as={LinkTo}
-                to="/masuk"
-                color={useColorModeValue("white", "black")}
-                bg={useColorModeValue("accentLight.400", "accentDark.400")}
-                _hover={{
-                  bg: useColorModeValue("accentLight.500", "accentDark.500"),
-                }}
-                size={"sm"}
-              >
-                MASUK
-              </Button>
+              {!props.isLoggedIn ? (
+                <Button as={LinkTo} to="/masuk" size={"sm"} {...navbarSet}>
+                  MASUK
+                </Button>
+              ) : (
+                <Flex alignItems={"center"}>
+                  <Menu>
+                    <MenuButton
+                      as={Button}
+                      rounded={"full"}
+                      variant={"link"}
+                      cursor={"pointer"}
+                      minW={0}
+                    >
+                      <Avatar
+                        size={"sm"}
+                        name={"Nabil Aziz Bima Anggita"}
+                        src={
+                          "https://avatars.githubusercontent.com/u/45154878?v=4"
+                        }
+                      />
+                    </MenuButton>
+                    <MenuList>
+                      <MenuItem
+                        icon={<EditIcon />}
+                        as={LinkTo}
+                        to="sunting-akun"
+                      >
+                        Sunting Akun
+                      </MenuItem>
+                      <MenuItem icon={<ArrowBackIcon />} onClick={HandleLogOut}>
+                        Keluar
+                      </MenuItem>
+                    </MenuList>
+                  </Menu>
+                </Flex>
+              )}
             </Flex>
           </Flex>
 
           {isOpen ? (
             <Box pb={4} display={{ md: "none" }}>
               <Stack as={"nav"} spacing={4}>
+                {props.isLoggedIn ? (
+                  <NavLink
+                    nama="Dashboard"
+                    link="dashboard"
+                    onClick={onClose}
+                  />
+                ) : null}
                 {Links.map((link) => (
                   <NavLink key={link.nama} {...link} onClick={onClose} />
                 ))}

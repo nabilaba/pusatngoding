@@ -18,13 +18,24 @@ import {
 
 export default function Login(props) {
   const [email, setEmail] = useState("");
-  const useNavigateTo = useNavigate();
+  const navigate = useNavigate();
 
   const HandleSubmit = (e) => {
-    if (email === "mentor@gmail.com") props.setIsMentor(true);
-    else props.setIsMentor(false);
-
-    useNavigateTo("/dashboard");
+    if (email === "mentor@gmail.com") {
+      props.setIsMentor(true);
+      props.setIsSiswa(false);
+      props.setIsLoggedIn(true);
+      navigate("/dashboard");
+    } else if (email === "siswa@gmail.com") {
+      props.setIsMentor(false);
+      props.setIsSiswa(true);
+      props.setIsLoggedIn(true);
+      navigate("/dashboard");
+    } else {
+      alert("Email atau Password Salah");
+      props.setIsSiswa(false);
+      props.setIsMentor(false);
+    }
     e.preventDefault();
   };
 
@@ -47,11 +58,24 @@ export default function Login(props) {
         >
           <FormControl id="email">
             <FormLabel>Email</FormLabel>
-            <Input type="email" focusBorderColor={useColorModeValue("accentLight.400", "accentDark.400")} onChange={(e) => setEmail(e.target.value)} />
+            <Input
+              type="email"
+              focusBorderColor={useColorModeValue(
+                "accentLight.400",
+                "accentDark.400"
+              )}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </FormControl>
           <FormControl id="password">
             <FormLabel>Kata Sandi</FormLabel>
-            <Input type="password" focusBorderColor={useColorModeValue("accentLight.400", "accentDark.400")} />
+            <Input
+              type="password"
+              focusBorderColor={useColorModeValue(
+                "accentLight.400",
+                "accentDark.400"
+              )}
+            />
           </FormControl>
           <Stack spacing={10}>
             <Stack

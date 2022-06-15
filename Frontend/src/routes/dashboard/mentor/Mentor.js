@@ -1,7 +1,7 @@
 import { Box, Stack, Container, Hide } from "@chakra-ui/react";
-import { Outlet } from "react-router-dom";
 import Akun from "./Akun";
 import AkunMobile from "./AkunMobile";
+import ListKomen from "./ListKomen";
 
 export default function Guru(props) {
   return (
@@ -19,7 +19,7 @@ export default function Guru(props) {
           <AkunMobile />
         </Hide>
         <Box flex="1">
-          <Outlet />
+          <ListKomen />
         </Box>
       </Stack>
     </Stack>

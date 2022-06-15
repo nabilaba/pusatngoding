@@ -12,10 +12,7 @@ import {
   IconButton,
   Center,
   Divider,
-  Select,
   Text,
-  FormHelperText,
-  Textarea,
   Container,
 } from "@chakra-ui/react";
 import { SmallCloseIcon } from "@chakra-ui/icons";
@@ -80,26 +77,12 @@ export default function SuntingProfilMentor() {
                 placeholder="Aziz Bima Anggita"
                 _placeholder={{ color: "gray.500" }}
                 focusBorderColor={useColorModeValue(
-                  "accentLight.400",
-                  "accentDark.400"
-                )}
+              "accentLight.400",
+              "accentDark.400"
+            )}
               />
             </FormControl>
           </HStack>
-          <FormControl id="motivasi">
-            <FormLabel>Deskripsi Singkat</FormLabel>
-            <Textarea
-              placeholder="Saya adalah seorang Frontend Developer dengan pengalaman 5 tahun."
-              _placeholder={{ color: "gray.500" }}
-              focusBorderColor={useColorModeValue(
-                "accentLight.400",
-                "accentDark.400"
-              )}
-            />
-            <FormHelperText>
-              Berikan deskripsi ciri-ciri yang menarik dari dalam dirimu.
-            </FormHelperText>
-          </FormControl>
           <FormControl id="notelp" isRequired>
             <FormLabel>No Telp</FormLabel>
             <Input
@@ -107,67 +90,44 @@ export default function SuntingProfilMentor() {
               placeholder="081234567890"
               _placeholder={{ color: "gray.500" }}
               focusBorderColor={useColorModeValue(
-                "accentLight.400",
-                "accentDark.400"
-              )}
+              "accentLight.400",
+              "accentDark.400"
+            )}
             />
           </FormControl>
-          <FormControl>
-            <FormLabel>Status Keakfitan</FormLabel>
-            <Select placeholder="" focusBorderColor={useColorModeValue(
-                "accentLight.400",
-                "accentDark.400"
-              )}>
-              <option>Online</option>
-              <option>Offline</option>
-            </Select>
-          </FormControl>
-          <HStack>
-            <FormControl id="bayaran" isRequired>
-              <FormLabel>Tarif</FormLabel>
-              <Input
-                type="text"
-                placeholder="Rp.500.000"
-                _placeholder={{ color: "gray.500" }}
-                focusBorderColor={useColorModeValue(
-                  "accentLight.400",
-                  "accentDark.400"
-                )}
-              />
-            </FormControl>
-            <FormControl id="lastName">
-              <FormLabel>Per</FormLabel>
-              <Select placeholder="" focusBorderColor={useColorModeValue(
-                "accentLight.400",
-                "accentDark.400"
-              )}>
-                <option>Jam</option>
-                <option>Hari</option>
-                <option>Minggu</option>
-              </Select>
-            </FormControl>
-          </HStack>
-          <FormControl id="kota" isRequired>
-            <FormLabel>Kota</FormLabel>
+          <FormControl id="tanggalLahir">
+            <FormLabel>Tanggal Lahir</FormLabel>
             <Input
               placeholder="Sukoharjo"
               _placeholder={{ color: "gray.500" }}
               focusBorderColor={useColorModeValue(
-                "accentLight.400",
-                "accentDark.400"
-              )}
+              "accentLight.400",
+              "accentDark.400"
+            )}
+              type="text"
+            />
+          </FormControl>
+          <FormControl id="kota" isRequired>
+            <FormLabel>Asal Kota</FormLabel>
+            <Input
+              placeholder="Sukoharjo"
+              _placeholder={{ color: "gray.500" }}
+              focusBorderColor={useColorModeValue(
+              "accentLight.400",
+              "accentDark.400"
+            )}
               type="text"
             />
           </FormControl>
           <FormControl id="lulusan" isRequired>
-            <FormLabel>Lulusan</FormLabel>
+            <FormLabel>Pendidikan</FormLabel>
             <Input
-              placeholder="Oxford"
+              placeholder="Semester 2"
               _placeholder={{ color: "gray.500" }}
               focusBorderColor={useColorModeValue(
-                "accentLight.400",
-                "accentDark.400"
-              )}
+              "accentLight.400",
+              "accentDark.400"
+            )}
               type="text"
             />
           </FormControl>
