@@ -1,49 +1,110 @@
-import { Container, chakra, Flex, Image, Box, useColorModeValue, Stack, Button, SimpleGrid } from '@chakra-ui/react';
-import './Hero.css';
-import ImgHero from '../../../assets/ImgHero.svg'
+import "./Hero.css";
+import ImgHero from "../../../assets/ImgHero.png";
+
+import {
+  Button,
+  Flex,
+  Heading,
+  Image,
+  Stack,
+  Text,
+  Container,
+  Box,
+  useColorModeValue,
+} from "@chakra-ui/react";
+import { Link as LinkTo } from "react-router-dom";
 
 export default function Hero() {
   return (
-    <>
-      <Container maxW='7xl' pt={{base: '24', md: '20'}}>
-        <SimpleGrid columns={[1, null, 2]} alignItems='center'>
-          <Box maxW='700px' mb={{base: '20'}}>
-            <chakra.h1 lineHeight={{base: '8', md: '10'}}>
-              <chakra.span fontSize={{base: '36', md: '48'}} fontWeight={700}>Cari Mentor</chakra.span>
-              <br />
-              <chakra.span fontSize={{base: '24', md: '36'}} fontWeight={650}>Solusi Untuk Belajar Ngoding dan
-              <br />
-                <chakra.span color={'accentDark.300'}>Raih Mimpimu</chakra.span>
-              </chakra.span>
-            </chakra.h1>
-            <chakra.p letterSpacing={'wider'} fontSize={16} py='4'>
+    <Stack
+      as={Container}
+      direction={{ base: "column", md: "row" }}
+      maxW={"7xl"}
+      pt={20}
+    >
+      <Flex
+        py={{ base: 0, md: 8 }}
+        flex={1}
+        align={"center"}
+        order={{ base: 2, md: 1 }}
+      >
+        <Stack spacing={6} w={"full"}>
+          <Heading
+            mt={{ base: 4, md: 0 }}
+            fontSize={{ base: "xl", md: "2xl", lg: "3xl" }}
+            fontWeight={"bold"}
+          >
+            <Text fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }} as={"span"}>
+              Cari Mentor
+            </Text>
+            <br />
+            Solusi Untuk Belajar Ngoding dan Raih Mimpimu
+          </Heading>
+          <Text fontSize={"md"} color={"gray.500"} align="justify">
             Platform pencarian mentor ngoding pribadi yang terpercaya dengan
             keahlian di berbagai lini perkodingan. Cari mentor ngoding pribadi
             ya dimana lagi selain di Pusat Ngoding!
-            </chakra.p>
-            <SimpleGrid pt={4} alignItems={'center'} columns={3} spacing={{base: '3', md: '20'}}>
-              <Button fontSize={{base: 'sm', md: '18'}} rounded={'full'} color={useColorModeValue("white", "black")} bg={useColorModeValue("accentLight.400", "accentDark.400")} _hover={{ bg: useColorModeValue("accentLight.500", "accentDark.500"),}} px={{base: '16', md: '24'}} py={{base: '3', md: '6'}}>
-                Daftar Sekarang
-              </Button>
-              <Box>
-                <chakra.span fontWeight={800} fontSize={{base: '16', md: '28'}}>
-                  300+
-                </chakra.span>
-                <br />
-                <chakra.span fontSize={{base: '14'}}>Mentor Terdaftar </chakra.span></Box>
-              <Box>
-                <chakra.span fontWeight={800} fontSize={{base: '16', md: '28'}}>
-                  3k+
-                </chakra.span>
-                <br />
-                <chakra.span fontSize={{base: '14'}}>Ulasan Positif Siswa </chakra.span></Box>
-            </SimpleGrid>
-          </Box>
-          <Flex maxW='100%'>
-            <Image src={ImgHero} />
-          </Flex>
-        </SimpleGrid>
-      </Container>
-    </>
+          </Text>
+          <Stack
+            direction={{ base: "row", md: "row" }}
+            spacing={4}
+            align={"center"}
+            justifyContent={"space-between"}
+          >
+            <Button
+              as={LinkTo}
+              to="/mendaftar"
+              size={{ base: "md", md: "lg" }}
+              rounded={"full"}
+              color={useColorModeValue("white", "black")}
+              bg={useColorModeValue("accentLight.400", "accentDark.400")}
+              _hover={{
+                bg: useColorModeValue("accentLight.500", "accentDark.500"),
+                transform: "translateY(2px)",
+                boxShadow: "lg",
+              }}
+            >
+              Daftar Sekarang
+            </Button>
+            <Box>
+              <Heading>300+</Heading>
+              <Text color="gray.500" as={"span"} fontSize={"md"}>
+                Mentor Terdaftar
+              </Text>
+            </Box>
+            <Box>
+              <Heading>3k+</Heading>
+              <Text color="gray.500" as={"span"} fontSize={"md"}>
+                Ulasan Positif Siswa
+              </Text>
+            </Box>
+          </Stack>
+        </Stack>
+      </Flex>
+      <Flex
+        flex={1}
+        align={"center"}
+        justify={"center"}
+        order={{ base: 1, md: 2 }}
+      >
+        <Box
+          position={"absolute"}
+          w={{ base: "270px", md: "350px" }}
+          h={{ base: "270px", md: "350px" }}
+          rounded={"full"}
+          bg={"#61D2F2"}
+          boxShadow={
+            "0 0 0 40px rgba(97, 210, 242, 0.5), 0 0 0 70px rgba(97, 210, 242, 0.3), 0 0 0 100px rgba(97, 210, 242, 0.1)"
+          }
+          zIndex={1}
+        />
+        <Image
+          alt={"Login Image"}
+          objectFit={"cover"}
+          src={ImgHero}
+          zIndex={2}
+        />
+      </Flex>
+    </Stack>
   );
 }

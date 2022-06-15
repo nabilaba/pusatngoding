@@ -14,6 +14,7 @@ import Event from "./routes/event/Event";
 import Roadmap from "./routes/roadmap/Roadmap";
 import SuntingAkunMentor from "./routes/dashboard/mentor/SuntingAkunMentor";
 import SuntingAkunSiswa from "./routes/dashboard/siswa/SuntingAkunSiswa";
+import DetailMentor from "./routes/dashboard/siswa/DetailMentor";
 
 export default function App() {
   const [isMentor, setIsMentor] = useState(false);
@@ -47,6 +48,7 @@ export default function App() {
           {isSiswa ? (
             <>
               <Route path="dashboard" element={<Siswa />} />
+              <Route path="mentor/:name" element={<DetailMentor />} />
               <Route path="sunting-akun" element={<SuntingAkunSiswa />} />
             </>
           ) : null}
