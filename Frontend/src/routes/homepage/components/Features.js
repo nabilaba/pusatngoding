@@ -8,7 +8,7 @@ export default function Features() {
         <chakra.h2 fontSize={30} fontWeight={700} lineHeight={10}>
           Keunggulan <br />Pusat Ngoding
         </chakra.h2>
-        <SimpleGrid pt='10' columns={[2, null, 4]} spacing={{base: '5', md: '20'}} color={'white'}>
+        <SimpleGrid pt='10' columns={{base: 2, xl: 4}} spacing={{base: '5', xl: '20'}} color={'white'}>
           <Box w='100%' rounded={'40'} bg='#F65C8B' px='8' py='4'>
             <chakra.span fontSize={{base: '36', md: '50'}} fontWeight='500'>
               #1

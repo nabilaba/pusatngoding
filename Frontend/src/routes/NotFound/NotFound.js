@@ -1,17 +1,25 @@
 import "./NotFound.css";
 import Img404 from "../../assets/Img404.svg";
-import { Image, Container, chakra } from "@chakra-ui/react";
+import { Image, Container, Heading, Stack } from "@chakra-ui/react";
 
 const NotFound = () => {
   return (
-    <main>
-      <Container pt={24} align={"center"} justify={"center"} maxW={"lg"}>
-        <Image src={Img404} />
-        <chakra.h1 fontWeight={700} fontSize={36}>
-          Halaman Tidak Ditemukan
-        </chakra.h1>
-      </Container>
-    </main>
+    <Stack
+      as={Container}
+      pt={24}
+      align={"center"}
+      justify={"center"}
+      maxW={"7xl"}
+      textAlign={"center"}
+    >
+      <Image
+        src={Img404}
+        alt=""
+        boxSize={{ base: "xs", md: "sm" }}
+        objectFit="cover"
+      />
+      <Heading>Halaman Tidak Ditemukan</Heading>
+    </Stack>
   );
 };
 
