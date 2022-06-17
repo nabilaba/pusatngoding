@@ -1,140 +1,131 @@
+import "./About.css";
 import {
-  Avatar,
-  Box,
-  chakra,
+  Button,
   Flex,
+  Heading,
+  Image,
+  Stack,
+  Text,
+  useBreakpointValue,
+  Container,
+  Box,
+  Avatar,
+  VStack,
+  Center,
   SimpleGrid,
-  useColorModeValue,
 } from "@chakra-ui/react";
+import { Link as LinkTo } from "react-router-dom";
 
-const testimonials = [
+const data = [
   {
-    nama: "William Saputra P.",
-    posisi: "Chief Marketing Officer",
-    motivasi:
-      "Salah satu dari sekian hal yang membuat saya memilih untuk menjadi programmer adalah karena pekerjaan ini penuh dengan tantangan",
-    univ: "Univ. Ruangguru Indonesia",
-    avatar: "",
+    nama: "Nabil Aziz Bima Anggita",
+    status: "Univ. Muhammadiyah Surakarta",
+    text: `"Just listening to Lil Peep and you will knowing who i am"`,
+    avatar: "https://avatars.githubusercontent.com/u/45154878?v=4",
+    sbg: "Frontend Developer",
   },
   {
-    nama: "William Saputra P.",
-    posisi: "Chief Marketing Officer",
-    motivasi:
-      "Salah satu dari sekian hal yang membuat saya memilih untuk menjadi programmer adalah karena pekerjaan ini penuh dengan tantangan",
-    univ: "Univ. Ruangguru Indonesia",
-    avatar: "",
+    nama: "Anggun Lenteraningati",
+    status: "Univ. Ruangguru Indonesia",
+    text: `"Salah satu dari sekian hal yang membuat saya memilih untuk menjadi programmer adalah karena pekerjaan ini penuh dengan tantangan"`,
+    avatar: "https://avatars.githubusercontent.com/u/90821767?v=4",
+    sbg: "Frontend Developer"
   },
   {
-    nama: "William Saputra P.",
-    posisi: "Chief Marketing Officer",
-    motivasi:
-      "Salah satu dari sekian hal yang membuat saya memilih untuk menjadi programmer adalah karena pekerjaan ini penuh dengan tantangan",
-    univ: "Univ. Ruangguru Indonesia",
-    avatar: "",
+    nama: "Soultan Ali Hadji",
+    status: "Univ. Ruangguru Indonesia",
+    text: `"Salah satu dari sekian hal yang membuat saya memilih untuk menjadi programmer adalah karena pekerjaan ini penuh dengan tantangan"`,
+    avatar: "https://avatars.githubusercontent.com/u/79008954?v=4",
+    sbg: "Frontend Developer"
   },
   {
-    nama: "William Saputra P.",
-    posisi: "Chief Marketing Officer",
-    motivasi:
-      "Salah satu dari sekian hal yang membuat saya memilih untuk menjadi programmer adalah karena pekerjaan ini penuh dengan tantangan",
-    univ: "Univ. Ruangguru Indonesia",
-    avatar: "",
+    nama: "Achmad Izhar",
+    status: "Univ. Ruangguru Indonesia",
+    text: `"Salah satu dari sekian hal yang membuat saya memilih untuk menjadi programmer adalah karena pekerjaan ini penuh dengan tantangan"`,
+    avatar: "https://avatars.githubusercontent.com/u/72540494?v=4",
+    sbg: "Backend Developer"
   },
   {
-    nama: "William Saputra P.",
-    posisi: "Chief Marketing Officer",
-    motivasi:
-      "Salah satu dari sekian hal yang membuat saya memilih untuk menjadi programmer adalah karena pekerjaan ini penuh dengan tantangan",
-    univ: "Univ. Ruangguru Indonesia",
-    avatar: "",
+    nama: "Irsan Nur Hidayat",
+    status: "Univ. Ruangguru Indonesia",
+    text: `"Salah satu dari sekian hal yang membuat saya memilih untuk menjadi programmer adalah karena pekerjaan ini penuh dengan tantangan"`,
+    avatar: "https://avatars.githubusercontent.com/u/84580327?v=4",
+    sbg: "Backend Developer"
+  },
+  {
+    nama: "Sean Sebastian",
+    status: "Univ. Ruangguru Indonesia",
+    text: `"Salah satu dari sekian hal yang membuat saya memilih untuk menjadi programmer adalah karena pekerjaan ini penuh dengan tantangan"`,
+    avatar: "https://avatars.githubusercontent.com/u/100177839?v=4",
+    sbg: "Backend Developer"
   },
 ];
 
-function TestimonialCard(props) {
-  const { nama, posisi, motivasi, univ, avatar } = props;
-  return (
-    <Flex
-      boxShadow={"lg"}
-      maxW={"640px"}
-      direction={{ base: "column", md: "row" }}
-      width={"full"}
-      rounded={"xl"}
-      p={10}
-      justifyContent={"space-between"}
-      position={"relative"}
-      bg={useColorModeValue("white", "gray.800")}
-      _after={{
-        content: '""',
-        position: "absolute",
-        height: "21px",
-        width: "29px",
-        left: "35px",
-        top: "-10px",
-      }}
-    >
-      <Avatar
-        src={avatar}
-        height={"80px"}
-        width={"80px"}
-        alignSelf={"center"}
-        m={{ base: "0 0 35px 0", md: "0 50px 0 0" }}
-      />
-      <Flex
-        direction={"column"}
-        textAlign={"left"}
-        justifyContent={"space-between"}
-      >
-        <Flex justifyContent={"space-between"} wrap={{ base: "wrap" }}>
-          <chakra.p fontFamily={"Work Sans"} fontWeight={"bold"} fontSize={14}>
-            {nama}
-          </chakra.p>
-          <chakra.span
-            fontWeight={"medium"}
-            color={"gray.500"}
-            fontStyle="italic"
-          >
-            {posisi}
-          </chakra.span>
-        </Flex>
-        <chakra.span>{univ}</chakra.span>
-        <chakra.p fontWeight={"medium"} fontSize={"15px"} pb={4} mt={2}>
-          {motivasi}
-        </chakra.p>
-      </Flex>
-    </Flex>
-  );
-}
-
-export default function GridBlurredBackdrop() {
-  return (
-    <Flex
-      textAlign={"center"}
-      pt={10}
-      px={{ lg: "28" }}
-      justifyContent={"center"}
-      direction={"column"}
-      width={"full"}
-    >
-      <Box width={{ base: "full", sm: "lg", lg: "xl" }} margin={"auto"} pt={20}>
-        <chakra.h1
-          py={5}
-          fontSize={30}
-          fontWeight={"bold"}
-          color={useColorModeValue("gray.700", "gray.50")}
+export default function About() {
+  const About = (props) => {
+    return (
+      <Box>
+        <Stack
+          spacing={{ base: 0, lg: 8 }}
+          direction={"row"}
+          h={'100%'}
+          p={10}
+          borderWidth="1px"
+          borderRadius="lg"
+          justifyContent={"center"}
+          boxShadow={"0px 10px 0px 0px rgba(97, 210, 242, 0.15)"}
         >
-          TIM KAMI
-        </chakra.h1>
+          <Avatar
+            size={"xl"}
+            src={props.avatar}
+            display={{ base: "none", lg: "block" }}
+          />
+          <Stack spacing={5} textAlign={{ base: "center", lg: "left" }}>
+            <Box>
+              <Center>
+                <Avatar
+                  size={"xl"}
+                  src={props.avatar}
+                  display={{ base: "block", lg: "none" }}
+                  mb={2}
+                />
+              </Center>
+              <Stack
+                align="center"
+                justify={"space-between"}
+                direction={{ base: "column", lg: "row" }}
+              >
+                <Box>
+                  <Heading size={"sm"}>{props.nama}</Heading>
+                  <Text as={"span"} fontWeight={"normal"}>
+                    {props.status}
+                  </Text>
+                </Box>
+                <Text as={"i"} fontWeight={"normal"}>
+                  {props.sbg}
+                </Text>
+              </Stack>
+            </Box>
+            <Text align={"justify"}>{props.text}</Text>
+          </Stack>
+        </Stack>
       </Box>
-      <SimpleGrid
-        columns={{ base: 1, xl: 2 }}
-        spacing={"10"}
-        mt={5}
-        mx={"auto"}
+    );
+  };
+  return (
+    <Stack as={Container} maxW={"7xl"} pt={20} pb={4}>
+      <Heading
+        fontSize={{ base: "xl", md: "2xl", lg: "3xl" }}
+        textAlign={"center"}
+        my={5}
       >
-        {testimonials.map((cardInfo, index) => (
-          <TestimonialCard {...cardInfo} key={index} />
-        ))}
+        TIM KAMI
+      </Heading>
+      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={{ base: 4, xl: 8 }} autoRows={'1fr'}>
+        {data.map((item, index) => {
+          return <About {...item} key={index} />;
+        })}
       </SimpleGrid>
-    </Flex>
+    </Stack>
   );
 }
