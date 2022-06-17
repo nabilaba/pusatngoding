@@ -31,10 +31,10 @@ export default function Features() {
             py="4"
           >
             <Text fontSize={{ base: "36", md: "50" }} fontWeight="500">
-              #1 <br />
-              <Text fontSize={{ base: "16", md: "24" }}>
-                Pilihan Kursus Online/Offline
-              </Text>
+              #1
+            </Text>
+            <Text fontSize={{ base: "16", md: "24" }}>
+              Pilihan Kursus Online/Offline
             </Text>
             <Box mt="auto" w="100%" h={0.9} bg={"white"} />
           </Stack>
@@ -48,9 +48,9 @@ export default function Features() {
           >
             <Text fontSize={{ base: "36", md: "50" }} fontWeight="500">
               #2
-              <Text fontSize={{ base: "16", md: "24" }}>
-                Mentor Berpengalaman
-              </Text>
+            </Text>
+            <Text fontSize={{ base: "16", md: "24" }}>
+              Mentor Berpengalaman
             </Text>
             <Box mt="auto" w="100%" h={0.9} bg={"white"} />
           </Stack>
@@ -64,9 +64,9 @@ export default function Features() {
           >
             <Text fontSize={{ base: "36", md: "50" }} fontWeight="500">
               #3
-              <Text fontSize={{ base: "16", md: "24" }}>
-                Subjek Kursus Beragam
-              </Text>
+            </Text>
+            <Text fontSize={{ base: "16", md: "24" }}>
+              Subjek Kursus Beragam
             </Text>
             <Box mt="auto" w="100%" h={0.9} bg={"white"} />
           </Stack>
@@ -80,9 +80,9 @@ export default function Features() {
           >
             <Text fontSize={{ base: "36", md: "50" }} fontWeight="500">
               #4
-              <Text fontSize={{ base: "16", md: "24" }}>
-                Jumlah Siswa Aktif 1k
-              </Text>
+            </Text>
+            <Text fontSize={{ base: "16", md: "24" }}>
+              Jumlah Siswa Aktif 1k
             </Text>
             <Box mt="auto" w="100%" h={0.9} bg={"white"} />
           </Stack>

@@ -52,7 +52,7 @@ export default function Siswa() {
         >
           {Array(7)
             .fill("")
-            .map((i) => (
+            .map((_, i) => (
               <CardMentor key={i} />
             ))}
         </SimpleGrid>
