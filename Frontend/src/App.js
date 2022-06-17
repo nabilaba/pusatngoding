@@ -13,10 +13,12 @@ import SuntingAkunMentor from "./routes/dashboard/mentor/SuntingAkunMentor";
 import SuntingAkunSiswa from "./routes/dashboard/siswa/SuntingAkunSiswa";
 import DetailMentor from "./routes/dashboard/siswa/DetailMentor";
 import RoutesOutlet from "./routes/RoutesOutlet";
+import Admin from "./routes/dashboard/admin/Admin";
 
 export default function App() {
   const [isMentor, setIsMentor] = useState(false);
   const [isSiswa, setIsSiswa] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
@@ -24,7 +26,7 @@ export default function App() {
       <Route
         path="/"
         element={
-          <RoutesOutlet isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+          <RoutesOutlet isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} isAdmin={isAdmin} isMentor={isMentor} isSiswa={isSiswa} />
         }
       >
         <Route index element={<Homepage />} />
@@ -36,6 +38,7 @@ export default function App() {
               setIsLoggedIn={setIsLoggedIn}
               setIsMentor={setIsMentor}
               setIsSiswa={setIsSiswa}
+              setIsAdmin={setIsAdmin}
             />
           }
         />
@@ -53,6 +56,7 @@ export default function App() {
             <Route path="sunting-akun" element={<SuntingAkunSiswa />} />
           </>
         ) : null}
+        {isAdmin ? <Route path="dashboard" element={<Admin />} /> : null}
         <Route path="acara" element={<Event />} />
         <Route path="roadmap" element={<Roadmap />} />
         <Route path="*" element={<NotFound />} />
