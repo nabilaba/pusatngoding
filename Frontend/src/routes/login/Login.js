@@ -21,14 +21,21 @@ export default function Login(props) {
   const navigate = useNavigate();
 
   const HandleSubmit = (e) => {
-    if (email === "mentor@gmail.com") {
-      props.setIsMentor(true);
-      props.setIsSiswa(false);
-      props.setIsLoggedIn(true);
-      navigate("/dashboard");
-    } else if (email === "siswa@gmail.com") {
-      props.setIsMentor(false);
-      props.setIsSiswa(true);
+    if (email === "mentor@gmail.com" || email === "siswa@gmail.com" || email === "pusatngoding@admin.com") {
+      if (email === "mentor@gmail.com") {
+        props.setIsMentor(true);
+        props.setIsSiswa(false);
+        props.setIsAdmin(false);
+      } else if (email === "siswa@gmail.com") {
+        props.setIsMentor(false);
+        props.setIsSiswa(true);
+        props.setIsAdmin(false);
+      } else {
+        props.setIsMentor(false);
+        props.setIsSiswa(false);
+        props.setIsAdmin(true);
+      }
+      
       props.setIsLoggedIn(true);
       navigate("/dashboard");
     } else {

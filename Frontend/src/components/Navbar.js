@@ -180,13 +180,15 @@ export default function Navbar(props) {
                       />
                     </MenuButton>
                     <MenuList>
-                      <MenuItem
-                        icon={<EditIcon />}
-                        as={LinkTo}
-                        to="sunting-akun"
-                      >
-                        Sunting Akun
-                      </MenuItem>
+                      {!props.isAdmin ? (
+                        <MenuItem
+                          icon={<EditIcon />}
+                          as={LinkTo}
+                          to="sunting-akun"
+                        >
+                          Sunting Akun
+                        </MenuItem>
+                      ) : null}
                       <MenuItem icon={<ArrowBackIcon />} onClick={HandleLogOut}>
                         Keluar
                       </MenuItem>
