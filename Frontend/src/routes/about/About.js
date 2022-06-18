@@ -1,20 +1,14 @@
 import "./About.css";
 import {
-  Button,
-  Flex,
   Heading,
-  Image,
   Stack,
   Text,
-  useBreakpointValue,
   Container,
   Box,
   Avatar,
-  VStack,
   Center,
   SimpleGrid,
 } from "@chakra-ui/react";
-import { Link as LinkTo } from "react-router-dom";
 
 const data = [
   {
@@ -23,93 +17,100 @@ const data = [
     text: `"Just listening to Lil Peep and you will knowing who i am"`,
     avatar: "https://avatars.githubusercontent.com/u/45154878?v=4",
     sbg: "Frontend Developer",
+    github: "https://github.com/nabilaba"
   },
   {
     nama: "Anggun Lenteraningati",
     status: "Univ. Ruangguru Indonesia",
     text: `"Salah satu dari sekian hal yang membuat saya memilih untuk menjadi programmer adalah karena pekerjaan ini penuh dengan tantangan"`,
     avatar: "https://avatars.githubusercontent.com/u/90821767?v=4",
-    sbg: "Frontend Developer"
+    sbg: "Frontend Developer",
+    github: "https://github.com/AnggunLntra"
   },
   {
     nama: "Soultan Ali Hadji",
     status: "Univ. Ruangguru Indonesia",
     text: `"Salah satu dari sekian hal yang membuat saya memilih untuk menjadi programmer adalah karena pekerjaan ini penuh dengan tantangan"`,
     avatar: "https://avatars.githubusercontent.com/u/79008954?v=4",
-    sbg: "Frontend Developer"
+    sbg: "Frontend Developer",
+    github: "https://github.com/SoultanAliHadji"
   },
   {
     nama: "Achmad Izhar",
     status: "Univ. Ruangguru Indonesia",
     text: `"Salah satu dari sekian hal yang membuat saya memilih untuk menjadi programmer adalah karena pekerjaan ini penuh dengan tantangan"`,
     avatar: "https://avatars.githubusercontent.com/u/72540494?v=4",
-    sbg: "Backend Developer"
+    sbg: "Backend Developer",
+    github: "https://github.com/Zharonk"
   },
   {
     nama: "Irsan Nur Hidayat",
     status: "Univ. Ruangguru Indonesia",
     text: `"Salah satu dari sekian hal yang membuat saya memilih untuk menjadi programmer adalah karena pekerjaan ini penuh dengan tantangan"`,
     avatar: "https://avatars.githubusercontent.com/u/84580327?v=4",
-    sbg: "Backend Developer"
+    sbg: "Backend Developer",
+    github: "https://github.com/irsannh"
   },
   {
     nama: "Sean Sebastian",
     status: "Univ. Ruangguru Indonesia",
     text: `"Salah satu dari sekian hal yang membuat saya memilih untuk menjadi programmer adalah karena pekerjaan ini penuh dengan tantangan"`,
     avatar: "https://avatars.githubusercontent.com/u/100177839?v=4",
-    sbg: "Backend Developer"
+    sbg: "Backend Developer",
+    github: "https://github.com/seanlim12"
   },
 ];
 
 export default function About() {
   const About = (props) => {
     return (
-      <Box>
-        <Stack
-          spacing={{ base: 0, lg: 8 }}
-          direction={"row"}
-          h={'100%'}
-          p={10}
-          borderWidth="1px"
-          borderRadius="lg"
-          justifyContent={"center"}
-          boxShadow={"0px 10px 0px 0px rgba(97, 210, 242, 0.15)"}
-        >
-          <Avatar
-            size={"xl"}
-            src={props.avatar}
-            display={{ base: "none", lg: "block" }}
-          />
-          <Stack spacing={5} textAlign={{ base: "center", lg: "left" }}>
-            <Box>
-              <Center>
-                <Avatar
-                  size={"xl"}
-                  src={props.avatar}
-                  display={{ base: "block", lg: "none" }}
-                  mb={2}
-                />
-              </Center>
-              <Stack
-                align="center"
-                justify={"space-between"}
-                direction={{ base: "column", lg: "row" }}
-              >
-                <Box>
-                  <Heading size={"sm"}>{props.nama}</Heading>
-                  <Text as={"span"} fontWeight={"normal"}>
-                    {props.status}
-                  </Text>
-                </Box>
-                <Text as={"i"} fontWeight={"normal"}>
-                  {props.sbg}
+      <Stack
+        as="a"
+        href={props.github}
+        target="_blank"
+        spacing={{ base: 0, lg: 8 }}
+        direction={"row"}
+        h={"100%"}
+        p={10}
+        borderWidth="1px"
+        borderRadius="lg"
+        justifyContent={"center"}
+        boxShadow={"0px 10px 0px 0px rgba(97, 210, 242, 0.15)"}
+      >
+        <Avatar
+          size={"xl"}
+          src={props.avatar}
+          display={{ base: "none", lg: "block" }}
+        />
+        <Stack spacing={5} textAlign={{ base: "center", lg: "left" }}>
+          <Box>
+            <Center>
+              <Avatar
+                size={"xl"}
+                src={props.avatar}
+                display={{ base: "block", lg: "none" }}
+                mb={2}
+              />
+            </Center>
+            <Stack
+              align="center"
+              justify={"space-between"}
+              direction={{ base: "column", lg: "row" }}
+            >
+              <Box>
+                <Heading size={"sm"}>{props.nama}</Heading>
+                <Text as={"span"} fontWeight={"normal"}>
+                  {props.status}
                 </Text>
-              </Stack>
-            </Box>
-            <Text align={"justify"}>{props.text}</Text>
-          </Stack>
+              </Box>
+              <Text as={"i"} fontWeight={"normal"}>
+                {props.sbg}
+              </Text>
+            </Stack>
+          </Box>
+          <Text align={"justify"}>{props.text}</Text>
         </Stack>
-      </Box>
+      </Stack>
     );
   };
   return (
@@ -121,7 +122,11 @@ export default function About() {
       >
         TIM KAMI
       </Heading>
-      <SimpleGrid columns={{ base: 1, md: 2 }} spacing={{ base: 4, xl: 8 }} autoRows={'1fr'}>
+      <SimpleGrid
+        columns={{ base: 1, md: 2 }}
+        spacing={{ base: 4, xl: 8 }}
+        autoRows={"1fr"}
+      >
         {data.map((item, index) => {
           return <About {...item} key={index} />;
         })}
