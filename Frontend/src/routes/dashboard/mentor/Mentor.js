@@ -5,7 +5,7 @@ import ListKomen from "./ListKomen";
 
 export default function Guru(props) {
   return (
-    <Stack as={Container} maxW={"7xl"} pt={16}>
+    <Stack as={Container} maxW={"7xl"}>
       <Stack
         direction={{ base: "column", lg: "row" }}
         spacing={5}

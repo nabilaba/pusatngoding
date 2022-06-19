@@ -6,7 +6,6 @@ const NotFound = () => {
   return (
     <Stack
       as={Container}
-      pt={24}
       align={"center"}
       justify={"center"}
       maxW={"7xl"}

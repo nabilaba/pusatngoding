@@ -47,7 +47,7 @@ export default function Login() {
   };
 
   return (
-    <Container pt={20} pb={4} align={"center"} justify={"center"} maxW={"lg"}>
+    <Container pt={4} pb={4} align={"center"} justify={"center"} maxW={"lg"}>
       <Box
         rounded={"3xl"}
         bg={useColorModeValue("white", "gray.700")}

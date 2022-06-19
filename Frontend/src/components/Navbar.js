@@ -77,10 +77,12 @@ export default function Navbar() {
     <>
       <Box
         as="header"
-        position={"fixed"}
+        position={"sticky"}
         top={0}
+        left={0}
+        right={0}
         w={"full"}
-        zIndex={9999}
+        zIndex={3}
         bg={bgnavbar}
         backdropFilter="auto"
         backdropsaturation="180%"
@@ -202,7 +204,6 @@ export default function Navbar() {
               )}
             </Flex>
           </Flex>
-          
 
           {isOpen ? (
             <Box pb={4} display={{ md: "none" }}>

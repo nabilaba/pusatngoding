@@ -114,7 +114,7 @@ export default function About() {
     );
   };
   return (
-    <Stack as={Container} maxW={"7xl"} pt={20} pb={4}>
+    <Stack as={Container} maxW={"7xl"} pt={4} pb={4}>
       <Heading
         fontSize={{ base: "xl", md: "2xl", lg: "3xl" }}
         textAlign={"center"}

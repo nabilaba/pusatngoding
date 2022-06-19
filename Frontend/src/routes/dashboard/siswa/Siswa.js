@@ -21,7 +21,7 @@ import { Link as LinkTo } from "react-router-dom";
 
 export default function Siswa() {
   return (
-    <Stack pt={"20"}>
+    <Stack pt={"4"}>
       <Container maxW={"7xl"}>
         <InputGroup>
           <InputLeftElement

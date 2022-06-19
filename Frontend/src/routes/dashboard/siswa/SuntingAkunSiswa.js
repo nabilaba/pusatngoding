@@ -19,7 +19,7 @@ import { SmallCloseIcon } from "@chakra-ui/icons";
 
 export default function SuntingProfilMentor() {
   return (
-    <Stack as={Container} maxW={"7xl"} pt={16}>
+    <Stack as={Container} maxW={"7xl"}>
       <Stack spacing={5} py={5} justifyContent={"center"}>
         <Stack
           spacing={4}

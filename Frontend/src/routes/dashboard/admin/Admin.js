@@ -16,6 +16,7 @@ import {
   TabPanels,
   Tabs,
   Hide,
+  useToast,
 } from "@chakra-ui/react";
 import { AiTwotoneLock } from "react-icons/ai";
 import { BsFillTrashFill } from "react-icons/bs";
@@ -24,15 +25,21 @@ import { ADMIN, MENTOR, SISWA } from "../../../api/API";
 import useAdmin from "../../../zustand/todoAdmin";
 
 export default function Admin() {
-  const { admin, mentor, siswa, setAdmin, setMentor, setSiswa } = useAdmin();
-  
-  useEffect(() => {
-    setAdmin(ADMIN);
-    setMentor(MENTOR);
-    setSiswa(SISWA);
-  })
+  const { admin, mentor, siswa, setAdmin, setMentor, setSiswa, remove } =
+    useAdmin();
 
-  const bg = useColorModeValue("white", "gray.700");
+  const getData = (data, setData) => {
+    setData(data);
+  };
+
+  useEffect(() => {
+    getData(ADMIN, setAdmin);
+    getData(MENTOR, setMentor);
+    getData(SISWA, setSiswa);
+  }, [setAdmin, setMentor, setSiswa]);
+
+  const textColor = useColorModeValue("accentLight.400", "accentDark.400");
+  const bg = useColorModeValue("gray.100", "gray.700");
   const bg2 = useColorModeValue("white", "gray.800");
 
   const setButton = {
@@ -59,7 +66,7 @@ export default function Admin() {
         }}
         textTransform="uppercase"
         bg={bg}
-        color={"gray.500"}
+        color={textColor}
         py={{
           base: 1,
           md: 2,
@@ -76,6 +83,19 @@ export default function Admin() {
         <span>Aksi</span>
       </SimpleGrid>
     );
+  };
+
+  const toast = useToast();
+  const HandleRemove = (props) => {
+    remove(props.api, props.id).then(() => {
+      toast({
+        title: "Akun dihapus.",
+        description: `Akun ${props.nama} telah dihapus.`,
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      });
+    });
   };
 
   const IsiTabs = (props) => {
@@ -122,6 +142,7 @@ export default function Admin() {
                 variant="outline"
                 icon={<BsFillTrashFill />}
                 aria-label="Hapus"
+                onClick={() => HandleRemove(props)}
               />
             </ButtonGroup>
           </Flex>
@@ -130,7 +151,7 @@ export default function Admin() {
     );
   };
 
-  const ContainerTabs = (judul, data) => {
+  const ContainerTabs = (judul, data, api) => {
     return (
       <Stack>
         <Stack
@@ -160,7 +181,7 @@ export default function Admin() {
           >
             <Hide below="md">{kepalaTabel()}</Hide>
             {data.map((item) => {
-              return <IsiTabs {...item} key={item.id} />
+              return <IsiTabs {...item} key={item.id} api={api} />;
             })}
           </Stack>
         </Flex>
@@ -169,7 +190,7 @@ export default function Admin() {
   };
 
   return (
-    <Container maxWidth="7xl" pt={20}>
+    <Container maxWidth="7xl" pt={4}>
       <Tabs isFitted variant="enclosed">
         <TabList mb="1em">
           <Tab>List Mentor</Tab>
@@ -177,9 +198,9 @@ export default function Admin() {
           <Tab>List Admin</Tab>
         </TabList>
         <TabPanels>
-          <TabPanel>{ContainerTabs("Mentor", mentor)}</TabPanel>
-          <TabPanel>{ContainerTabs("Siswa", siswa)}</TabPanel>
-          <TabPanel>{ContainerTabs("Admin", admin)}</TabPanel>
+          <TabPanel>{ContainerTabs("Mentor", mentor, MENTOR)}</TabPanel>
+          <TabPanel>{ContainerTabs("Siswa", siswa, SISWA)}</TabPanel>
+          <TabPanel>{ContainerTabs("Admin", admin, ADMIN)}</TabPanel>
         </TabPanels>
       </Tabs>
     </Container>
