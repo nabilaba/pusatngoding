@@ -15,34 +15,34 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import useLoginState from "../../zustand/todoLogin";
 
-export default function Login(props) {
-  const [email, setEmail] = useState("");
+export default function Login() {
+  const { setIsLoggedIn, setLoggedAs } = useLoginState();
+  
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
 
   const HandleSubmit = (e) => {
-    if (email === "mentor@gmail.com" || email === "siswa@gmail.com" || email === "pusatngoding@admin.com") {
+    if (
+      email === "mentor@gmail.com" ||
+      email === "siswa@gmail.com" ||
+      email === "pusatngoding@admin.com"
+    ) {
       if (email === "mentor@gmail.com") {
-        props.setIsMentor(true);
-        props.setIsSiswa(false);
-        props.setIsAdmin(false);
+        setLoggedAs("mentor");
       } else if (email === "siswa@gmail.com") {
-        props.setIsMentor(false);
-        props.setIsSiswa(true);
-        props.setIsAdmin(false);
+        setLoggedAs("siswa");
       } else {
-        props.setIsMentor(false);
-        props.setIsSiswa(false);
-        props.setIsAdmin(true);
+        setLoggedAs("admin");
       }
-      
-      props.setIsLoggedIn(true);
+
+      setIsLoggedIn(true);
       navigate("/dashboard");
     } else {
       alert("Email atau Password Salah");
-      props.setIsSiswa(false);
-      props.setIsMentor(false);
     }
+
     e.preventDefault();
   };
 

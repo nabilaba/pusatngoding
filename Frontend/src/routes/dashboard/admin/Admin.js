@@ -19,91 +19,21 @@ import {
 } from "@chakra-ui/react";
 import { AiTwotoneLock } from "react-icons/ai";
 import { BsFillTrashFill } from "react-icons/bs";
+import { useEffect } from "react";
+import { ADMIN, MENTOR, SISWA } from "../../../api/API";
+import useAdmin from "../../../zustand/todoAdmin";
 
 export default function Admin() {
+  const { admin, mentor, siswa, setAdmin, setMentor, setSiswa } = useAdmin();
+  
+  useEffect(() => {
+    setAdmin(ADMIN);
+    setMentor(MENTOR);
+    setSiswa(SISWA);
+  })
+
   const bg = useColorModeValue("white", "gray.700");
   const bg2 = useColorModeValue("white", "gray.800");
-
-  const mentor = [
-    {
-      name: "Nabil Aziz Bima Anggita",
-      created: "17 Juni 2022",
-    },
-    {
-      name: "Nabil Aziz Bima Anggita",
-      created: "17 Juni 2022",
-    },
-    {
-      name: "Nabil Aziz Bima Anggita",
-      created: "17 Juni 2022",
-    },
-    {
-      name: "Nabil Aziz Bima Anggita",
-      created: "17 Juni 2022",
-    },
-    {
-      name: "Nabil Aziz Bima Anggita",
-      created: "17 Juni 2022",
-    },
-    {
-      name: "Nabil Aziz Bima Anggita",
-      created: "17 Juni 2022",
-    },
-  ];
-
-  const siswa = [
-    {
-      name: "Soultan",
-      created: "17 Juni 2022",
-    },
-    {
-      name: "Soultan",
-      created: "17 Juni 2022",
-    },
-    {
-      name: "Soultan",
-      created: "17 Juni 2022",
-    },
-    {
-      name: "Soultan",
-      created: "17 Juni 2022",
-    },
-    {
-      name: "Soultan",
-      created: "17 Juni 2022",
-    },
-    {
-      name: "Soultan",
-      created: "17 Juni 2022",
-    },
-  ];
-
-  const admin = [
-    {
-      name: "Anggun Lentera",
-      created: "17 Juni 2022",
-    },
-    {
-      name: "Ihsan",
-      created: "17 Juni 2022",
-    },
-    {
-      name: "Izhar",
-      created: "17 Juni 2022",
-    },
-    {
-      name: "Nabil",
-      created: "17 Juni 2022",
-    },
-    {
-      name: "Sean",
-      created: "17 Juni 2022",
-    },
-    {
-      name: "Soultan",
-      created: "17 Juni 2022",
-    },
-  ];
 
   const setButton = {
     color: useColorModeValue("white", "black"),
@@ -169,13 +99,13 @@ export default function Admin() {
           px={10}
           fontWeight="hairline"
         >
-          <span>{props.name}</span>
+          <span>{props.nama}</span>
           <chakra.span
             textOverflow="ellipsis"
             overflow="hidden"
             whiteSpace="nowrap"
           >
-            {props.created}
+            {props.created_at}
           </chakra.span>
           <Flex>
             <ButtonGroup variant="solid" size="sm" spacing={3}>
@@ -230,7 +160,7 @@ export default function Admin() {
           >
             <Hide below="md">{kepalaTabel()}</Hide>
             {data.map((item) => {
-              return <IsiTabs {...item} />;
+              return <IsiTabs {...item} key={item.id} />
             })}
           </Stack>
         </Flex>
