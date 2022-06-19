@@ -141,7 +141,7 @@ export default function DetailMentor() {
     );
   };
   return (
-    <Container maxW={"7xl"} pt={20}>
+    <Container maxW={"7xl"} pt={4}>
       <Stack
         spacing={{ base: 8, md: 10 }}
         direction={{ base: "column-reverse", md: "row" }}

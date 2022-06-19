@@ -89,7 +89,7 @@ export default function Event() {
   };
 
   return (
-    <Container pt={20} maxW={"7xl"}>
+    <Container pt={4} maxW={"7xl"}>
       <Heading fontSize={{ base: "2xl", sm: "4xl", md: "5xl" }}>
         Halo, 👋
       </Heading>

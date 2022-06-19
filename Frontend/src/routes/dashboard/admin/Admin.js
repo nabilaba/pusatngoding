@@ -16,6 +16,7 @@ import {
   TabPanels,
   Tabs,
   Hide,
+  useToast,
 } from "@chakra-ui/react";
 import { AiTwotoneLock } from "react-icons/ai";
 import { BsFillTrashFill } from "react-icons/bs";
@@ -24,11 +25,12 @@ import { ADMIN, MENTOR, SISWA } from "../../../api/API";
 import useAdmin from "../../../zustand/todoAdmin";
 
 export default function Admin() {
-  const { admin, mentor, siswa, setAdmin, setMentor, setSiswa, remove } = useAdmin();
+  const { admin, mentor, siswa, setAdmin, setMentor, setSiswa, remove } =
+    useAdmin();
 
   const getData = (data, setData) => {
     setData(data);
-  }
+  };
 
   useEffect(() => {
     getData(ADMIN, setAdmin);
@@ -36,7 +38,8 @@ export default function Admin() {
     getData(SISWA, setSiswa);
   }, [setAdmin, setMentor, setSiswa]);
 
-  const bg = useColorModeValue("white", "gray.700");
+  const textColor = useColorModeValue("accentLight.400", "accentDark.400");
+  const bg = useColorModeValue("gray.100", "gray.700");
   const bg2 = useColorModeValue("white", "gray.800");
 
   const setButton = {
@@ -63,7 +66,7 @@ export default function Admin() {
         }}
         textTransform="uppercase"
         bg={bg}
-        color={"gray.500"}
+        color={textColor}
         py={{
           base: 1,
           md: 2,
@@ -80,6 +83,19 @@ export default function Admin() {
         <span>Aksi</span>
       </SimpleGrid>
     );
+  };
+
+  const toast = useToast();
+  const HandleRemove = (props) => {
+    remove(props.api, props.id).then(() => {
+      toast({
+        title: "Akun dihapus.",
+        description: `Akun ${props.nama} telah dihapus.`,
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      });
+    });
   };
 
   const IsiTabs = (props) => {
@@ -126,7 +142,7 @@ export default function Admin() {
                 variant="outline"
                 icon={<BsFillTrashFill />}
                 aria-label="Hapus"
-                onClick={() => remove(props.api, props.id)}
+                onClick={() => HandleRemove(props)}
               />
             </ButtonGroup>
           </Flex>
@@ -174,7 +190,7 @@ export default function Admin() {
   };
 
   return (
-    <Container maxWidth="7xl" pt={20}>
+    <Container maxWidth="7xl" pt={4}>
       <Tabs isFitted variant="enclosed">
         <TabList mb="1em">
           <Tab>List Mentor</Tab>
