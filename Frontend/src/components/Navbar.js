@@ -24,6 +24,7 @@ import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { MoonIcon, SunIcon, EditIcon, ArrowBackIcon } from "@chakra-ui/icons";
 import { Link as LinkTo, useNavigate } from "react-router-dom";
 import Logo from "../assets/logo.svg";
+import useLoginState from "../zustand/todoLogin";
 
 const Links = [
   { nama: "Roadmap", link: "/roadmap" },
@@ -48,7 +49,9 @@ const NavLink = ({ nama, link, onClick }) => (
   </Text>
 );
 
-export default function Navbar(props) {
+export default function Navbar() {
+  const { isLoggedIn, setIsLoggedOut, loggedAs, setLoggedAs } = useLoginState();
+
   const navigate = useNavigate();
   const bgnavbar = useColorModeValue(
     "rgba(255, 255, 255, 0.8)",
@@ -65,7 +68,8 @@ export default function Navbar(props) {
   };
 
   const HandleLogOut = () => {
-    props.setIsLoggedIn(false);
+    setIsLoggedOut();
+    setLoggedAs("");
     navigate("/");
   };
 
@@ -139,7 +143,7 @@ export default function Navbar(props) {
                 display={{ base: "none", md: "flex" }}
                 mr={4}
               >
-                {props.isLoggedIn ? (
+                {isLoggedIn ? (
                   <NavLink
                     nama="Dashboard"
                     link="dashboard"
@@ -157,7 +161,7 @@ export default function Navbar(props) {
                 mr={4}
                 onClick={toggleColorMode}
               />
-              {!props.isLoggedIn ? (
+              {!isLoggedIn ? (
                 <Button as={LinkTo} to="/masuk" size={"sm"} {...navbarSet}>
                   MASUK
                 </Button>
@@ -180,7 +184,7 @@ export default function Navbar(props) {
                       />
                     </MenuButton>
                     <MenuList>
-                      {!props.isAdmin ? (
+                      {loggedAs === "admin" ? null : (
                         <MenuItem
                           icon={<EditIcon />}
                           as={LinkTo}
@@ -188,7 +192,7 @@ export default function Navbar(props) {
                         >
                           Sunting Akun
                         </MenuItem>
-                      ) : null}
+                      )}
                       <MenuItem icon={<ArrowBackIcon />} onClick={HandleLogOut}>
                         Keluar
                       </MenuItem>
@@ -198,11 +202,12 @@ export default function Navbar(props) {
               )}
             </Flex>
           </Flex>
+          
 
           {isOpen ? (
             <Box pb={4} display={{ md: "none" }}>
               <Stack as={"nav"} spacing={4}>
-                {props.isLoggedIn ? (
+                {isLoggedIn ? (
                   <NavLink
                     nama="Dashboard"
                     link="dashboard"
