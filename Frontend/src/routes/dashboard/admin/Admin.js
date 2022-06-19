@@ -24,13 +24,17 @@ import { ADMIN, MENTOR, SISWA } from "../../../api/API";
 import useAdmin from "../../../zustand/todoAdmin";
 
 export default function Admin() {
-  const { admin, mentor, siswa, setAdmin, setMentor, setSiswa } = useAdmin();
-  
+  const { admin, mentor, siswa, setAdmin, setMentor, setSiswa, remove } = useAdmin();
+
+  const getData = (data, setData) => {
+    setData(data);
+  }
+
   useEffect(() => {
-    setAdmin(ADMIN);
-    setMentor(MENTOR);
-    setSiswa(SISWA);
-  })
+    getData(ADMIN, setAdmin);
+    getData(MENTOR, setMentor);
+    getData(SISWA, setSiswa);
+  }, [setAdmin, setMentor, setSiswa]);
 
   const bg = useColorModeValue("white", "gray.700");
   const bg2 = useColorModeValue("white", "gray.800");
@@ -122,6 +126,7 @@ export default function Admin() {
                 variant="outline"
                 icon={<BsFillTrashFill />}
                 aria-label="Hapus"
+                onClick={() => remove(props.api, props.id)}
               />
             </ButtonGroup>
           </Flex>
@@ -130,7 +135,7 @@ export default function Admin() {
     );
   };
 
-  const ContainerTabs = (judul, data) => {
+  const ContainerTabs = (judul, data, api) => {
     return (
       <Stack>
         <Stack
@@ -160,7 +165,7 @@ export default function Admin() {
           >
             <Hide below="md">{kepalaTabel()}</Hide>
             {data.map((item) => {
-              return <IsiTabs {...item} key={item.id} />
+              return <IsiTabs {...item} key={item.id} api={api} />;
             })}
           </Stack>
         </Flex>
@@ -177,9 +182,9 @@ export default function Admin() {
           <Tab>List Admin</Tab>
         </TabList>
         <TabPanels>
-          <TabPanel>{ContainerTabs("Mentor", mentor)}</TabPanel>
-          <TabPanel>{ContainerTabs("Siswa", siswa)}</TabPanel>
-          <TabPanel>{ContainerTabs("Admin", admin)}</TabPanel>
+          <TabPanel>{ContainerTabs("Mentor", mentor, MENTOR)}</TabPanel>
+          <TabPanel>{ContainerTabs("Siswa", siswa, SISWA)}</TabPanel>
+          <TabPanel>{ContainerTabs("Admin", admin, ADMIN)}</TabPanel>
         </TabPanels>
       </Tabs>
     </Container>
