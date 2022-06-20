@@ -6,8 +6,18 @@ const useSiswa = create(
   devtools((set) => ({
     mentor: [],
     setMentor: async (api) => {
-      const res = await axios.get(api);
-      set({ mentor: res.data });
+      await axios
+        .get(api)
+        .then((res) => {
+          const mentorRequests = res.data.map((todo) =>
+            axios
+              .get(`${api}/${todo.id}/kursus`)
+              .then((response) => ({ ...todo, kursus: response.data }))
+          );
+
+          return Promise.all(mentorRequests);
+        })
+        .then((res) => set({ mentor: res }));
     },
   }))
 );

@@ -15,12 +15,13 @@ import {
   Icon,
   Stack,
 } from "@chakra-ui/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { StarIcon, SearchIcon } from "@chakra-ui/icons";
 import { FaChalkboardTeacher, FaDollarSign } from "react-icons/fa";
 import { Link as LinkTo } from "react-router-dom";
 import { MENTOR } from "../../../api/API";
 import useSiswa from "../../../zustand/todoSiswa";
+import axios from "axios";
 
 export default function Siswa() {
   const { mentor, setMentor } = useSiswa();
@@ -59,9 +60,11 @@ export default function Siswa() {
           autoRows={"1fr"}
           autoColumns={"1fr"}
         >
-          {mentor.map((item) => (
-            <CardMentor key={item.id} {...item} />
-          ))}
+          {mentor.map((item) =>
+            item.kursus.map((kursus, index) => (
+              <CardMentor key={index} {...item} kursus={kursus} />
+            ))
+          )}
         </SimpleGrid>
       </Container>
     </Stack>
@@ -72,7 +75,7 @@ function CardMentor(props) {
   return (
     <Stack
       as={LinkTo}
-      to={`/mentor/${props.nama}`}
+      to={`/mentor/${props.id}`}
       borderWidth="1px"
       borderRadius="2xl"
       bg={useColorModeValue("white", "gray.700")}
@@ -91,7 +94,7 @@ function CardMentor(props) {
 
       <Box p="3">
         <Heading fontSize="2xl">{props.nama}</Heading>
-        <Heading fontSize="lg">{props.keahlian}</Heading>
+        <Heading fontSize="lg">{props.kursus.nama} - {props.kursus.modul}</Heading>
         <Heading fontSize="md">{props.kota}</Heading>
         <HStack spacing={"1"}>
           <StarIcon
@@ -104,7 +107,9 @@ function CardMentor(props) {
             (10 feedback)
           </Text>
         </HStack>
-        <Text my={2} noOfLines={2}>{props.motivasi}</Text>
+        <Text my={2} noOfLines={2}>
+          {props.kursus.deskripsi}
+        </Text>
         <HStack spacing={2}>
           <Tag size="lg" colorScheme="blue" borderRadius="2xl">
             <Icon as={FaDollarSign} h={4} w={4} mr={2} />

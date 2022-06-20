@@ -34,7 +34,7 @@ export default function App() {
         {loggedAs === "siswa" ? (
           <>
             <Route path="dashboard" element={<Siswa />} />
-            <Route path="mentor/:nama" element={<DetailMentor />} />
+            <Route path="mentor/:id" element={<DetailMentor />} />
             <Route path="sunting-akun" element={<SuntingAkunSiswa />} />
           </>
         ) : null}
