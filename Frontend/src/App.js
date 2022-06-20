@@ -14,6 +14,7 @@ import DetailMentor from "./routes/dashboard/siswa/DetailMentor";
 import RoutesOutlet from "./routes/RoutesOutlet";
 import Admin from "./routes/dashboard/admin/Admin";
 import useLoginState from "./zustand/todoLogin";
+import SignUpMentor from "./routes/signup/SignUpMentor";
 
 export default function App() {
   const { loggedAs } = useLoginState();
@@ -25,6 +26,7 @@ export default function App() {
         <Route path="tentang" element={<About />} />
         <Route path="masuk" element={<Login />} />
         <Route path="mendaftar" element={<SignUp />} />
+        <Route path="mendaftar_mentor" element={<SignUpMentor />} />
         {loggedAs === "mentor" ? (
           <>
             <Route path="dashboard" element={<Mentor />} />
@@ -34,7 +36,7 @@ export default function App() {
         {loggedAs === "siswa" ? (
           <>
             <Route path="dashboard" element={<Siswa />} />
-            <Route path="mentor/:name" element={<DetailMentor />} />
+            <Route path="mentor/:id" element={<DetailMentor />} />
             <Route path="sunting-akun" element={<SuntingAkunSiswa />} />
           </>
         ) : null}

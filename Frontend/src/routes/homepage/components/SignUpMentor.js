@@ -4,8 +4,11 @@ import {
   Box,
   Button,
   useColorModeValue,
-  Stack, Heading, Text
+  Stack,
+  Heading,
+  Text,
 } from "@chakra-ui/react";
+import { Link as LinkTo } from "react-router-dom";
 
 export default function SignUpGuru() {
   return (
@@ -26,14 +29,14 @@ export default function SignUpGuru() {
           lineHeight="shorter"
           color={useColorModeValue("gray.900", "gray.100")}
         >
-          <Text>
-            Ingin Bergabung Sebagai Partner Mentor Kami?
-          </Text>
+          <Text>Ingin Bergabung Sebagai Partner Mentor Kami?</Text>
           <Text color={useColorModeValue("gray.500", "gray.500")}>
             Bagikan Pengalamanmu Sekarang Bersama Mentor-Mentor Lainnya.
           </Text>
         </Heading>
         <Button
+          as={LinkTo}
+          to={"mendaftar_mentor"}
           color={useColorModeValue("white", "black")}
           bg={useColorModeValue("accentLight.400", "accentDark.400")}
           _hover={{

@@ -7,7 +7,6 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Checkbox,
   Stack,
   Link,
   Button,
@@ -19,7 +18,7 @@ import useLoginState from "../../zustand/todoLogin";
 
 export default function Login() {
   const { setIsLoggedIn, setLoggedAs } = useLoginState();
-  
+
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
 
@@ -88,9 +87,8 @@ export default function Login() {
             <Stack
               direction={{ base: "column", sm: "row" }}
               align={"start"}
-              justify={"space-between"}
+              justify={"end"}
             >
-              <Checkbox mr={32}>Ingat Saya</Checkbox>
               <Link
                 color={useColorModeValue("accentLight.400", "accentDark.400")}
               >

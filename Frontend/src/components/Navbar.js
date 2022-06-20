@@ -70,6 +70,7 @@ export default function Navbar() {
   const HandleLogOut = () => {
     setIsLoggedOut();
     setLoggedAs("");
+    useLoginState.persist.clearStorage();
     navigate("/");
   };
 
