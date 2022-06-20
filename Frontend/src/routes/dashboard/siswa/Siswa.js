@@ -15,13 +15,12 @@ import {
   Icon,
   Stack,
 } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { StarIcon, SearchIcon } from "@chakra-ui/icons";
 import { FaChalkboardTeacher, FaDollarSign } from "react-icons/fa";
 import { Link as LinkTo } from "react-router-dom";
 import { MENTOR } from "../../../api/API";
 import useSiswa from "../../../zustand/todoSiswa";
-import axios from "axios";
 
 export default function Siswa() {
   const { mentor, setMentor } = useSiswa();
