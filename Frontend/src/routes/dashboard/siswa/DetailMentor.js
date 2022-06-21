@@ -15,64 +15,45 @@ import {
   Tag,
   Link,
   Avatar,
+  TableContainer,
+  Tbody,
+  Tr,
+  Td,
+  Table,
 } from "@chakra-ui/react";
 import { FaChalkboardTeacher, FaDollarSign } from "react-icons/fa";
 import { StarIcon } from "@chakra-ui/icons";
 import { BsStarFill } from "react-icons/bs";
-
-const dataKomen = [
-  {
-    avatar: "https://source.unsplash.com/random/200x200?sig=1",
-    nama: "Lil Peep",
-    text: `"Jos mantep materi yang diberikan"`,
-    tgl: "Jum'at, 10 Juni 2022",
-    star: "4.6",
-  },
-  {
-    avatar: "https://source.unsplash.com/random/200x200?sig=2",
-    nama: "XXXTentacion",
-    text: `"Ga nyesel belajar sama Nabil"`,
-    tgl: "Kamis, 9 Juni 2022",
-    star: "4.6",
-  },
-  {
-    avatar: "https://source.unsplash.com/random/200x200?sig=3",
-    nama: "Lil Tracy",
-    text: `"Walaupun tugas yang diberikan guru di kampus sangat susah, semua terbantu gara-gara Pusat Ngoding dan kak Nabil. Terima kasih Pusat Ngoding dan kak Nabil"`,
-    tgl: "Rabu, 8 Juni 2022",
-    star: "4.6",
-  },
-  {
-    avatar: "https://source.unsplash.com/random/200x200?sig=4",
-    nama: "Sadboyprolific",
-    text: `"Belajar sama Nabil kurang dari 2 jam sudah paham akan apa itu react dan cara menggunakannya"`,
-    tgl: "Rabu, 8 Juni 2022",
-    star: "4.6",
-  },
-  {
-    avatar: "https://source.unsplash.com/random/200x200?sig=5",
-    nama: "Powfu",
-    text: `"Terima kasih telah membantu saya mas"`,
-    tgl: "Selasa, 7 Juni 2022",
-    star: "4.6",
-  },
-  {
-    avatar: "https://source.unsplash.com/random/200x200?sig=7",
-    nama: "Lund",
-    text: `"Mantap mas Nabil tidak mengecewakan. Terima kasih juga buat Pusat Ngoding"`,
-    tgl: "Senin, 6 Juni 2022",
-    star: "4.6",
-  },
-  {
-    avatar: "https://source.unsplash.com/random/200x200?sig=8",
-    nama: "Komandan Leke",
-    text: `"Memuaskan"`,
-    tgl: "Senin, 6 Juni 2022",
-    star: "4.6",
-  },
-];
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { useState, useEffect, useCallback } from "react";
+import { MENTOR, KURSUS, SISWA } from "../../../api/API";
 
 export default function DetailMentor() {
+  const param = useParams();
+  const [mentor, setMentor] = useState([]);
+  const [kursus, setKursus] = useState([]);
+  const [siswa, setSiswa] = useState([]);
+  const [dataKomentar, setDataKomentar] = useState([]);
+
+  const getKursusInfo = useCallback(async () => {
+    const res = await axios.get(`${MENTOR}/${param.mentorId}`);
+    setMentor(res.data);
+
+    const res2 = await axios.get(`${KURSUS}/${param.kursusId}`);
+    setKursus(res2.data);
+
+    const res3 = await axios.get(`${SISWA}`);
+    setSiswa(res3.data);
+
+    const res4 = await axios.get(`${MENTOR}/${param.mentorId}/komentar`);
+    setDataKomentar(res4.data);
+  }, [param.mentorId, param.kursusId]);
+
+  useEffect(() => {
+    getKursusInfo();
+  }, [getKursusInfo]);
+
   const Komen = (props) => {
     return (
       <Stack
@@ -82,7 +63,6 @@ export default function DetailMentor() {
         px={4}
         py={4}
         rounded="xl"
-        shadow="lg"
         border="1px"
         borderColor={useColorModeValue("gray.200", "gray.500")}
         bg={useColorModeValue("white", "gray.800")}
@@ -124,7 +104,7 @@ export default function DetailMentor() {
           color={useColorModeValue("gray.600", "gray.300")}
           align={"justify"}
         >
-          {props.text}
+          {props.komentar.content}
         </Text>
 
         <Flex justifyContent="space-between" alignItems="center">
@@ -133,7 +113,7 @@ export default function DetailMentor() {
             fontSize="sm"
             color={useColorModeValue("gray.600", "gray.400")}
           >
-            {props.tgl}
+            {props.komentar.created_at}
           </Text>
           <Link _hover={{ textDecor: "underline" }}>Lihat Selengkapnya</Link>
         </Flex>
@@ -149,17 +129,17 @@ export default function DetailMentor() {
         <Stack flex={1}>
           <Box>
             <Heading fontSize={{ base: "2xl", sm: "4xl", xl: "5xl" }}>
-              Nabil Aziz Bima Anggita
+              {mentor.nama}
             </Heading>
             <Heading fontSize={{ base: "lg", sm: "xl", lg: "3xl" }}>
-              Mentor Frontend
+              {kursus.nama} - {kursus.modul}
             </Heading>
             <Heading fontSize={{ base: "sm", sm: "lg", lg: "xl" }}>
-              Sukoharjo
+              {mentor.kota}
             </Heading>
           </Box>
 
-          <Stack direction={"column"}>
+          <Box direction={"column"}>
             <HStack spacing={"1"}>
               <StarIcon
                 color={useColorModeValue("accentLight.500", "accentDark.500")}
@@ -167,40 +147,66 @@ export default function DetailMentor() {
               <Text fontSize="sm" fontWeight={"bold"}>
                 4.6
               </Text>
-              <Text fontSize="xs" fontWeight={"bold"} color="gray.500">
-                (10 feedback)
-              </Text>
             </HStack>
-            <Text my={2}>
-              Saya adalah seorang Frontend Developer dengan pengalaman 5 tahun.
-            </Text>
+            <Text>{mentor.motivasi}</Text>
+
+            <Box my={3}>
+              <Heading fontSize={{ base: "lg", sm: "xl", lg: "xl" }}>
+                Deskripsi Kursus
+              </Heading>
+              <Text>{kursus.deskripsi}</Text>
+            </Box>
             <HStack spacing={2}>
               <Tag size="lg" colorScheme="blue" borderRadius="2xl">
                 <Icon as={FaDollarSign} h={4} w={4} mr={2} />
-                <TagLabel>Rp. 500.000 / Jam</TagLabel>
+                <TagLabel>{mentor.price}</TagLabel>
               </Tag>
               <Tag size="lg" colorScheme="blue" borderRadius="2xl">
                 <Icon as={FaChalkboardTeacher} h={4} w={4} mr={2} />
-                <TagLabel>Online</TagLabel>
+                <TagLabel>{mentor.status}</TagLabel>
               </Tag>
             </HStack>
-          </Stack>
-          <Heading fontSize={"lg"}>Feedback Pengguna</Heading>
+          </Box>
+          <Heading fontSize={"lg"}>
+            {Object.keys(dataKomentar).length} Feedback Pengguna
+          </Heading>
           <SimpleGrid w="full" autoRows={"1fr"} spacing={2}>
-            {dataKomen.map((item) => (
-              <Komen key={item.nama} {...item} />
-            ))}
+            {siswa.map((item) =>
+              dataKomentar
+                .filter((item2) => item2.siswaId === item.id)
+                .map((item3, index) => (
+                  <Komen key={index} {...item} komentar={item3} />
+                ))
+            )}
           </SimpleGrid>
         </Stack>
         <Stack>
           <Image
             rounded={"md"}
             alt={"product image"}
-            src={"https://avatars.githubusercontent.com/u/45154878?v=4"}
+            src={mentor.avatar}
             fit={"cover"}
             objectPosition={"center"}
             h={{ base: "100%", sm: "300px", lg: "400px" }}
           />
+          <TableContainer borderWidth={1} my={3} borderRadius={"md"}>
+            <Table variant="simple">
+              <Tbody>
+                <Tr>
+                  <Td>KEAHLIAN</Td>
+                  <Td>{mentor.keahlian}</Td>
+                </Tr>
+                <Tr>
+                  <Td>LULUSAN</Td>
+                  <Td>Oxford University</Td>
+                </Tr>
+                <Tr>
+                  <Td>TANGGAL BERGABUNG</Td>
+                  <Td>{mentor.created_at}</Td>
+                </Tr>
+              </Tbody>
+            </Table>
+          </TableContainer>
           <Button
             rounded={"md"}
             w={"full"}

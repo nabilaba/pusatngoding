@@ -74,7 +74,7 @@ function CardMentor(props) {
   return (
     <Stack
       as={LinkTo}
-      to={`/mentor/${props.id}`}
+      to={`kursusId=${props.id}${props.kursus.id}`}
       borderWidth="1px"
       borderRadius="2xl"
       bg={useColorModeValue("white", "gray.700")}
@@ -107,7 +107,7 @@ function CardMentor(props) {
           </Text>
         </HStack>
         <Text my={2} noOfLines={2}>
-          {props.kursus.deskripsi}
+          {props.motivasi}
         </Text>
         <HStack spacing={2}>
           <Tag size="lg" colorScheme="blue" borderRadius="2xl">

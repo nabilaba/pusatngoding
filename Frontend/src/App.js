@@ -15,6 +15,7 @@ import RoutesOutlet from "./routes/RoutesOutlet";
 import Admin from "./routes/dashboard/admin/Admin";
 import useLoginState from "./zustand/todoLogin";
 import SignUpMentor from "./routes/signup/SignUpMentor";
+import { Outlet } from "react-router-dom"
 
 export default function App() {
   const { loggedAs } = useLoginState();
@@ -35,8 +36,13 @@ export default function App() {
         ) : null}
         {loggedAs === "siswa" ? (
           <>
-            <Route path="dashboard" element={<Siswa />} />
-            <Route path="mentor/:id" element={<DetailMentor />} />
+            <Route path="dashboard" element={<Outlet />}>
+              <Route index element={<Siswa />} />
+              <Route
+                path={"kursusId=:mentorId:kursusId"}
+                element={<DetailMentor />}
+              />
+            </Route>
             <Route path="sunting-akun" element={<SuntingAkunSiswa />} />
           </>
         ) : null}

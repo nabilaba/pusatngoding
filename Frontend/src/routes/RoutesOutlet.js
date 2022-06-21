@@ -35,7 +35,6 @@ export default function RoutesOutlet() {
           >
             <Text
               color={useColorModeValue("accentLight.400", "accentDark.400")}
-              _dark="accentDark.400"
               as={"span"}
               position={"relative"}
               _after={{
