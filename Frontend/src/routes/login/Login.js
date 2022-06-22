@@ -122,28 +122,28 @@ export default function Login() {
               </InputRightElement>
             </InputGroup>
           </FormControl>
-        </Stack>
-        <Stack mt={10} spacing={10}>
-          <Button
-            type={"submit"}
-            color={useColorModeValue("white", "black")}
-            bg={useColorModeValue("accentLight.400", "accentDark.400")}
-            _hover={{
-              bg: useColorModeValue("accentLight.500", "accentDark.500"),
-            }}
-          >
-            Masuk
-          </Button>
-          <Text textAlign={"center"}>
-            Belum memiliki akun?{" "}
-            <Link
-              as={LinkTo}
-              to="/mendaftar"
-              color={useColorModeValue("accentLight.400", "accentDark.400")}
+          <Stack pt={10} spacing={5}>
+            <Button
+              type={"submit"}
+              color={useColorModeValue("white", "black")}
+              bg={useColorModeValue("accentLight.400", "accentDark.400")}
+              _hover={{
+                bg: useColorModeValue("accentLight.500", "accentDark.500"),
+              }}
             >
-              Daftar Sekarang
-            </Link>
-          </Text>
+              Masuk
+            </Button>
+            <Text textAlign={"center"}>
+              Belum memiliki akun?{" "}
+              <Link
+                as={LinkTo}
+                to="/mendaftar"
+                color={useColorModeValue("accentLight.400", "accentDark.400")}
+              >
+                Daftar Sekarang
+              </Link>
+            </Text>
+          </Stack>
         </Stack>
       </Box>
     </Container>
