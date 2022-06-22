@@ -14,12 +14,17 @@ import {
   Text,
   useColorModeValue,
   useToast,
+  InputRightElement,
+  InputGroup,
+  IconButton,
 } from "@chakra-ui/react";
 import useLoginState from "../../zustand/todoLogin";
 import axios from "axios";
 import { LOGIN_AUTH } from "../../api/API";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 export default function Login() {
+  const [passwordType, setPasswordType] = useState(false);
   const { isLoggedIn, setIsLoggedIn, setLoggedAs, setUserId } = useLoginState();
 
   const navigate = useNavigate();
@@ -85,9 +90,10 @@ export default function Login() {
           as={"form"}
           onSubmit={(e) => HandleSubmit(e)}
         >
-          <FormControl id="email">
+          <FormControl id="email" isRequired>
             <FormLabel>Email</FormLabel>
             <Input
+              size={"lg"}
               type="email"
               focusBorderColor={useColorModeValue(
                 "accentLight.400",
@@ -96,51 +102,49 @@ export default function Login() {
               onChange={(e) => setEmail(e.target.value)}
             />
           </FormControl>
-          <FormControl id="password">
+          <FormControl id="password" isRequired>
             <FormLabel>Kata Sandi</FormLabel>
-            <Input
-              type="password"
-              focusBorderColor={useColorModeValue(
-                "accentLight.400",
-                "accentDark.400"
-              )}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <InputGroup size={"lg"}>
+              <Input
+                type={passwordType ? "text" : "password"}
+                focusBorderColor={useColorModeValue(
+                  "accentLight.400",
+                  "accentDark.400"
+                )}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <InputRightElement width="4.5rem">
+                <IconButton
+                  icon={passwordType ? <ViewIcon /> : <ViewOffIcon />}
+                  onClick={() => setPasswordType(!passwordType)}
+                  variant="ghost"
+                />
+              </InputRightElement>
+            </InputGroup>
           </FormControl>
-          <Stack spacing={10}>
-            <Stack
-              direction={{ base: "column", sm: "row" }}
-              align={"start"}
-              justify={"end"}
-            >
-              <Link
-                color={useColorModeValue("accentLight.400", "accentDark.400")}
-              >
-                Lupa Kata Sandi?
-              </Link>
-            </Stack>
-            <Button
-              type={"submit"}
-              color={useColorModeValue("white", "black")}
-              bg={useColorModeValue("accentLight.400", "accentDark.400")}
-              _hover={{
-                bg: useColorModeValue("accentLight.500", "accentDark.500"),
-              }}
-            >
-              Masuk
-            </Button>
-          </Stack>
         </Stack>
-        <Text textAlign={"center"}>
-          Belum memiliki akun?{" "}
-          <Link
-            as={LinkTo}
-            to="/mendaftar"
-            color={useColorModeValue("accentLight.400", "accentDark.400")}
+        <Stack mt={10} spacing={10}>
+          <Button
+            type={"submit"}
+            color={useColorModeValue("white", "black")}
+            bg={useColorModeValue("accentLight.400", "accentDark.400")}
+            _hover={{
+              bg: useColorModeValue("accentLight.500", "accentDark.500"),
+            }}
           >
-            Daftar Sekarang
-          </Link>
-        </Text>
+            Masuk
+          </Button>
+          <Text textAlign={"center"}>
+            Belum memiliki akun?{" "}
+            <Link
+              as={LinkTo}
+              to="/mendaftar"
+              color={useColorModeValue("accentLight.400", "accentDark.400")}
+            >
+              Daftar Sekarang
+            </Link>
+          </Text>
+        </Stack>
       </Box>
     </Container>
   );
