@@ -86,17 +86,6 @@ export default function Hero() {
         justify={"center"}
         order={{ base: 1, md: 2 }}
       >
-        <Box
-          position={"absolute"}
-          w={{ base: "270px", md: "350px" }}
-          h={{ base: "270px", md: "350px" }}
-          rounded={"full"}
-          bg={"#61D2F2"}
-          boxShadow={
-            "0 0 0 40px rgba(97, 210, 242, 0.5), 0 0 0 70px rgba(97, 210, 242, 0.3), 0 0 0 100px rgba(97, 210, 242, 0.1)"
-          }
-          zIndex={1}
-        />
         <Image
           alt={"Login Image"}
           objectFit={"cover"}

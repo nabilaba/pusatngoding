@@ -15,60 +15,13 @@ import {
   Icon,
   Stack,
 } from "@chakra-ui/react";
-import { useEffect } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { StarIcon, SearchIcon } from "@chakra-ui/icons";
 import { FaChalkboardTeacher, FaDollarSign } from "react-icons/fa";
 import { Link as LinkTo } from "react-router-dom";
 import { MENTOR } from "../../../api/API";
 import useSiswa from "../../../zustand/todoSiswa";
-
-export default function Siswa() {
-  const { mentor, setMentor } = useSiswa();
-
-  useEffect(() => {
-    setMentor(MENTOR);
-  }, [setMentor]);
-
-  return (
-    <Stack pt={"4"}>
-      <Container maxW={"7xl"}>
-        <InputGroup>
-          <InputLeftElement
-            pointerEvents="none"
-            children={<SearchIcon color="gray.300" />}
-          />
-          <Input
-            type="text"
-            placeholder="Cari Mentor"
-            focusBorderColor={useColorModeValue(
-              "accentLight.400",
-              "accentDark.400"
-            )}
-            shadow={"md"}
-            _focus={{
-              shadow: "md",
-            }}
-          />
-        </InputGroup>
-        <SimpleGrid
-          columns={{ base: 1, md: 2, lg: 3 }}
-          spacing={5}
-          my={5}
-          w={"full"}
-          justifyContent={"center"}
-          autoRows={"1fr"}
-          autoColumns={"1fr"}
-        >
-          {mentor.map((item) =>
-            item.kursus.map((kursus, index) => (
-              <CardMentor key={index} {...item} kursus={kursus} />
-            ))
-          )}
-        </SimpleGrid>
-      </Container>
-    </Stack>
-  );
-}
+import LoadingFetchEffect from "../../../components/LoadingFetchEffect";
 
 function CardMentor(props) {
   return (
@@ -93,7 +46,9 @@ function CardMentor(props) {
 
       <Box p="3">
         <Heading fontSize="2xl">{props.nama}</Heading>
-        <Heading fontSize="lg">{props.kursus.nama} - {props.kursus.modul}</Heading>
+        <Heading fontSize="lg">
+          {props.kursus.nama} - {props.kursus.modul}
+        </Heading>
         <Heading fontSize="md">{props.kota}</Heading>
         <HStack spacing={"1"}>
           <StarIcon
@@ -120,6 +75,59 @@ function CardMentor(props) {
           </Tag>
         </HStack>
       </Box>
+    </Stack>
+  );
+}
+
+export default function Siswa() {
+  const [isLoading, setLoading] = useState(true);
+  const { mentor, setMentor } = useSiswa();
+
+  const getMentor = useCallback(() => {
+    setLoading(true);
+    setMentor(MENTOR).finally(() => setLoading(false));
+  }, [setMentor]);
+
+  useEffect(() => {
+    getMentor();
+  }, [getMentor]);
+
+  const searchstyle = {
+    focusBorderColor: useColorModeValue("accentLight.400", "accentDark.400"),
+  };
+
+  return isLoading ? (
+    <LoadingFetchEffect />
+  ) : (
+    <Stack pt={"4"}>
+      <Container maxW={"7xl"}>
+        <InputGroup>
+          <InputLeftElement
+            pointerEvents="none"
+            children={<SearchIcon color="gray.300" />}
+          />
+          <Input
+            type="text"
+            placeholder="Cari Mentor"
+            {...searchstyle}
+          />
+        </InputGroup>
+        <SimpleGrid
+          columns={{ base: 1, md: 2, lg: 3 }}
+          spacing={5}
+          my={5}
+          w={"full"}
+          justifyContent={"center"}
+          autoRows={"1fr"}
+          autoColumns={"1fr"}
+        >
+          {mentor.map((item) =>
+            item.kursus.map((kursus, index) => (
+              <CardMentor key={index} {...item} kursus={kursus} />
+            ))
+          )}
+        </SimpleGrid>
+      </Container>
     </Stack>
   );
 }
