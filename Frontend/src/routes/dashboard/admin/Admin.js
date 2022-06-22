@@ -20,22 +20,25 @@ import {
 } from "@chakra-ui/react";
 import { AiTwotoneLock } from "react-icons/ai";
 import { BsFillTrashFill } from "react-icons/bs";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { ADMIN, MENTOR, SISWA } from "../../../api/API";
 import useAdmin from "../../../zustand/todoAdmin";
+import LoadingFetchEffect from "../../../components/LoadingFetchEffect";
 
 export default function Admin() {
+  const [isLoading, setLoading] = useState(true);
+
   const { admin, mentor, siswa, setAdmin, setMentor, setSiswa, remove } =
     useAdmin();
 
-  const getData = (data, setData) => {
-    setData(data);
-  };
-
   useEffect(() => {
-    getData(ADMIN, setAdmin);
-    getData(MENTOR, setMentor);
-    getData(SISWA, setSiswa);
+    setLoading(true);
+    setAdmin(ADMIN)
+      .then(() => {
+        setMentor(MENTOR).then(() => {
+          setSiswa(SISWA).finally(() => setLoading(false));
+        });
+      })
   }, [setAdmin, setMentor, setSiswa]);
 
   const textColor = useColorModeValue("accentLight.400", "accentDark.400");
@@ -189,7 +192,9 @@ export default function Admin() {
     );
   };
 
-  return (
+  return isLoading ? (
+    <LoadingFetchEffect />
+  ) : (
     <Container maxWidth="7xl" pt={4}>
       <Tabs isFitted variant="enclosed">
         <TabList mb="1em">

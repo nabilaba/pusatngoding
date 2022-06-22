@@ -28,9 +28,12 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect, useCallback } from "react";
 import { MENTOR, KURSUS, SISWA } from "../../../api/API";
+import LoadingFetchEffect from "../../../components/LoadingFetchEffect";
 
 export default function DetailMentor() {
   const param = useParams();
+  const [isLoading, setLoading] = useState(true);
+
   const [mentor, setMentor] = useState([]);
   const [kursus, setKursus] = useState([]);
   const [siswa, setSiswa] = useState([]);
@@ -51,7 +54,8 @@ export default function DetailMentor() {
   }, [param.mentorId, param.kursusId]);
 
   useEffect(() => {
-    getKursusInfo();
+    setLoading(true);
+    getKursusInfo().finally(() => setLoading(false));
   }, [getKursusInfo]);
 
   const Komen = (props) => {
@@ -120,7 +124,24 @@ export default function DetailMentor() {
       </Stack>
     );
   };
-  return (
+
+  const stylestaricon = {
+    color: useColorModeValue("accentLight.500", "accentDark.500"),
+  };
+
+  const stylebutton = {
+    color: useColorModeValue("white", "black"),
+    bg: useColorModeValue("accentLight.400", "accentDark.400"),
+    _hover: {
+      bg: useColorModeValue("accentLight.500", "accentDark.500"),
+      transform: "translateY(2px)",
+      boxShadow: "lg",
+    },
+  };
+
+  return isLoading ? (
+    <LoadingFetchEffect />
+  ) : (
     <Container maxW={"7xl"} pt={4}>
       <Stack
         spacing={{ base: 8, md: 10 }}
@@ -141,9 +162,7 @@ export default function DetailMentor() {
 
           <Box direction={"column"}>
             <HStack spacing={"1"}>
-              <StarIcon
-                color={useColorModeValue("accentLight.500", "accentDark.500")}
-              />
+              <StarIcon {...stylestaricon} />
               <Text fontSize="sm" fontWeight={"bold"}>
                 4.6
               </Text>
@@ -212,13 +231,7 @@ export default function DetailMentor() {
             w={"full"}
             size={"lg"}
             py={"3"}
-            color={useColorModeValue("white", "black")}
-            bg={useColorModeValue("accentLight.400", "accentDark.400")}
-            _hover={{
-              bg: useColorModeValue("accentLight.500", "accentDark.500"),
-              transform: "translateY(2px)",
-              boxShadow: "lg",
-            }}
+            {...stylebutton}
           >
             Reservasi
           </Button>
