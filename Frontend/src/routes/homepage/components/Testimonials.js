@@ -4,13 +4,13 @@ import { Container, Flex, Box, chakra, Avatar } from '@chakra-ui/react';
 export default function Testimonials() {
   return (
     <>
-      <Container maxW={'7xl'} >
-        <Flex justify={'center'} py='10'>
+      <Container maxW={'7xl'}>
+        <Flex justify={'center'} py='10' data-aos="fade-up">
           <chakra.span textAlign={'center'} fontSize='28' fontWeight={700} lineHeight={10}>
           Bagaimana <br />Kami di Mata Para Siswa?
           </chakra.span>
         </Flex>
-        <Flex justify={'flex-start'}>
+        <Flex justify={'flex-start'} data-aos="fade-up-right">
           <Box maxW={'4xl'} rounded={40} p={8} my='4' borderWidth={1}>
             <Flex justify={'space-around'} wrap={{base: 'wrap', md: 'nowrap'}}>
               <Box maxW='sm' display='flex' alignItems={'center'}>
@@ -42,7 +42,7 @@ export default function Testimonials() {
             </Flex>
           </Box>
         </Flex>
-        <Flex justify={'flex-end'}>
+        <Flex justify={'flex-end'} data-aos="fade-up-left">
           <Box maxW={'4xl'} rounded={40} p={8} my='4' borderWidth={1}>
             <Flex justify={'space-around'} wrap={{base: 'wrap-reverse', md: 'nowrap'}}>
               <Box maxW='100%'>
@@ -74,7 +74,7 @@ export default function Testimonials() {
             </Flex>          
           </Box>
         </Flex>
-        <Flex justify={'flex-start'}>
+        <Flex justify={'flex-start'} data-aos="fade-up-right">
           <Box maxW={'4xl'} rounded={40} p={8} my='4' borderWidth={1}>
             <Flex justify={'space-around'} wrap={{base: 'wrap', md: 'nowrap'}}>
               <Box maxW='sm' display='flex' alignItems={'center'}>
