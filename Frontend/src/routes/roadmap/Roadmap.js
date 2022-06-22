@@ -1,4 +1,5 @@
 import "./Roadmap.css";
+import { useEffect, useState } from "react";
 import {
   Container,
   Heading,
@@ -8,6 +9,8 @@ import {
   SimpleGrid,
   useColorModeValue,
 } from "@chakra-ui/react";
+import LoadingFetchEffect from "../../components/LoadingFetchEffect";
+import useTimeoutGlobal from "../../zustand/timeoutPindahHalaman";
 
 const dataRoadmap = [
   {
@@ -63,6 +66,14 @@ const dataRoadmap = [
 ];
 
 export default function Event() {
+  const { timeout } = useTimeoutGlobal();
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, timeout);
+  });
+
   const Feature = (props) => {
     return (
       <Box
@@ -88,8 +99,10 @@ export default function Event() {
     );
   };
 
-  return (
-    <Container pt={4} maxW={"7xl"}>
+  return isLoading ? (
+    <LoadingFetchEffect />
+  ) : (
+    <Container pt={4} maxW={"7xl"} data-aos="fade-up">
       <Heading fontSize={{ base: "2xl", sm: "4xl", md: "5xl" }}>
         Halo, 👋
       </Heading>

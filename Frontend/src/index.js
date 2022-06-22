@@ -8,8 +8,7 @@ import { BrowserRouter } from "react-router-dom";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 AOS.init({
-  anchorPlacement: 'top-bottom',
-  duration: '1000',
+  duration: '800',
 });
 
 const colors = {

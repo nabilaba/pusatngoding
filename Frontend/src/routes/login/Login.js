@@ -1,5 +1,5 @@
 import "./Login.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link as LinkTo, useNavigate } from "react-router-dom";
 import {
   Container,
@@ -17,7 +17,7 @@ import {
 import useLoginState from "../../zustand/todoLogin";
 
 export default function Login() {
-  const { setIsLoggedIn, setLoggedAs } = useLoginState();
+  const { isLoggedIn, setIsLoggedIn, setLoggedAs } = useLoginState();
 
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -45,8 +45,21 @@ export default function Login() {
     e.preventDefault();
   };
 
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/dashboard");
+    }
+  }, [isLoggedIn, navigate]);
+
   return (
-    <Container pt={4} pb={4} align={"center"} justify={"center"} maxW={"lg"}>
+    <Container
+      pt={4}
+      pb={4}
+      align={"center"}
+      justify={"center"}
+      maxW={"lg"}
+      data-aos="fade-up"
+    >
       <Box
         rounded={"3xl"}
         bg={useColorModeValue("white", "gray.700")}
