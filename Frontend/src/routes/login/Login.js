@@ -13,36 +13,46 @@ import {
   Heading,
   Text,
   useColorModeValue,
+  useToast,
 } from "@chakra-ui/react";
 import useLoginState from "../../zustand/todoLogin";
+import axios from "axios";
+import { LOGIN_AUTH } from "../../api/API";
 
 export default function Login() {
-  const { isLoggedIn, setIsLoggedIn, setLoggedAs } = useLoginState();
+  const { isLoggedIn, setIsLoggedIn, setLoggedAs, setUserId } = useLoginState();
 
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const HandleSubmit = (e) => {
-    if (
-      email === "mentor@gmail.com" ||
-      email === "siswa@gmail.com" ||
-      email === "pusatngoding@admin.com"
-    ) {
-      if (email === "mentor@gmail.com") {
-        setLoggedAs("mentor");
-      } else if (email === "siswa@gmail.com") {
-        setLoggedAs("siswa");
-      } else {
-        setLoggedAs("admin");
-      }
+  const toast = useToast();
 
-      setIsLoggedIn(true);
-      navigate("/dashboard");
-    } else {
-      alert("Email atau Password Salah");
-    }
-
+  const HandleSubmit = async (e) => {
     e.preventDefault();
+
+    const user = {
+      email,
+      password,
+    };
+
+    await axios
+      .post(LOGIN_AUTH, user)
+      .then((response) => {
+        setUserId(response.data.user.id);
+        setIsLoggedIn(true);
+        setLoggedAs(response.data.user.role);
+        localStorage.setItem("tokenId", response.data.tokenId);
+      })
+      .catch((error) => {
+        toast({
+          title: "Gagal.",
+          description: `Email atau password salah.`,
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+        });
+      });
   };
 
   useEffect(() => {
@@ -94,6 +104,7 @@ export default function Login() {
                 "accentLight.400",
                 "accentDark.400"
               )}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </FormControl>
           <Stack spacing={10}>

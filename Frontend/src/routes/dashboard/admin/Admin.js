@@ -92,8 +92,8 @@ export default function Admin() {
   const HandleRemove = (props) => {
     remove(props.api, props.id).then(() => {
       toast({
-        title: "Akun dihapus.",
-        description: `Akun ${props.nama} telah dihapus.`,
+        title: "Berhasil.",
+        description: `Akun telah dihapus.`,
         status: "success",
         duration: 2000,
         isClosable: true,
@@ -122,7 +122,7 @@ export default function Admin() {
           px={10}
           fontWeight="hairline"
         >
-          <span>{props.nama}</span>
+          <span>{props.nama} {props.nama_depan} {props.nama_belakang}</span>
           <chakra.span
             textOverflow="ellipsis"
             overflow="hidden"
