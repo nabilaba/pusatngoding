@@ -21,7 +21,7 @@ export default function SignUpGuru() {
       maxW={"7xl"}
       p={50}
     >
-      <Box w="100%">
+      <Box w="100%" data-aos="fade-up">
         <Heading
           fontSize={{ base: "3xl", sm: "4xl" }}
           fontWeight="extrabold"

@@ -26,6 +26,7 @@ export default function Hero() {
         flex={1}
         align={"center"}
         order={{ base: 2, md: 1 }}
+        data-aos="fade-right"
       >
         <Stack spacing={6} w={"full"}>
           <Heading
@@ -81,6 +82,8 @@ export default function Hero() {
         </Stack>
       </Flex>
       <Flex
+      data-aos="fade-left"
+        h={"90vh"}
         flex={1}
         align={"center"}
         justify={"center"}

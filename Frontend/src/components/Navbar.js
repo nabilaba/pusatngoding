@@ -50,9 +50,10 @@ const NavLink = ({ nama, link, onClick }) => (
 );
 
 export default function Navbar() {
-  const { isLoggedIn, setIsLoggedOut, loggedAs, setLoggedAs } = useLoginState();
-
   const navigate = useNavigate();
+  const { isLoggedIn, setIsLoggedOut, loggedAs, setLoggedAs } =
+    useLoginState();
+
   const bgnavbar = useColorModeValue(
     "rgba(255, 255, 255, 0.8)",
     "rgba(26, 32, 44, 0.8)"
@@ -67,11 +68,11 @@ export default function Navbar() {
     },
   };
 
-  const HandleLogOut = () => {
-    setIsLoggedOut();
+  const HandleLogOut = async () => {
+    navigate("/");
     setLoggedAs("");
     useLoginState.persist.clearStorage();
-    navigate("/");
+    setIsLoggedOut();
   };
 
   return (
@@ -164,11 +165,7 @@ export default function Navbar() {
                 mr={4}
                 onClick={toggleColorMode}
               />
-              {!isLoggedIn ? (
-                <Button as={LinkTo} to="/masuk" size={"sm"} {...navbarSet}>
-                  MASUK
-                </Button>
-              ) : (
+              {isLoggedIn ? (
                 <Flex alignItems={"center"}>
                   <Menu>
                     <MenuButton
@@ -180,10 +177,7 @@ export default function Navbar() {
                     >
                       <Avatar
                         size={"sm"}
-                        name={"Nabil Aziz Bima Anggita"}
-                        src={
-                          "https://avatars.githubusercontent.com/u/45154878?v=4"
-                        }
+                        name="user"
                       />
                     </MenuButton>
                     <MenuList>
@@ -202,6 +196,10 @@ export default function Navbar() {
                     </MenuList>
                   </Menu>
                 </Flex>
+              ) : (
+                <Button as={LinkTo} to="/masuk" size={"sm"} {...navbarSet}>
+                  MASUK
+                </Button>
               )}
             </Flex>
           </Flex>

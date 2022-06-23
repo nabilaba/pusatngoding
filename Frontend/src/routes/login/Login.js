@@ -1,5 +1,5 @@
 import "./Login.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link as LinkTo, useNavigate } from "react-router-dom";
 import {
   Container,
@@ -13,40 +13,68 @@ import {
   Heading,
   Text,
   useColorModeValue,
+  useToast,
+  InputRightElement,
+  InputGroup,
+  IconButton,
 } from "@chakra-ui/react";
 import useLoginState from "../../zustand/todoLogin";
+import axios from "axios";
+import { LOGIN_AUTH } from "../../api/API";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 export default function Login() {
-  const { setIsLoggedIn, setLoggedAs } = useLoginState();
+  const [passwordType, setPasswordType] = useState(false);
+  const { isLoggedIn, setIsLoggedIn, setLoggedAs, setUserId } = useLoginState();
 
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const HandleSubmit = (e) => {
-    if (
-      email === "mentor@gmail.com" ||
-      email === "siswa@gmail.com" ||
-      email === "pusatngoding@admin.com"
-    ) {
-      if (email === "mentor@gmail.com") {
-        setLoggedAs("mentor");
-      } else if (email === "siswa@gmail.com") {
-        setLoggedAs("siswa");
-      } else {
-        setLoggedAs("admin");
-      }
+  const toast = useToast();
 
-      setIsLoggedIn(true);
-      navigate("/dashboard");
-    } else {
-      alert("Email atau Password Salah");
-    }
-
+  const HandleSubmit = async (e) => {
     e.preventDefault();
+
+    const user = {
+      email,
+      password,
+    };
+
+    await axios
+      .post(LOGIN_AUTH, user)
+      .then((response) => {
+        setUserId(response.data.user.id);
+        setIsLoggedIn(true);
+        setLoggedAs(response.data.user.role);
+        localStorage.setItem("tokenId", response.data.tokenId);
+      })
+      .catch((error) => {
+        toast({
+          title: "Gagal.",
+          description: `Email atau password salah.`,
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+        });
+      });
   };
 
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/dashboard");
+    }
+  }, [isLoggedIn, navigate]);
+
   return (
-    <Container pt={4} pb={4} align={"center"} justify={"center"} maxW={"lg"}>
+    <Container
+      pt={4}
+      pb={4}
+      align={"center"}
+      justify={"center"}
+      maxW={"lg"}
+      data-aos="fade-up"
+    >
       <Box
         rounded={"3xl"}
         bg={useColorModeValue("white", "gray.700")}
@@ -62,9 +90,10 @@ export default function Login() {
           as={"form"}
           onSubmit={(e) => HandleSubmit(e)}
         >
-          <FormControl id="email">
+          <FormControl id="email" isRequired>
             <FormLabel>Email</FormLabel>
             <Input
+              size={"lg"}
               type="email"
               focusBorderColor={useColorModeValue(
                 "accentLight.400",
@@ -73,28 +102,27 @@ export default function Login() {
               onChange={(e) => setEmail(e.target.value)}
             />
           </FormControl>
-          <FormControl id="password">
+          <FormControl id="password" isRequired>
             <FormLabel>Kata Sandi</FormLabel>
-            <Input
-              type="password"
-              focusBorderColor={useColorModeValue(
-                "accentLight.400",
-                "accentDark.400"
-              )}
-            />
+            <InputGroup size={"lg"}>
+              <Input
+                type={passwordType ? "text" : "password"}
+                focusBorderColor={useColorModeValue(
+                  "accentLight.400",
+                  "accentDark.400"
+                )}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <InputRightElement width="4.5rem">
+                <IconButton
+                  icon={passwordType ? <ViewIcon /> : <ViewOffIcon />}
+                  onClick={() => setPasswordType(!passwordType)}
+                  variant="ghost"
+                />
+              </InputRightElement>
+            </InputGroup>
           </FormControl>
-          <Stack spacing={10}>
-            <Stack
-              direction={{ base: "column", sm: "row" }}
-              align={"start"}
-              justify={"end"}
-            >
-              <Link
-                color={useColorModeValue("accentLight.400", "accentDark.400")}
-              >
-                Lupa Kata Sandi?
-              </Link>
-            </Stack>
+          <Stack pt={10} spacing={5}>
             <Button
               type={"submit"}
               color={useColorModeValue("white", "black")}
@@ -105,18 +133,18 @@ export default function Login() {
             >
               Masuk
             </Button>
+            <Text textAlign={"center"}>
+              Belum memiliki akun?{" "}
+              <Link
+                as={LinkTo}
+                to="/mendaftar"
+                color={useColorModeValue("accentLight.400", "accentDark.400")}
+              >
+                Daftar Sekarang
+              </Link>
+            </Text>
           </Stack>
         </Stack>
-        <Text textAlign={"center"}>
-          Belum memiliki akun?{" "}
-          <Link
-            as={LinkTo}
-            to="/mendaftar"
-            color={useColorModeValue("accentLight.400", "accentDark.400")}
-          >
-            Daftar Sekarang
-          </Link>
-        </Text>
       </Box>
     </Container>
   );

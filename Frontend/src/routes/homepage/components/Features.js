@@ -11,7 +11,7 @@ import {
 
 export default function Features() {
   return (
-    <Stack as={Container} maxW={"7xl"} spacing={5} py={10}>
+    <Stack as={Container} maxW={"7xl"} spacing={5} py={10} data-aos="fade-up">
       <Heading fontSize={{ base: "xl", md: "2xl", lg: "3xl" }}>
         Keunggulan <br />
         Pusat Ngoding

@@ -1,4 +1,5 @@
 import "./About.css";
+import { useEffect, useState } from "react";
 import {
   Heading,
   Stack,
@@ -9,6 +10,8 @@ import {
   Center,
   SimpleGrid,
 } from "@chakra-ui/react";
+import LoadingFetchEffect from "../../components/LoadingFetchEffect";
+import useTimeoutGlobal from "../../zustand/timeoutPindahHalaman";
 
 const data = [
   {
@@ -62,6 +65,14 @@ const data = [
 ];
 
 export default function About() {
+  const { timeout } = useTimeoutGlobal();
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, timeout);
+  });
+
   const About = (props) => {
     return (
       <Stack
@@ -113,8 +124,10 @@ export default function About() {
       </Stack>
     );
   };
-  return (
-    <Stack as={Container} maxW={"7xl"} pt={4} pb={4}>
+  return isLoading ? (
+    <LoadingFetchEffect />
+  ) : (
+    <Stack as={Container} maxW={"7xl"} pt={4} pb={4} data-aos="fade-up">
       <Heading
         fontSize={{ base: "xl", md: "2xl", lg: "3xl" }}
         textAlign={"center"}

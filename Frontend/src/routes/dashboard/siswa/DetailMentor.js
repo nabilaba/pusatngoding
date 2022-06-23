@@ -40,16 +40,21 @@ export default function DetailMentor() {
   const [dataKomentar, setDataKomentar] = useState([]);
 
   const getKursusInfo = useCallback(async () => {
-    const res = await axios.get(`${MENTOR}/${param.mentorId}`);
+    const headers = {
+      Authorization: "Bearer " + localStorage.getItem("tokenId"),
+    };
+    const res = await axios.get(`${MENTOR}/${param.mentorId}`, { headers });
     setMentor(res.data);
 
-    const res2 = await axios.get(`${KURSUS}/${param.kursusId}`);
+    const res2 = await axios.get(`${KURSUS}/${param.kursusId}`, { headers });
     setKursus(res2.data);
 
-    const res3 = await axios.get(`${SISWA}`);
+    const res3 = await axios.get(`${SISWA}`, { headers });
     setSiswa(res3.data);
 
-    const res4 = await axios.get(`${MENTOR}/${param.mentorId}/komentar`);
+    const res4 = await axios.get(`${MENTOR}/${param.mentorId}/komentar`, {
+      headers,
+    });
     setDataKomentar(res4.data);
   }, [param.mentorId, param.kursusId]);
 
@@ -142,7 +147,7 @@ export default function DetailMentor() {
   return isLoading ? (
     <LoadingFetchEffect />
   ) : (
-    <Container maxW={"7xl"} pt={4}>
+    <Container maxW={"7xl"} pt={4} data-aos="fade-up">
       <Stack
         spacing={{ base: 8, md: 10 }}
         direction={{ base: "column-reverse", md: "row" }}

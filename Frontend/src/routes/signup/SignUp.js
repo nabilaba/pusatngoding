@@ -1,4 +1,5 @@
 import "./SignUp.css";
+import { useEffect } from "react";
 import { Link as LinkTo, useNavigate } from "react-router-dom";
 import {
   Container,
@@ -14,17 +15,32 @@ import {
   useColorModeValue,
   HStack,
 } from "@chakra-ui/react";
+import useLoginState from "../../zustand/todoLogin";
 
 export default function SignUp() {
-  const useNavigateTo = useNavigate();
+  const { isLoggedIn } = useLoginState();
+  const navigate = useNavigate();
 
   const HandleSubmit = (e) => {
-    useNavigateTo("/masuk");
+    navigate("/masuk");
     e.preventDefault();
   };
-  
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/dashboard");
+    }
+  }, [isLoggedIn, navigate]);
+
   return (
-    <Container pt={4} pb={4} align={"center"} justify={"center"} maxW={"lg"}>
+    <Container
+      pt={4}
+      pb={4}
+      align={"center"}
+      justify={"center"}
+      maxW={"lg"}
+      data-aos="fade-up"
+    >
       <Box
         rounded={"3xl"}
         bg={useColorModeValue("white", "gray.700")}
