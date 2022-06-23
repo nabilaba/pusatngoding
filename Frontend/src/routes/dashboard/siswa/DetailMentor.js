@@ -94,7 +94,7 @@ export default function DetailMentor() {
               fontWeight="700"
               cursor="pointer"
             >
-              {props.nama}
+              {props.nama} {props.nama_depan} {props.nama_belakang}
             </Link>
             <HStack>
               <Icon as={BsStarFill} h={3} w={3} />

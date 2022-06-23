@@ -51,7 +51,7 @@ const NavLink = ({ nama, link, onClick }) => (
 
 export default function Navbar() {
   const navigate = useNavigate();
-  const { isLoggedIn, setIsLoggedOut, loggedAs, setLoggedAs } =
+  const { isLoggedIn, setIsLoggedOut, loggedAs, setLoggedAs, setUserId } =
     useLoginState();
 
   const bgnavbar = useColorModeValue(
@@ -68,11 +68,13 @@ export default function Navbar() {
     },
   };
 
-  const HandleLogOut = async () => {
-    navigate("/");
+  const HandleLogOut = () => {
     setLoggedAs("");
-    useLoginState.persist.clearStorage();
+    setUserId("");
     setIsLoggedOut();
+    navigate("/");
+    useLoginState.persist.clearStorage();
+    localStorage.removeItem("tokenId");
   };
 
   return (
@@ -190,7 +192,7 @@ export default function Navbar() {
                           Sunting Akun
                         </MenuItem>
                       )}
-                      <MenuItem icon={<ArrowBackIcon />} onClick={HandleLogOut}>
+                      <MenuItem icon={<ArrowBackIcon />} onClick={() => HandleLogOut()}>
                         Keluar
                       </MenuItem>
                     </MenuList>

@@ -15,30 +15,7 @@ import { MdEmail, MdLocationOn, MdSchool } from "react-icons/md";
 import { BsFillBriefcaseFill, BsStarFill } from "react-icons/bs";
 import { FaChalkboardTeacher, FaDollarSign } from "react-icons/fa";
 
-const dataAkun = [
-  {
-    dataName: "4.6",
-    dataIcon: BsStarFill,
-  },
-  {
-    dataName: "Frontend Developer",
-    dataIcon: BsFillBriefcaseFill,
-  },
-  {
-    dataName: "Sukoharjo",
-    dataIcon: MdLocationOn,
-  },
-  {
-    dataName: "Oxford",
-    dataIcon: MdSchool,
-  },
-  {
-    dataName: "nabilazizbimaanggita@gmail.com",
-    dataIcon: MdEmail,
-  },
-];
-
-export default function Akun() {
+export default function Akun(props) {
   const Profile = (props) => {
     return (
       <Flex
@@ -68,18 +45,18 @@ export default function Akun() {
             h={60}
             fit="cover"
             objectPosition="center"
-            src="https://avatars.githubusercontent.com/u/45154878?v=4"
+            src={props.avatar}
             alt="avatar"
           />
 
           <HStack align="center" px={6} py={3} bg="gray.900" spacing={2}>
             <Tag size="lg" colorScheme="yellow" borderRadius="full">
               <Icon as={FaChalkboardTeacher} h={4} w={4} mr={2} />
-              <TagLabel>Online</TagLabel>
+              <TagLabel>{props.status}</TagLabel>
             </Tag>
             <Tag size="lg" colorScheme="green" borderRadius="full">
               <Icon as={FaDollarSign} h={4} w={4} mr={2} />
-              <TagLabel>Rp.500.000 / Jam</TagLabel>
+              <TagLabel>{props.price}</TagLabel>
             </Tag>
           </HStack>
 
@@ -89,16 +66,18 @@ export default function Akun() {
               fontWeight="bold"
               color={useColorModeValue("gray.800", "white")}
             >
-              Nabil Aziz Bima Anggita
+              {props.nama}
             </Heading>
 
             <Text color={useColorModeValue("gray.700", "gray.400")}>
-              Saya adalah seorang Frontend Developer dengan pengalaman 5 tahun.
+              {props.motivasi}
             </Text>
             <Stack spacing={4} py={2}>
-              {dataAkun.map((item) => (
-                <Profile {...item} key={item.dataName} />
-              ))}
+              <Profile dataName={props.star} dataIcon={BsStarFill} />
+              <Profile dataName={props.keahlian} dataIcon={BsFillBriefcaseFill} />
+              <Profile dataName={props.kota} dataIcon={MdLocationOn} />
+              <Profile dataName={props.lulusan} dataIcon={MdSchool} />
+              <Profile dataName={props.email} dataIcon={MdEmail} />
             </Stack>
           </Stack>
         </Box>

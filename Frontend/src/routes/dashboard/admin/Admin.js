@@ -183,8 +183,8 @@ export default function Admin() {
             spacing={0}
           >
             <Hide below="md">{kepalaTabel()}</Hide>
-            {data.map((item) => {
-              return <IsiTabs {...item} key={item.id} api={api} />;
+            {data.map((item, index) => {
+              return <IsiTabs {...item} key={index} api={api} />;
             })}
           </Stack>
         </Flex>
