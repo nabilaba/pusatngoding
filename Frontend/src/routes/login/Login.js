@@ -42,7 +42,12 @@ export default function Login() {
     };
 
     await axios
-      .post(LOGIN_AUTH, user)
+      .post(LOGIN_AUTH, user, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      })
       .then((response) => {
         setUserId(response.data.user.id);
         setIsLoggedIn(true);
@@ -57,6 +62,7 @@ export default function Login() {
           duration: 2000,
           isClosable: true,
         });
+        return null;
       });
   };
 

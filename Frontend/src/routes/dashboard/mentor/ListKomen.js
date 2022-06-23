@@ -9,80 +9,11 @@ import {
   Stack,
   Icon,
   HStack,
-  useDisclosure,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalCloseButton,
-  ModalFooter,
-  Button,
   SimpleGrid,
 } from "@chakra-ui/react";
-import { useState } from "react";
 import { BsStarFill } from "react-icons/bs";
 
-const dataKomen = [
-  {
-    avatar: "https://source.unsplash.com/random/200x200?sig=1",
-    nama: "Lil Peep",
-    text: `"Jos mantep materi yang diberikan"`,
-    tgl: "Jum'at, 10 Juni 2022",
-    star: "4.6",
-  },
-  {
-    avatar: "https://source.unsplash.com/random/200x200?sig=2",
-    nama: "XXXTentacion",
-    text: `"Ga nyesel belajar sama Nabil"`,
-    tgl: "Kamis, 9 Juni 2022",
-    star: "4.6",
-  },
-  {
-    avatar: "https://source.unsplash.com/random/200x200?sig=3",
-    nama: "Lil Tracy",
-    text: `"Walaupun tugas yang diberikan guru di kampus sangat susah, semua terbantu gara-gara Pusat Ngoding dan kak Nabil. Terima kasih Pusat Ngoding dan kak Nabil"`,
-    tgl: "Rabu, 8 Juni 2022",
-    star: "4.6",
-  },
-  {
-    avatar: "https://source.unsplash.com/random/200x200?sig=4",
-    nama: "Sadboyprolific",
-    text: `"Belajar sama Nabil kurang dari 2 jam sudah paham akan apa itu react dan cara menggunakannya"`,
-    tgl: "Rabu, 8 Juni 2022",
-    star: "4.6",
-  },
-  {
-    avatar: "https://source.unsplash.com/random/200x200?sig=5",
-    nama: "Powfu",
-    text: `"Terima kasih telah membantu saya mas"`,
-    tgl: "Selasa, 7 Juni 2022",
-    star: "4.6",
-  },
-  {
-    avatar: "https://source.unsplash.com/random/200x200?sig=7",
-    nama: "Lund",
-    text: `"Mantap mas Nabil tidak mengecewakan. Terima kasih juga buat Pusat Ngoding"`,
-    tgl: "Senin, 6 Juni 2022",
-    star: "4.6",
-  },
-  {
-    avatar: "https://source.unsplash.com/random/200x200?sig=8",
-    nama: "Komandan Leke",
-    text: `"Memuaskan"`,
-    tgl: "Senin, 6 Juni 2022",
-    star: "4.6",
-  },
-];
-export default function ListKomen() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [komenDibuka, setKomenDibuka] = useState([]);
-
-  const LihatSelengakpnya = (props) => {
-    setKomenDibuka(props);
-    onOpen();
-  };
-
+export default function ListKomen(props) {
   const Komen = (props) => {
     return (
       <Stack
@@ -115,7 +46,7 @@ export default function ListKomen() {
               fontWeight="700"
               cursor="pointer"
             >
-              {props.nama}
+              {props.nama_depan} {props.nama_belakang}
             </Link>
             <HStack>
               <Icon as={BsStarFill} h={3} w={3} />
@@ -127,14 +58,14 @@ export default function ListKomen() {
         </Flex>
 
         <Text
-          noOfLines={2}
+          // noOfLines={2} nexttime
           mt={4}
           mb={2}
           as="p"
           color={useColorModeValue("gray.600", "gray.300")}
           align={"justify"}
         >
-          {props.text}
+          {props.komentar.content}
         </Text>
 
         <Flex justifyContent="space-between" alignItems="center">
@@ -143,14 +74,8 @@ export default function ListKomen() {
             fontSize="sm"
             color={useColorModeValue("gray.600", "gray.400")}
           >
-            {props.tgl}
+            {props.komentar.created_at}
           </Text>
-          <Link
-            onClick={() => LihatSelengakpnya(props)}
-            _hover={{ textDecor: "underline" }}
-          >
-            Lihat Selengkapnya
-          </Link>
         </Flex>
       </Stack>
     );
@@ -160,36 +85,17 @@ export default function ListKomen() {
     <Stack>
       <Heading size={"md"}>Anda Mendapat 4.6 Rating di Akhir-Akhir ini</Heading>
       <SimpleGrid w="full" autoRows={"1fr"} spacing={2}>
-        {dataKomen.map((item) => (
-          <Komen key={item.nama} {...item} />
-        ))}
+        {props.siswa.map((item) =>
+          props.komentar
+            .filter(
+              (item2) =>
+                item2.siswaId === item.id && item2.mentorId === props.mentor.id
+            )
+            .map((item3, index) => (
+              <Komen key={index} {...item} komentar={item3} />
+            ))
+        )}
       </SimpleGrid>
-      <Modal
-        isOpen={isOpen}
-        onClose={onClose}
-        isCentered
-        size={{ base: "md", md: "xl" }}
-      >
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>{komenDibuka.nama}</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>{komenDibuka.text}</ModalBody>
-          <ModalFooter>
-            <Button
-              onClick={onClose}
-              size="sm"
-              color={useColorModeValue("white", "black")}
-              bg={useColorModeValue("accentLight.400", "accentDark.400")}
-              _hover={{
-                bg: useColorModeValue("accentLight.500", "accentDark.500"),
-              }}
-            >
-              Tutup
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
     </Stack>
   );
 }
