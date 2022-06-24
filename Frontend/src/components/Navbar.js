@@ -62,7 +62,7 @@ export default function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navbarSet = {
     color: useColorModeValue("white", "black"),
-    bg: useColorModeValue("accentLight.400", "accentDark.400"),
+    bg: useColorModeValue("rgba(97, 210, 242, 0.7)", "accentDark.400"),
     _hover: {
       bg: useColorModeValue("accentLight.500", "accentDark.500"),
     },
