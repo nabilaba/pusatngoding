@@ -62,7 +62,6 @@ export default function Login() {
           duration: 2000,
           isClosable: true,
         });
-        return null;
       });
   };
 

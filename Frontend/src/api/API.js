@@ -8,3 +8,4 @@ exports.KOMENTAR = exports.BASE_URL + "/komentar";
 
 // AUTHENTICATION
 exports.LOGIN_AUTH = exports.BASE_URL + "/login";
+exports.REGISTER_AUTH = exports.BASE_URL + "/register";
