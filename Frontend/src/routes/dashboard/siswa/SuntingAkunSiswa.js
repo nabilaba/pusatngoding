@@ -27,7 +27,7 @@ export default function SuntingProfilMentor() {
   const navigate = useNavigate();
   const [isLoading, setLoading] = useState(true);
   const [user, setUser] = useState({});
-  const { userId, loggedAs } = useLoginState();
+  const { userId, loggedAs, setIsLoggedOut, setUserId, setLoggedAs } = useLoginState();
 
   const getUser = useCallback(async () => {
     const headers = {
@@ -38,6 +38,23 @@ export default function SuntingProfilMentor() {
     });
     setUser(res.data);
   }, [userId, loggedAs]);
+
+  const HandleDelete = useCallback(async () => {
+    const headers = {
+      Authorization: "Bearer " + localStorage.getItem("tokenId"),
+    };
+    const res = await axios.delete(`${BASE_URL}/${loggedAs}/${userId}`, {
+      headers,
+    });
+    if (res.status === 200) {
+      setLoggedAs("");
+      setUserId("");
+      setIsLoggedOut();
+      navigate("/");
+      useLoginState.persist.clearStorage();
+      localStorage.removeItem("tokenId");
+    }
+  }, [navigate, userId, loggedAs, setIsLoggedOut, setLoggedAs, setUserId]);
 
   useEffect(() => {
     setLoading(true);
@@ -233,6 +250,9 @@ export default function SuntingProfilMentor() {
                 transform: "translateY(-2px)",
                 boxShadow: "lg",
                 bg: "red.500",
+              }}
+              onClick={() => {
+                HandleDelete();
               }}
             >
               Hapus Akun

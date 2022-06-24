@@ -22,7 +22,7 @@ import { REGISTER_AUTH } from "../../api/API";
 import { useState } from "react";
 
 export default function SignUp() {
-  const { isLoggedIn, setIsLoggedIn, setLoggedAs, setUserId } = useLoginState();
+  const { isLoggedIn } = useLoginState();
   const navigate = useNavigate();
   const [nama_depan, setNamaDepan] = useState("");
   const [nama_belakang, setNamaBelakang] = useState("");
@@ -69,10 +69,7 @@ export default function SignUp() {
           duration: 2000,
           isClosable: true,
         });
-        setUserId(response.data.user.id);
-        setIsLoggedIn(true);
-        setLoggedAs(response.data.user.role);
-        localStorage.setItem("tokenId", response.data.tokenId);
+        navigate("/masuk");
       })
       .catch((err) => {
         toast({
