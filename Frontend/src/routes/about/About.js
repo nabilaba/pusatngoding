@@ -9,6 +9,7 @@ import {
   Avatar,
   Center,
   SimpleGrid,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import LoadingFetchEffect from "../../components/LoadingFetchEffect";
 import useTimeoutGlobal from "../../zustand/timeoutPindahHalaman";
@@ -86,7 +87,9 @@ export default function About() {
         borderWidth="1px"
         borderRadius="lg"
         justifyContent={"center"}
-        boxShadow={"0px 10px 0px 0px rgba(97, 210, 242, 0.15)"}
+        borderColor={useColorModeValue('rgba(107, 222, 255, 1)','rgba(97, 210, 242, 1)')}
+        boxShadow={useColorModeValue('5px 5px 5px 0 rgba(208, 245, 255, 1)', '5px 5px 5px 0 rgba(97, 210, 242, 0.15)')
+        }
       >
         <Avatar
           size={"xl"}
