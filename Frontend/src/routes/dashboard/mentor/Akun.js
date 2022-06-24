@@ -66,15 +66,32 @@ export default function Akun(props) {
               fontWeight="bold"
               color={useColorModeValue("gray.800", "white")}
             >
-              {props.nama}
+              {props.nama_depan} {props.nama_belakang}
             </Heading>
 
             <Text color={useColorModeValue("gray.700", "gray.400")}>
               {props.motivasi}
             </Text>
             <Stack spacing={4} py={2}>
-              <Profile dataName={props.star} dataIcon={BsStarFill} />
-              <Profile dataName={props.keahlian} dataIcon={BsFillBriefcaseFill} />
+              <Profile
+                dataName={
+                  props.komentar.filter((item) => item.mentorId === props.id)
+                    .length &&
+                  (
+                    props.komentar
+                      .filter((item) => item.mentorId === props.id)
+                      .map((item) => item.rate)
+                      .reduce((a, b) => a + b, 0) /
+                    props.komentar.filter((item) => item.mentorId === props.id)
+                      .length
+                  ).toFixed(2)
+                }
+                dataIcon={BsStarFill}
+              />
+              <Profile
+                dataName={props.keahlian}
+                dataIcon={BsFillBriefcaseFill}
+              />
               <Profile dataName={props.kota} dataIcon={MdLocationOn} />
               <Profile dataName={props.lulusan} dataIcon={MdSchool} />
               <Profile dataName={props.email} dataIcon={MdEmail} />

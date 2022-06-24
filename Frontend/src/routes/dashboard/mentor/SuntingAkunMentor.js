@@ -16,6 +16,7 @@ import {
   FormHelperText,
   Textarea,
   Container,
+  HStack,
 } from "@chakra-ui/react";
 import { SmallCloseIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
@@ -29,7 +30,7 @@ export default function SuntingProfilMentor() {
   const navigate = useNavigate();
   const [isLoading, setLoading] = useState(true);
   const [user, setUser] = useState({});
-  const { userId, loggedAs } = useLoginState();
+  const { userId, loggedAs, setIsLoggedOut, setUserId, setLoggedAs } = useLoginState();
 
   const getUser = useCallback(async () => {
     const headers = {
@@ -40,6 +41,23 @@ export default function SuntingProfilMentor() {
     });
     setUser(res.data);
   }, [userId, loggedAs]);
+
+  const HandleDelete = useCallback(async () => {
+    const headers = {
+      Authorization: "Bearer " + localStorage.getItem("tokenId"),
+    };
+    const res = await axios.delete(`${BASE_URL}/${loggedAs}/${userId}`, {
+      headers,
+    });
+    if (res.status === 200) {
+      setLoggedAs("");
+      setUserId("");
+      setIsLoggedOut();
+      navigate("/");
+      useLoginState.persist.clearStorage();
+      localStorage.removeItem("tokenId");
+    }
+  }, [navigate, userId, loggedAs, setIsLoggedOut, setLoggedAs, setUserId]);
 
   useEffect(() => {
     setLoading(true);
@@ -85,18 +103,32 @@ export default function SuntingProfilMentor() {
                 </Center>
               </Stack>
             </FormControl>
-            <FormControl id="firstName" isRequired>
-              <FormLabel>Nama Depan</FormLabel>
-              <Input
-                type="text"
-                placeholder={user.nama}
-                _placeholder={{ color: "gray.500" }}
-                focusBorderColor={useColorModeValue(
-                  "accentLight.400",
-                  "accentDark.400"
-                )}
-              />
-            </FormControl>
+            <HStack>
+              <FormControl id="firstName" isRequired>
+                <FormLabel>Nama Depan</FormLabel>
+                <Input
+                  type="text"
+                  placeholder={user.nama_depan}
+                  _placeholder={{ color: "gray.500" }}
+                  focusBorderColor={useColorModeValue(
+                    "accentLight.400",
+                    "accentDark.400"
+                  )}
+                />
+              </FormControl>
+              <FormControl id="lastName">
+                <FormLabel>Nama Belakang</FormLabel>
+                <Input
+                  type="text"
+                  placeholder={user.nama_belakang}
+                  _placeholder={{ color: "gray.500" }}
+                  focusBorderColor={useColorModeValue(
+                    "accentLight.400",
+                    "accentDark.400"
+                  )}
+                />
+              </FormControl>
+            </HStack>
             <FormControl id="motivasi">
               <FormLabel>Deskripsi Singkat</FormLabel>
               <Textarea
@@ -261,6 +293,9 @@ export default function SuntingProfilMentor() {
                 boxShadow: "lg",
                 bg: "red.500",
               }}
+              onClick={() => {
+                HandleDelete();
+              }}
             >
               Hapus Akun
             </Button>
@@ -270,5 +305,5 @@ export default function SuntingProfilMentor() {
     );
   };
 
-  return isLoading ? <LoadingFetchEffect /> : <ContainerSuntingAkunMentor />
+  return isLoading ? <LoadingFetchEffect /> : <ContainerSuntingAkunMentor />;
 }
