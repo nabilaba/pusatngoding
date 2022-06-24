@@ -126,7 +126,7 @@ export default function SignUpMentor() {
           as="a"
           href="https://docs.google.com/forms/d/e/1FAIpQLSex0ml4hdrempgQ04eu9Sqy5A1kUdfMfQjfywLz74zjDEWOOw/viewform?usp=sf_link"
           color={useColorModeValue("white", "black")}
-          bg={useColorModeValue("accentLight.400", "accentDark.400")}
+          bg={useColorModeValue('rgba(97, 210, 242, 0.7)','accentDark.500')}
           _hover={{
             bg: useColorModeValue("accentLight.500", "accentDark.500"),
           }}
