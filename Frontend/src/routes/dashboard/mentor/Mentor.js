@@ -8,6 +8,7 @@ import { BASE_URL, KOMENTAR, SISWA } from "../../../api/API";
 import useLoginState from "../../../zustand/todoLogin";
 import LoadingFetchEffect from "../../../components/LoadingFetchEffect";
 
+
 export default function Mentor(props) {
   const { userId, loggedAs } = useLoginState();
   const [isLoading, setLoading] = useState(true);
@@ -51,10 +52,10 @@ export default function Mentor(props) {
         justifyContent={"center"}
       >
         <Hide below="lg">
-          <Akun {...mentor} />
+          <Akun {...mentor} komentar={komentar} />
         </Hide>
         <Hide above="lg">
-          <AkunMobile {...mentor} />
+          <AkunMobile {...mentor} komentar={komentar} />
         </Hide>
         <Box flex="1">
           <ListKomen mentor={mentor} siswa={siswa} komentar={komentar} />

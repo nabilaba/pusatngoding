@@ -16,6 +16,7 @@ import {
   FormHelperText,
   Textarea,
   Container,
+  HStack,
 } from "@chakra-ui/react";
 import { SmallCloseIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
@@ -85,18 +86,32 @@ export default function SuntingProfilMentor() {
                 </Center>
               </Stack>
             </FormControl>
-            <FormControl id="firstName" isRequired>
-              <FormLabel>Nama Depan</FormLabel>
-              <Input
-                type="text"
-                placeholder={user.nama}
-                _placeholder={{ color: "gray.500" }}
-                focusBorderColor={useColorModeValue(
-                  "accentLight.400",
-                  "accentDark.400"
-                )}
-              />
-            </FormControl>
+            <HStack>
+              <FormControl id="firstName" isRequired>
+                <FormLabel>Nama Depan</FormLabel>
+                <Input
+                  type="text"
+                  placeholder={user.nama_depan}
+                  _placeholder={{ color: "gray.500" }}
+                  focusBorderColor={useColorModeValue(
+                    "accentLight.400",
+                    "accentDark.400"
+                  )}
+                />
+              </FormControl>
+              <FormControl id="lastName">
+                <FormLabel>Nama Belakang</FormLabel>
+                <Input
+                  type="text"
+                  placeholder={user.nama_belakang}
+                  _placeholder={{ color: "gray.500" }}
+                  focusBorderColor={useColorModeValue(
+                    "accentLight.400",
+                    "accentDark.400"
+                  )}
+                />
+              </FormControl>
+            </HStack>
             <FormControl id="motivasi">
               <FormLabel>Deskripsi Singkat</FormLabel>
               <Textarea
@@ -270,5 +285,5 @@ export default function SuntingProfilMentor() {
     );
   };
 
-  return isLoading ? <LoadingFetchEffect /> : <ContainerSuntingAkunMentor />
+  return isLoading ? <LoadingFetchEffect /> : <ContainerSuntingAkunMentor />;
 }

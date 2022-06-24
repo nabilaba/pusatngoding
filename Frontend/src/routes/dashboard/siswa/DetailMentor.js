@@ -27,7 +27,7 @@ import { BsStarFill } from "react-icons/bs";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect, useCallback } from "react";
-import { MENTOR, KURSUS, SISWA } from "../../../api/API";
+import { MENTOR, KURSUS, SISWA, KOMENTAR } from "../../../api/API";
 import LoadingFetchEffect from "../../../components/LoadingFetchEffect";
 
 export default function DetailMentor() {
@@ -52,7 +52,7 @@ export default function DetailMentor() {
     const res3 = await axios.get(`${SISWA}`, { headers });
     setSiswa(res3.data);
 
-    const res4 = await axios.get(`${MENTOR}/${param.mentorId}/komentar`, {
+    const res4 = await axios.get(`${KOMENTAR}`, {
       headers,
     });
     setDataKomentar(res4.data);
@@ -94,12 +94,12 @@ export default function DetailMentor() {
               fontWeight="700"
               cursor="pointer"
             >
-              {props.nama} {props.nama_depan} {props.nama_belakang}
+              {props.nama_depan} {props.nama_belakang}
             </Link>
             <HStack>
               <Icon as={BsStarFill} h={3} w={3} />
               <Text fontSize="md" color="gray.500">
-                {props.star}
+                {props.komentar.rate}
               </Text>
             </HStack>
           </Box>
@@ -124,7 +124,6 @@ export default function DetailMentor() {
           >
             {props.komentar.created_at}
           </Text>
-          <Link _hover={{ textDecor: "underline" }}>Lihat Selengkapnya</Link>
         </Flex>
       </Stack>
     );
@@ -169,7 +168,16 @@ export default function DetailMentor() {
             <HStack spacing={"1"}>
               <StarIcon {...stylestaricon} />
               <Text fontSize="sm" fontWeight={"bold"}>
-                4.6
+                {dataKomentar.filter((item) => item.mentorId === mentor.id)
+                  .length &&
+                  (
+                    dataKomentar
+                      .filter((item) => item.mentorId === mentor.id)
+                      .map((item) => item.rate)
+                      .reduce((a, b) => a + b, 0) /
+                    dataKomentar.filter((item) => item.mentorId === mentor.id)
+                      .length
+                  ).toFixed(2)}
               </Text>
             </HStack>
             <Text>{mentor.motivasi}</Text>
@@ -192,12 +200,16 @@ export default function DetailMentor() {
             </HStack>
           </Box>
           <Heading fontSize={"lg"}>
-            {Object.keys(dataKomentar).length} Feedback Pengguna
+            {dataKomentar.filter((item) => item.mentorId === mentor.id).length}{" "}
+            Feedback Pengguna
           </Heading>
           <SimpleGrid w="full" autoRows={"1fr"} spacing={2}>
             {siswa.map((item) =>
               dataKomentar
-                .filter((item2) => item2.siswaId === item.id)
+                .filter(
+                  (item2) =>
+                    item2.siswaId === item.id && item2.mentorId === mentor.id
+                )
                 .map((item3, index) => (
                   <Komen key={index} {...item} komentar={item3} />
                 ))

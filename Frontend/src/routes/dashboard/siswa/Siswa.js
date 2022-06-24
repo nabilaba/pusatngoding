@@ -19,69 +19,14 @@ import { useEffect, useState, useCallback } from "react";
 import { StarIcon, SearchIcon } from "@chakra-ui/icons";
 import { FaChalkboardTeacher, FaDollarSign } from "react-icons/fa";
 import { Link as LinkTo } from "react-router-dom";
-import { MENTOR } from "../../../api/API";
+import { MENTOR, KOMENTAR } from "../../../api/API";
 import LoadingFetchEffect from "../../../components/LoadingFetchEffect";
 import axios from "axios";
-
-function CardMentor(props) {
-  return (
-    <Stack
-      as={LinkTo}
-      to={`kursusId=${props.id}${props.kursus.id}`}
-      borderWidth="1px"
-      borderRadius="2xl"
-      bg={useColorModeValue("white", "gray.700")}
-      shadow={"lg"}
-    >
-      <Image
-        src={props.avatar}
-        alt=""
-        borderRadius="2xl"
-        h="full"
-        maxH="xs"
-        w="full"
-        objectFit="cover"
-        objectPosition="center"
-      />
-
-      <Box p="3">
-        <Heading fontSize="2xl">{props.nama}</Heading>
-        <Heading fontSize="lg">
-          {props.kursus.nama} - {props.kursus.modul}
-        </Heading>
-        <Heading fontSize="md">{props.kota}</Heading>
-        <HStack spacing={"1"}>
-          <StarIcon
-            color={useColorModeValue("accentLight.500", "accentDark.500")}
-          />
-          <Text fontSize="sm" fontWeight={"bold"}>
-            4.6
-          </Text>
-          <Text fontSize="xs" fontWeight={"bold"} color="gray.500">
-            (10 feedback)
-          </Text>
-        </HStack>
-        <Text my={2} noOfLines={2}>
-          {props.motivasi}
-        </Text>
-        <HStack spacing={2}>
-          <Tag size="lg" colorScheme="blue" borderRadius="2xl">
-            <Icon as={FaDollarSign} h={4} w={4} mr={2} />
-            <TagLabel>{props.price}</TagLabel>
-          </Tag>
-          <Tag size="lg" colorScheme="blue" borderRadius="2xl">
-            <Icon as={FaChalkboardTeacher} h={4} w={4} mr={2} />
-            <TagLabel>{props.status}</TagLabel>
-          </Tag>
-        </HStack>
-      </Box>
-    </Stack>
-  );
-}
 
 export default function Siswa() {
   const [isLoading, setLoading] = useState(true);
   const [mentor, setMentor] = useState([]);
+  const [dataKomentar, setDataKomentar] = useState([]);
 
   const getMentor = useCallback(async () => {
     setLoading(true);
@@ -99,16 +44,89 @@ export default function Siswa() {
 
         return Promise.all(mentorRequests);
       })
-      .then((res) => setMentor(res))
-      .then(() => setLoading(false));
+      .then((res) => setMentor(res));
+
+    const res = await axios.get(`${KOMENTAR}`, {
+      headers,
+    });
+    setDataKomentar(res.data);
   }, [setMentor]);
 
   useEffect(() => {
-    getMentor();
+    getMentor().then(() => setLoading(false));
   }, [getMentor]);
 
   const searchstyle = {
     focusBorderColor: useColorModeValue("accentLight.400", "accentDark.400"),
+  };
+
+  const CardMentor = (props) => {
+    return (
+      <Stack
+        as={LinkTo}
+        to={`kursusId=${props.id}${props.kursus.id}`}
+        borderWidth="1px"
+        borderRadius="2xl"
+        bg={useColorModeValue("white", "gray.700")}
+        shadow={"lg"}
+      >
+        <Image
+          src={props.avatar}
+          alt=""
+          borderRadius="2xl"
+          h="full"
+          maxH="xs"
+          w="full"
+          objectFit="cover"
+          objectPosition="center"
+        />
+
+        <Box p="3">
+          <Heading fontSize="2xl">
+            {props.nama_depan} {props.nama_belakang}
+          </Heading>
+          <Heading fontSize="lg">
+            {props.kursus.nama} - {props.kursus.modul}
+          </Heading>
+          <Heading fontSize="md">{props.kota}</Heading>
+          <HStack spacing={"1"}>
+            <StarIcon
+              color={useColorModeValue("accentLight.500", "accentDark.500")}
+            />
+            <Text fontSize="sm" fontWeight={"bold"}>
+              {dataKomentar.filter((item) => item.mentorId === props.id)
+                .length &&
+                (
+                  dataKomentar
+                    .filter((item) => item.mentorId === props.id)
+                    .map((item) => item.rate)
+                    .reduce((a, b) => a + b, 0) /
+                  dataKomentar.filter((item) => item.mentorId === props.id)
+                    .length
+                ).toFixed(2)}
+            </Text>
+            <Text fontSize="xs" fontWeight={"bold"} color="gray.500">
+              (
+              {dataKomentar.filter((item) => item.mentorId === props.id).length}{" "}
+              feedback)
+            </Text>
+          </HStack>
+          <Text my={2} noOfLines={2}>
+            {props.motivasi}
+          </Text>
+          <HStack spacing={2}>
+            <Tag size="lg" colorScheme="blue" borderRadius="2xl">
+              <Icon as={FaDollarSign} h={4} w={4} mr={2} />
+              <TagLabel>{props.price}</TagLabel>
+            </Tag>
+            <Tag size="lg" colorScheme="blue" borderRadius="2xl">
+              <Icon as={FaChalkboardTeacher} h={4} w={4} mr={2} />
+              <TagLabel>{props.status}</TagLabel>
+            </Tag>
+          </HStack>
+        </Box>
+      </Stack>
+    );
   };
 
   return isLoading ? (
