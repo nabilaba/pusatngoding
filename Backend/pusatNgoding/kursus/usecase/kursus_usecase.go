@@ -6,43 +6,41 @@ import (
 	"time"
 
 	"github.com/sirupsen/logrus"
-
 	"golang.org/x/sync/errgroup"
 )
 
 type kursus struct {
 	kursusRepo domain.KursusRepository
-	usersRepo  domain.UserRepository
+	userRepo   domain.UserRepository
 	ctxTimeout time.Duration
 }
 
-func NewKursusNewUseCase(kursusRepo domain.KursusRepository, usersRepo domain.UserRepository, ctxTimeout time.Duration) domain.KursusUseCase {
+func NewKursusUseCase(kursusRepo domain.KursusRepository, userRepo domain.UserRepository, ctxTimeout time.Duration) domain.KursusUseCase {
 	return &kursus{
 		kursusRepo: kursusRepo,
-		usersRepo:  usersRepo,
+		userRepo:   userRepo,
 		ctxTimeout: ctxTimeout,
 	}
 }
 
-func (k *kursus) fillUsersDetails(ctx context.Context, listKursus []domain.KursusResp) ([]domain.KursusResp, error) {
-	g, ctx := errgroup.WithContext(ctx)
+func (k *kursus) getUsers(ctx context.Context, result []domain.KursusResp) ([]domain.KursusResp, error) {
+	g, c := errgroup.WithContext(ctx)
 
-	users := map[int64]domain.User{}
+	mapUser := map[int64]domain.User{}
 
-	for _, kursus := range listKursus {
-		users[kursus.User.Id] = domain.User{}
+	for _, kursus := range result {
+		mapUser[kursus.User.Id] = domain.User{}
 	}
 
-	userChan := make(chan domain.User)
-	for idUser := range users {
-		idUser := idUser
+	chanUser := make(chan domain.User)
+	for userID := range mapUser {
+		userID := userID
 		g.Go(func() error {
-			user, err := k.usersRepo.GetById(ctx, idUser)
+			res, err := k.userRepo.GetById(c, userID)
 			if err != nil {
 				return err
 			}
-
-			userChan <- user
+			chanUser <- res
 			return nil
 		})
 	}
@@ -53,12 +51,12 @@ func (k *kursus) fillUsersDetails(ctx context.Context, listKursus []domain.Kursu
 			logrus.Error(err)
 			return
 		}
-		close(userChan)
+		close(chanUser)
 	}()
 
-	for user := range userChan {
+	for user := range chanUser {
 		if user != (domain.User{}) {
-			users[user.Id] = user
+			mapUser[user.Id] = user
 		}
 	}
 
@@ -66,13 +64,13 @@ func (k *kursus) fillUsersDetails(ctx context.Context, listKursus []domain.Kursu
 		return nil, err
 	}
 
-	for i, l := range listKursus {
-		if u, ok := users[l.User.Id]; ok {
-			listKursus[i].User = u
+	for index, item := range result {
+		if u, ok := mapUser[item.User.Id]; ok {
+			result[index].User = u
 		}
 	}
 
-	return listKursus, nil
+	return result, nil
 }
 
 func (k *kursus) GetAll(ctx context.Context) ([]domain.KursusResp, error) {
@@ -85,7 +83,7 @@ func (k *kursus) GetAll(ctx context.Context) ([]domain.KursusResp, error) {
 		return []domain.KursusResp{}, err
 	}
 
-	res, err = k.fillUsersDetails(c, res)
+	res, err = k.getUsers(c, res)
 	if err != nil {
 		return []domain.KursusResp{}, err
 	}
@@ -103,7 +101,7 @@ func (k *kursus) GetById(ctx context.Context, id int64) (domain.KursusResp, erro
 		return domain.KursusResp{}, err
 	}
 
-	user, err := k.usersRepo.GetById(c, id)
+	user, err := k.userRepo.GetById(c, res.User.Id)
 	if err != nil {
 		return domain.KursusResp{}, err
 	}
@@ -123,7 +121,27 @@ func (k *kursus) Store(ctx context.Context, kursus *domain.Kursus) (domain.Kursu
 		return domain.KursusResp{}, err
 	}
 
-	user, err := k.usersRepo.GetById(c, res.Id)
+	user, err := k.userRepo.GetById(c, res.User.Id)
+	if err != nil {
+		return domain.KursusResp{}, err
+	}
+
+	res.User = user
+
+	return res, nil
+}
+
+func (k *kursus) Update(ctx context.Context, id int64, kursus *domain.Kursus) (domain.KursusResp, error) {
+	c, cancel := context.WithTimeout(ctx, k.ctxTimeout)
+
+	defer cancel()
+
+	res, err := k.kursusRepo.Update(c, id, kursus)
+	if err != nil {
+		return domain.KursusResp{}, err
+	}
+
+	user, err := k.userRepo.GetById(c, res.User.Id)
 	if err != nil {
 		return domain.KursusResp{}, err
 	}

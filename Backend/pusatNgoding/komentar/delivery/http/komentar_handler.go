@@ -8,24 +8,24 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type kursus struct {
-	kursusUseCase domain.KursusUseCase
+type komentar struct {
+	komenUseCase domain.KomentarUseCase
 }
 
-func NewKursusHandler(r *gin.Engine, kursusUseCase domain.KursusUseCase) {
-	h := &kursus{kursusUseCase: kursusUseCase}
+func NewKomentarHandler(r *gin.Engine, komenUseCase domain.KomentarUseCase) {
+	h := &komentar{komenUseCase: komenUseCase}
 
-	r.GET("/kursus", h.getAll)
-	r.GET("/kursus/:id", h.getById)
-	r.POST("/kursus", h.store)
-	r.PUT("/kursus/:id", h.update)
-	r.DELETE("/kursus/:id", h.delete)
+	r.GET("/komentar", h.getAll)
+	r.GET("/komentar/:id", h.getById)
+	r.POST("/komentar", h.store)
+	r.PUT("/komentar/:id", h.update)
+	r.DELETE("/komentar/:id", h.delete)
 }
 
-func (k *kursus) getAll(c *gin.Context) {
+func (k *komentar) getAll(c *gin.Context) {
 	ctx := c.Request.Context()
 
-	res, err := k.kursusUseCase.GetAll(ctx)
+	res, err := k.komenUseCase.GetAll(ctx)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": "internal server error",
@@ -39,19 +39,19 @@ func (k *kursus) getAll(c *gin.Context) {
 	})
 }
 
-func (k *kursus) getById(c *gin.Context) {
+func (k *komentar) getById(c *gin.Context) {
 	id := c.Param("id")
 	convertId, err := strconv.Atoi(id)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "bad request",
 		})
+
 		return
 	}
-
 	ctx := c.Request.Context()
 
-	res, err := k.kursusUseCase.GetById(ctx, int64(convertId))
+	res, err := k.komenUseCase.GetById(ctx, int64(convertId))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": "internal server error",
@@ -65,51 +65,20 @@ func (k *kursus) getById(c *gin.Context) {
 	})
 }
 
-func (k *kursus) store(c *gin.Context) {
+func (k *komentar) store(c *gin.Context) {
 	ctx := c.Request.Context()
-	kursus := domain.Kursus{}
+	komen := domain.Komentar{}
 
-	err := c.ShouldBind(&kursus)
+	err := c.ShouldBind(&komen)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "bad request",
 		})
+
 		return
 	}
 
-	res, err := k.kursusUseCase.Store(ctx, &kursus)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, "internal")
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{
-		"message": "success",
-		"data":    res,
-	})
-}
-
-func (k *kursus) update(c *gin.Context) {
-	id := c.Param("id")
-	convertId, err := strconv.Atoi(id)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "bad request",
-		})
-		return
-	}
-	ctx := c.Request.Context()
-	kursus := domain.Kursus{}
-
-	err = c.ShouldBind(&kursus)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "bad request",
-		})
-		return
-	}
-
-	res, err := k.kursusUseCase.Update(ctx, int64(convertId), &kursus)
+	res, err := k.komenUseCase.Store(ctx, &komen)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": "internal server error",
@@ -123,18 +92,55 @@ func (k *kursus) update(c *gin.Context) {
 	})
 }
 
-func (k *kursus) delete(c *gin.Context) {
+func (k *komentar) update(c *gin.Context) {
 	id := c.Param("id")
 	convertId, err := strconv.Atoi(id)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "bad request",
 		})
+
+		return
+	}
+	ctx := c.Request.Context()
+	komen := domain.Komentar{}
+
+	err = c.ShouldBind(&komen)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "bad request",
+		})
+
+		return
+	}
+
+	res, err := k.komenUseCase.Update(ctx, int64(convertId), &komen)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": "internal server error",
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "success",
+		"data":    res,
+	})
+}
+
+func (k *komentar) delete(c *gin.Context) {
+	id := c.Param("id")
+	convertId, err := strconv.Atoi(id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "bad request",
+		})
+
 		return
 	}
 	ctx := c.Request.Context()
 
-	err = k.kursusUseCase.Delete(ctx, int64(convertId))
+	err = k.komenUseCase.Delete(ctx, int64(convertId))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": "internal server error",

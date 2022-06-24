@@ -4,12 +4,15 @@ import (
 	"database/sql"
 	"fmt"
 	authRepo "pusat-ngoding/auth/repository/sqlite3"
+	komenRepo "pusat-ngoding/komentar/repository/sqlite3"
+	komenUseCase "pusat-ngoding/komentar/usecase"
 	kursusRepo "pusat-ngoding/kursus/repository/sqlite3"
-	"pusat-ngoding/kursus/usecase"
+	kursusUseCase "pusat-ngoding/kursus/usecase"
 	userRepo "pusat-ngoding/users/repository/sqlite3"
 	"time"
 
 	authHandler "pusat-ngoding/auth/delivery/http"
+	komenHandler "pusat-ngoding/komentar/delivery/http"
 	kursusHandler "pusat-ngoding/kursus/delivery/http"
 	userHandler "pusat-ngoding/users/delivery/http"
 	"pusat-ngoding/users/delivery/http/middleware"
@@ -39,8 +42,12 @@ func main() {
 	userHandler.NewSiswaHandler(r, userRepo)
 
 	kursusRepo := kursusRepo.NewKursusRepo(db)
-	kursusUseCase := usecase.NewKursusNewUseCase(kursusRepo, userRepo, ctxTimeout)
+	kursusUseCase := kursusUseCase.NewKursusUseCase(kursusRepo, userRepo, ctxTimeout)
 	kursusHandler.NewKursusHandler(r, kursusUseCase)
+
+	komenRepo := komenRepo.NewKomentarRepo(db)
+	komenUseCase := komenUseCase.NewKomentarUseCase(komenRepo, userRepo, kursusRepo, ctxTimeout)
+	komenHandler.NewKomentarHandler(r, komenUseCase)
 
 	r.Run()
 }
