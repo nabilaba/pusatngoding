@@ -121,12 +121,18 @@ func (u *userRepo) Update(ctx context.Context, id int64, user *domain.User) (dom
 	return res, nil
 }
 
-func (u *userRepo) UpdateMentor(ctx context.Context, id int64, user *domain.User) (domain.User, error) {
-	sqlStmt := `UPDATE users SET role = ?, kota = ?, tgl_lahir = ?, pendidikan = ?, keahlian = ?, motivasi = ?, status = ?, price = ?, lulusan = ?, avatar = ? WHERE id = ?`
+func (u *userRepo) UpdateRole(ctx context.Context, id int64, user *domain.User) (domain.User, error) {
+	userOld, _ := u.GetById(ctx, id)
 
-	user.Role = "mentor"
+	sqlStmt := `UPDATE users SET nama_depan = ?, nama_belakang = ?, email = ?, no_telp = ?, password = ?, role = ?, kota = ?, tgl_lahir = ?, pendidikan = ?, avatar = ? WHERE id = ?`
 
-	_, err := u.db.ExecContext(ctx, sqlStmt, user.Role, user.Kota, user.TglLahir, user.Pendidikan, user.Keahlian, user.Motivasi, user.Status, user.Price, user.Lulusan, user.Avatar, id)
+	if user.Password == userOld.Password {
+		user.Password = userOld.Password
+	} else {
+		user.Password, _ = hash.GeneratePassword(user.Password)
+	}
+
+	_, err := u.db.ExecContext(ctx, sqlStmt, user.NamaDepan, user.NamaBelakang, user.Email, user.NoTelp, user.Password, user.Role, user.Kota, user.TglLahir, user.Pendidikan, user.Avatar, id)
 	if err != nil {
 		return domain.User{}, err
 	}

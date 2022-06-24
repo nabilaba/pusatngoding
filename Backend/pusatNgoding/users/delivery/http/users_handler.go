@@ -21,14 +21,14 @@ func NewSiswaHandler(r *gin.Engine, usersRepo domain.UserRepository) {
 	{
 		a.GET("/users", h.getAll)
 		a.GET("/users/:id", h.getById)
+		a.POST("/users", h.store)
 		a.PUT("/users/:id", h.update)
 		a.DELETE("/users/:id", h.delete)
-		
-		a.PUT("/users/mentor/:id", h.updateMentor)
+
+		a.GET("/users/role/:role", h.getByRole)
+		a.PUT("/users/role/:id", h.updateRole)
 	}
-	
-	r.POST("/users", h.store)
-	r.GET("/users/role/:role", h.getByRole)
+
 }
 
 func (s *usersHandler) getAll(c *gin.Context) {
@@ -68,6 +68,24 @@ func (s *usersHandler) getAll(c *gin.Context) {
 func (u *usersHandler) getByRole(c *gin.Context) {
 	ctx := c.Request.Context()
 	role := c.Param("role")
+
+	// check role
+	auth := c.Request.Header.Get("Authorization")
+
+	claims, err := jwt.ValidateToken(auth)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{
+			"message": "unauthorized",
+		})
+		return
+	}
+
+	if claims.Role != "admin" && claims.Role != "" {
+		c.JSON(http.StatusUnauthorized, gin.H{
+			"message": "unauthorized",
+		})
+		return
+	}
 
 	res, err := u.usersRepo.GetByRole(ctx, role)
 	if err != nil {
@@ -180,7 +198,7 @@ func (u *usersHandler) update(c *gin.Context) {
 	})
 }
 
-func (u *usersHandler) updateMentor(c *gin.Context) {
+func (u *usersHandler) updateRole(c *gin.Context) {
 	id := c.Param("id")
 	intId, _ := strconv.Atoi(id)
 	ctx := c.Request.Context()
@@ -195,7 +213,25 @@ func (u *usersHandler) updateMentor(c *gin.Context) {
 		return
 	}
 
-	res, err := u.usersRepo.UpdateMentor(ctx, int64(intId), &user)
+	// check role
+	auth := c.Request.Header.Get("Authorization")
+
+	claims, err := jwt.ValidateToken(auth)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{
+			"message": "unauthorized",
+		})
+		return
+	}
+
+	if claims.Role != "admin" && claims.Role != "" {
+		c.JSON(http.StatusUnauthorized, gin.H{
+			"message": "unauthorized",
+		})
+		return
+	}
+
+	res, err := u.usersRepo.UpdateRole(ctx, int64(intId), &user)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": "error internal",
