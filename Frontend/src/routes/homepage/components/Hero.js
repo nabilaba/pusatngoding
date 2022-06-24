@@ -20,6 +20,7 @@ export default function Hero() {
       as={Container}
       direction={{ base: "column", md: "row" }}
       maxW={"7xl"}
+      pt={'20'}
     >
       <Flex
         py={{ base: 0, md: 8 }}
@@ -34,11 +35,12 @@ export default function Hero() {
             fontSize={{ base: "xl", md: "2xl", lg: "3xl" }}
             fontWeight={"bold"}
           >
-            <Text fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }} as={"span"}>
+            <Text fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }}>
               Cari Mentor
             </Text>
-            <br />
-            Solusi Untuk Belajar Ngoding dan Raih Mimpimu
+            <Text fontSize={{base: "2xl", md: "3xl", lg: "4xl"}}>
+              Solusi Untuk Belajar Ngoding dan <Text as={"span"} color={useColorModeValue('rgba(255, 155, 41, 1)','rgba(97, 210, 242, 0.7)')}>Raih Mimpimu</Text>
+            </Text>
           </Heading>
           <Text fontSize={"md"} color={"gray.500"} align="justify">
             Platform pencarian mentor ngoding pribadi yang terpercaya dengan
@@ -57,9 +59,9 @@ export default function Hero() {
               size={{ base: "md", md: "lg" }}
               rounded={"full"}
               color={useColorModeValue("white", "black")}
-              bg={useColorModeValue("accentLight.400", "accentDark.400")}
+              bg={useColorModeValue("rgba(97, 210, 242, 0.7)", "accentDark.400")}
               _hover={{
-                bg: useColorModeValue("accentLight.500", "accentDark.500"),
+                bg: useColorModeValue("rgba(97, 210, 242, 1)", "accentDark.500"),
                 transform: "translateY(2px)",
                 boxShadow: "lg",
               }}
@@ -88,6 +90,7 @@ export default function Hero() {
         align={"center"}
         justify={"center"}
         order={{ base: 1, md: 2 }}
+        pl={{md:'40px'}}
       >
         <Image
           alt={"Login Image"}
