@@ -92,6 +92,14 @@ func (k *komentar) getKursus(ctx context.Context, result []domain.KomentarResp) 
 			if err != nil {
 				return err
 			}
+
+			user, err := k.userRepo.GetById(c, res.User.Id)
+			if err != nil {
+				return err
+			}
+
+			res.User = user
+
 			chanKursus <- res
 			return nil
 		})
