@@ -26,20 +26,12 @@ type User struct {
 	CreatedAt    time.Time `json:"created_at"`
 }
 
-type UserResp struct {
-	Id           int64     `json:"id"`
-	NamaDepan    string    `json:"nama_depan"`
-	NamaBelakang string    `json:"nama_belakang"`
-	Avatar       string    `json:"avatar"`
-	CreatedAt    time.Time `json:"created_at"`
-}
-
 type UserRepository interface {
 	GetAll(ctx context.Context) ([]User, error)
 	Store(ctx context.Context, user *User) (User, error)
 	GetByRole(ctx context.Context, role string) ([]User, error)
 	GetById(ctx context.Context, id int64) (User, error)
 	Update(ctx context.Context, id int64, user *User) (User, error)
-	UpdateMentor(ctx context.Context, id int64, user *User) (User, error)
+	UpdateRole(ctx context.Context, id int64, user *User) (User, error)
 	Delete(ctx context.Context, id int64) error
 }
