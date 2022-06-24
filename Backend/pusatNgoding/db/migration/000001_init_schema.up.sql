@@ -23,78 +23,30 @@ CREATE TABLE kursus(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nama VARCHAR(255) NOT NULL,
     users_id INTEGER NOT NULL,     
-    deskripsi TEXT NOT NULL,
-    modul TEXT NOT NULL,
+    deskripsi VARCHAR(255) NOT NULL,
+    modul VARCHAR(255) NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (`users_id`) REFERENCES `users` (`id`)
 );
 
--- CREATE TABLE transaksi(
---     ID INTEGER PRIMARY KEY AUTOINCREMENT,
---     users_id INTEGER,
---     kursus_id INTEGER,
---     status BOOLEAN,
---     createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
---     endAt DATETIME,
---     FOREIGN KEY (`users_id`) REFERENCES `users` (`id`),
---     FOREIGN KEY (`kursus_id`) REFERENCES `kursus` (`id`)
--- );
+CREATE TABLE komentar(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    rate INTEGER NOT NULL,
+    content TEXT,
+    users_id INTEGER NOT NULL,
+    kursus_id INTEGER NOT NULL,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (`users_id`) REFERENCES `users` (`id`),
+    FOREIGN KEY (`kursus_id`) REFERENCES `kursus` (`id`)
+);
 
--- CREATE TABLE rating(
---     ID INTEGER PRIMARY KEY AUTOINCREMENT,
---     users_id INTEGER,
---     kursus_id INTEGER,
---     createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
---     FOREIGN KEY (`siswa_id`) REFERENCES `users` (`id`),
---     FOREIGN KEY (`kursus_id`) REFERENCES `kursus` (`id`)             
--- );
-
--- CREATE TABLE admin(
---    id INTEGER PRIMARY KEY AUTOINCREMENT,
---    nama TEXT NOT NULL,
---    email VARCHAR NOT NULL,
---    password VARCHAR NOT NULL,
---    role VARCHAR DEFAULT 'admin',
---    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
--- );
-
--- CREATE TABLE kursus(
---     ID                   INTEGER PRIMARY KEY    AUTOINCREMENT,
---     nama                 TEXT                   NOT NULL,
---     mentor_id            INTEGER,                
---     deskripsi            TEXT,
---     modul                TEXT,
---     createdAt            DATETIME DEFAULT CURRENT_TIMESTAMP,
---     FOREIGN KEY (`mentor_id`) REFERENCES `users` (`id`)
--- );
-
--- CREATE TABLE rating(
---     ID                   INTEGER PRIMARY KEY    AUTOINCREMENT,
---     siswa_id             INTEGER,
---     kursus_id            INTEGER,
---     createdAt            DATETIME DEFAULT CURRENT_TIMESTAMP,
---     FOREIGN KEY (`siswa_id`) REFERENCES `users` (`id`),
---     FOREIGN KEY (`kursus_id`) REFERENCES `kursus` (`id`)             
--- );
-
--- CREATE TABLE transaksi(
---     ID                   INTEGER PRIMARY KEY    AUTOINCREMENT,
---     siswa_id             INTEGER,
---     kursus_id            INTEGER,
---     status               BOOLEAN,
---     createdAt            DATETIME DEFAULT CURRENT_TIMESTAMP,
---     endAt                DATETIME,
---     FOREIGN KEY (`siswa_id`) REFERENCES `users` (`id`),
---     FOREIGN KEY (`kursus_id`) REFERENCES `kursus` (`id`)
--- );
-
--- CREATE TABLE komentar(
---     ID                   INTEGER PRIMARY KEY    AUTOINCREMENT,
---     content              TEXT,
---     siswa_id             INTEGER,
---     kursus_id            INTEGER,
---     createdAt            DATETIME DEFAULT CURRENT_TIMESTAMP,
---     FOREIGN KEY (`siswa_id`) REFERENCES `users` (`id`),
---     FOREIGN KEY (`kursus_id`) REFERENCES `kursus` (`id`)
--- );
-
+CREATE TABLE transaksi(
+    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    users_id INTEGER NOT NULL,
+    kursus_id INTEGER NOT NULL,
+    status BOOLEAN,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    endAt DATETIME,
+    FOREIGN KEY (`users_id`) REFERENCES `users` (`id`),
+    FOREIGN KEY (`kursus_id`) REFERENCES `kursus` (`id`)
+);
