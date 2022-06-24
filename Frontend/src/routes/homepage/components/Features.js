@@ -26,7 +26,7 @@ export default function Features() {
             justify={"space-between"}
             w="100%"
             rounded={"xl"}
-            bg="#F65C8B"
+            bgGradient="linear(to-b, rgba(246, 92, 139, 0.5), rgba(246, 92, 139, 1))"
             px="8"
             py="4"
           >
@@ -42,7 +42,7 @@ export default function Features() {
             justify={"space-between"}
             w="100%"
             rounded={"xl"}
-            bg="#9E8AFC"
+            bgGradient="linear(to-b, rgba(158, 138, 252, 0.5), rgba(158, 138, 252, 1))"
             px="8"
             py="4"
           >
@@ -58,7 +58,7 @@ export default function Features() {
             justify={"space-between"}
             w="100%"
             rounded={"xl"}
-            bg="#61D2F2"
+            bgGradient="linear(to-b, rgba(97, 210, 242, 0.5), rgba(97, 210, 242, 1))"
             px="8"
             p="4"
           >
@@ -74,7 +74,7 @@ export default function Features() {
             justify={"space-between"}
             w="100%"
             rounded={"xl"}
-            bg="#FF9B29"
+            bgGradient="linear(to-b, rgba(255, 155, 41, 0.5), rgba(255, 155, 41, 1))"
             px="8"
             p="4"
           >
