@@ -11,7 +11,10 @@ export default function Testimonials() {
           </chakra.span>
         </Flex>
         <Flex justify={'flex-start'} data-aos="fade-up-right">
-          <Box maxW={'4xl'} rounded={40} p={8} my='4' borderWidth={1}>
+          <Box maxW={'4xl'} rounded={40} p={8} my='5' borderWidth={1} 
+          boxShadow={
+            '10px 10px 10px 0 rgba(97, 210, 242, 0.15), 20px 20px 20px -5px rgba(97, 210, 242, 0.1)'
+          }>
             <Flex justify={'space-around'} wrap={{base: 'wrap', md: 'nowrap'}}>
               <Box maxW='sm' display='flex' alignItems={'center'}>
               <Avatar
@@ -43,7 +46,10 @@ export default function Testimonials() {
           </Box>
         </Flex>
         <Flex justify={'flex-end'} data-aos="fade-up-left">
-          <Box maxW={'4xl'} rounded={40} p={8} my='4' borderWidth={1}>
+          <Box maxW={'4xl'} rounded={40} p={8} my='5' borderWidth={1}
+          boxShadow={
+            '10px 10px 10px 0 rgba(97, 210, 242, 0.15), 20px 20px 20px -5px rgba(97, 210, 242, 0.1)'
+          }>
             <Flex justify={'space-around'} wrap={{base: 'wrap-reverse', md: 'nowrap'}}>
               <Box maxW='100%'>
                 <chakra.p textAlign={'justify'}>
@@ -75,7 +81,10 @@ export default function Testimonials() {
           </Box>
         </Flex>
         <Flex justify={'flex-start'} data-aos="fade-up-right">
-          <Box maxW={'4xl'} rounded={40} p={8} my='4' borderWidth={1}>
+          <Box maxW={'4xl'} rounded={40} p={8} my='5' borderWidth={1}
+          boxShadow={
+            '10px 10px 10px 0 rgba(97, 210, 242, 0.15), 20px 20px 20px -5px rgba(97, 210, 242, 0.1)'
+          }>
             <Flex justify={'space-around'} wrap={{base: 'wrap', md: 'nowrap'}}>
               <Box maxW='sm' display='flex' alignItems={'center'}>
               <Avatar
