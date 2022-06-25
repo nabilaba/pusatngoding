@@ -46,14 +46,13 @@ export default function SignUp() {
       });
     }
 
-    const data = {
-      nama_depan,
-      nama_belakang,
-      email,
-      no_telp,
-      password,
-      role,
-    };
+    const data = new FormData();
+    data.append("nama_depan", nama_depan);
+    data.append("nama_belakang", nama_belakang);
+    data.append("email", email);
+    data.append("no_telp", no_telp);
+    data.append("password", password);
+    data.append("role", role);
 
     axios
       .post(REGISTER_AUTH, data, {
