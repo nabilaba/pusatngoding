@@ -93,7 +93,7 @@ export default function Akun(props) {
                 dataIcon={BsFillBriefcaseFill}
               />
               <Profile dataName={props.kota} dataIcon={MdLocationOn} />
-              <Profile dataName={props.lulusan} dataIcon={MdSchool} />
+              <Profile dataName={props.pendidikan} dataIcon={MdSchool} />
               <Profile dataName={props.email} dataIcon={MdEmail} />
             </Stack>
           </Stack>

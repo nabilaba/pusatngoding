@@ -206,9 +206,9 @@ export default function Navbar() {
                         <MenuItem
                           icon={<EditIcon />}
                           as={LinkTo}
-                          to="sunting-akun"
+                          to="dashboard/akun"
                         >
-                          Sunting Akun
+                          Akun Saya
                         </MenuItem>
                       )}
                       <MenuItem icon={<ArrowBackIcon />} onClick={() => HandleLogOut()}>

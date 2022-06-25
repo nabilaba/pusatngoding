@@ -15,13 +15,19 @@ import {
   useColorModeValue,
   HStack,
   useToast,
+  InputGroup,
+  InputRightElement,
+  IconButton,
 } from "@chakra-ui/react";
 import useLoginState from "../../zustand/todoLogin";
 import axios from "axios";
 import { REGISTER_AUTH } from "../../api/API";
 import { useState } from "react";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 export default function SignUp() {
+  const [passwordType, setPasswordType] = useState(false);
+  const [passwordType2, setPasswordType2] = useState(false);
   const { isLoggedIn } = useLoginState();
   const navigate = useNavigate();
   const [nama_depan, setNamaDepan] = useState("");
@@ -29,30 +35,33 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [no_telp, setNoTelp] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [password2, setPassword2] = useState("");
   const role = "siswa";
   const toast = useToast();
 
   const HandleSubmit = (e) => {
     e.preventDefault();
 
-    if (password !== confirmPassword) {
+    if (password !== password2) {
       toast({
         title: "Gagal.",
         description: "Perulangan sandi tidak sama",
         status: "error",
         duration: 2000,
         isClosable: true,
+        position: "top",
       });
+      return;
     }
 
-    const data = new FormData();
-    data.append("nama_depan", nama_depan);
-    data.append("nama_belakang", nama_belakang);
-    data.append("email", email);
-    data.append("no_telp", no_telp);
-    data.append("password", password);
-    data.append("role", role);
+    const data = {
+      nama_depan,
+      nama_belakang,
+      email,
+      no_telp,
+      password,
+      role,
+    };
 
     axios
       .post(REGISTER_AUTH, data, {
@@ -67,6 +76,7 @@ export default function SignUp() {
           status: "success",
           duration: 2000,
           isClosable: true,
+          position: "top",
         });
         navigate("/masuk");
       })
@@ -167,27 +177,43 @@ export default function SignUp() {
           </FormControl>
           <FormControl id="password" isRequired>
             <FormLabel>Kata Sandi</FormLabel>
-            <Input
-              type="password"
-              focusBorderColor={useColorModeValue(
-                "accentLight.400",
-                "accentDark.400"
-              )}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+            <InputGroup size={"lg"}>
+              <Input
+                type={passwordType ? "text" : "password"}
+                focusBorderColor={useColorModeValue(
+                  "accentLight.400",
+                  "accentDark.400"
+                )}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <InputRightElement width="4.5rem">
+                <IconButton
+                  icon={passwordType ? <ViewIcon /> : <ViewOffIcon />}
+                  onClick={() => setPasswordType(!passwordType)}
+                  variant="ghost"
+                />
+              </InputRightElement>
+            </InputGroup>
           </FormControl>
           <FormControl id="password2" isRequired>
             <FormLabel>Ulangi Kata Sandi</FormLabel>
-            <Input
-              type="password"
-              focusBorderColor={useColorModeValue(
-                "accentLight.400",
-                "accentDark.400"
-              )}
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
+            <InputGroup size={"lg"}>
+              <Input
+                type={passwordType2 ? "text" : "password"}
+                focusBorderColor={useColorModeValue(
+                  "accentLight.400",
+                  "accentDark.400"
+                )}
+                onChange={(e) => setPassword2(e.target.value)}
+              />
+              <InputRightElement width="4.5rem">
+                <IconButton
+                  icon={passwordType2 ? <ViewIcon /> : <ViewOffIcon />}
+                  onClick={() => setPasswordType2(!passwordType2)}
+                  variant="ghost"
+                />
+              </InputRightElement>
+            </InputGroup>
           </FormControl>
           <Stack pt={6}>
             <Button

@@ -8,14 +8,16 @@ import Siswa from "./routes/dashboard/siswa/Siswa";
 import NotFound from "./routes/NotFound/NotFound";
 import Event from "./routes/event/Event";
 import Roadmap from "./routes/roadmap/Roadmap";
-import SuntingAkunMentor from "./routes/dashboard/mentor/SuntingAkunMentor";
-import SuntingAkunSiswa from "./routes/dashboard/siswa/SuntingAkunSiswa";
+import InformasiAkunMentor from "./routes/dashboard/mentor/InformasiAkunMentor";
+import EmailPasswordMentor from "./routes/dashboard/mentor/EmailPasswordMentor";
+import InformasiAkunSiswa from "./routes/dashboard/siswa/InformasiAkunSiswa";
+import EmailPasswordSiswa from "./routes/dashboard/siswa/EmailPasswordSiswa";
 import DetailMentor from "./routes/dashboard/siswa/DetailMentor";
 import RoutesOutlet from "./routes/RoutesOutlet";
 import Admin from "./routes/dashboard/admin/Admin";
 import useLoginState from "./zustand/todoLogin";
 import SignUpMentor from "./routes/signup/SignUpMentor";
-import { Outlet } from "react-router-dom"
+import { Outlet } from "react-router-dom";
 
 export default function App() {
   const { loggedAs } = useLoginState();
@@ -29,22 +31,26 @@ export default function App() {
         <Route path="mendaftar" element={<SignUp />} />
         <Route path="mendaftar_mentor" element={<SignUpMentor />} />
         {loggedAs === "mentor" ? (
-          <>
-            <Route path="dashboard" element={<Mentor />} />
-            <Route path="sunting-akun" element={<SuntingAkunMentor />} />
-          </>
+          <Route path="dashboard" element={<Outlet />}>
+            <Route index element={<Mentor />} />
+            <Route path="akun" element={<Outlet />}>
+              <Route index element={<InformasiAkunMentor />} />
+              <Route path="email-password" element={<EmailPasswordMentor />} />
+            </Route>
+          </Route>
         ) : null}
         {loggedAs === "siswa" ? (
-          <>
-            <Route path="dashboard" element={<Outlet />}>
-              <Route index element={<Siswa />} />
-              <Route
-                path={"kursusId=:mentorId:kursusId"}
-                element={<DetailMentor />}
-              />
+          <Route path="dashboard" element={<Outlet />}>
+            <Route index element={<Siswa />} />
+            <Route
+              path={"kursusId=:mentorId:kursusId"}
+              element={<DetailMentor />}
+            />
+            <Route path="akun" element={<Outlet />}>
+              <Route index element={<InformasiAkunSiswa />} />
+              <Route path="email-password" element={<EmailPasswordSiswa />} />
             </Route>
-            <Route path="sunting-akun" element={<SuntingAkunSiswa />} />
-          </>
+          </Route>
         ) : null}
         {loggedAs === "admin" ? (
           <Route path="dashboard" element={<Admin />} />
