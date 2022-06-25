@@ -43,6 +43,7 @@ const syarats = [
     direction: "row-reverse",
   },
 ];
+
 export default function SignUpMentor() {
   const ContainerSyarat = (props) => {
     return (

@@ -20,6 +20,7 @@ import {
   Tr,
   Td,
   Table,
+  useToast,
 } from "@chakra-ui/react";
 import { FaChalkboardTeacher, FaDollarSign } from "react-icons/fa";
 import { StarIcon } from "@chakra-ui/icons";
@@ -29,6 +30,8 @@ import axios from "axios";
 import { useState, useEffect, useCallback } from "react";
 import { MENTOR, KURSUS, SISWA, KOMENTAR } from "../../../api/API";
 import LoadingFetchEffect from "../../../components/LoadingFetchEffect";
+import { Link as LinkTo, useNavigate } from "react-router-dom";
+import useLoginState from "../../../zustand/todoLogin";
 
 export default function DetailMentor() {
   const param = useParams();
@@ -38,6 +41,11 @@ export default function DetailMentor() {
   const [kursus, setKursus] = useState([]);
   const [siswa, setSiswa] = useState([]);
   const [dataKomentar, setDataKomentar] = useState([]);
+
+  const { setIsLoggedOut, setLoggedAs, setUserId } = useLoginState();
+
+  const toast = useToast();
+  const navigate = useNavigate();
 
   const getKursusInfo = useCallback(async () => {
     const headers = {
@@ -59,9 +67,25 @@ export default function DetailMentor() {
   }, [param.mentorId, param.kursusId]);
 
   useEffect(() => {
-    setLoading(true);
-    getKursusInfo().finally(() => setLoading(false));
-  }, [getKursusInfo]);
+    getKursusInfo()
+      .then(() => setLoading(false))
+      .catch((err) => {
+        if (err.response.status === 401) {
+          toast({
+            title: "Anda harus login ulang.",
+            status: "error",
+            duration: 2000,
+            isClosable: true,
+          });
+          setLoggedAs("");
+          setUserId("");
+          setIsLoggedOut();
+          navigate("/");
+          useLoginState.persist.clearStorage();
+          localStorage.removeItem("tokenId");
+        }
+      });
+  }, [getKursusInfo, setIsLoggedOut, setLoggedAs, setUserId, navigate, toast]);
 
   const Komen = (props) => {
     return (
@@ -244,13 +268,15 @@ export default function DetailMentor() {
             </Table>
           </TableContainer>
           <Button
+            as={LinkTo}
+            to={`1`}
             rounded={"md"}
             w={"full"}
             size={"lg"}
             py={"3"}
             {...stylebutton}
           >
-            Reservasi
+            Buat Transaksi
           </Button>
         </Stack>
       </Stack>

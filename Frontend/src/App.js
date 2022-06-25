@@ -12,6 +12,7 @@ import InformasiAkunMentor from "./routes/dashboard/mentor/InformasiAkunMentor";
 import EmailPasswordMentor from "./routes/dashboard/mentor/EmailPasswordMentor";
 import InformasiAkunSiswa from "./routes/dashboard/siswa/InformasiAkunSiswa";
 import EmailPasswordSiswa from "./routes/dashboard/siswa/EmailPasswordSiswa";
+import Transaksi from "./routes/dashboard/siswa/Transaksi/Transaksi";
 import DetailMentor from "./routes/dashboard/siswa/DetailMentor";
 import RoutesOutlet from "./routes/RoutesOutlet";
 import Admin from "./routes/dashboard/admin/Admin";
@@ -42,10 +43,10 @@ export default function App() {
         {loggedAs === "siswa" ? (
           <Route path="dashboard" element={<Outlet />}>
             <Route index element={<Siswa />} />
-            <Route
-              path={"kursusId=:mentorId:kursusId"}
-              element={<DetailMentor />}
-            />
+            <Route path={"kursusId=:mentorId:kursusId"} element={<Outlet />}>
+              <Route index element={<DetailMentor />} />
+              <Route path=":transaksiId" element={<Transaksi />} />
+            </Route>
             <Route path="akun" element={<Outlet />}>
               <Route index element={<InformasiAkunSiswa />} />
               <Route path="email-password" element={<EmailPasswordSiswa />} />
