@@ -13,7 +13,6 @@ import {
   Icon,
   TagLabel,
   Tag,
-  Link,
   Avatar,
   TableContainer,
   Tbody,
@@ -28,24 +27,57 @@ import { BsStarFill } from "react-icons/bs";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect, useCallback } from "react";
-import { MENTOR, KURSUS, SISWA, KOMENTAR } from "../../../api/API";
+import {
+  MENTOR,
+  KURSUS,
+  SISWA,
+  KOMENTAR,
+  TAMBAH_TRANSAKSI,
+} from "../../../api/API";
 import LoadingFetchEffect from "../../../components/LoadingFetchEffect";
-import { Link as LinkTo, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useLoginState from "../../../zustand/todoLogin";
 
 export default function DetailMentor() {
   const param = useParams();
   const [isLoading, setLoading] = useState(true);
+  const [redirect, setRedirect] = useState(0);
 
   const [mentor, setMentor] = useState([]);
   const [kursus, setKursus] = useState([]);
   const [siswa, setSiswa] = useState([]);
   const [dataKomentar, setDataKomentar] = useState([]);
 
-  const { setIsLoggedOut, setLoggedAs, setUserId } = useLoginState();
+  const { setIsLoggedOut, setLoggedAs, setUserId, userId } = useLoginState();
 
   const toast = useToast();
   const navigate = useNavigate();
+
+  const HandleTransaksi = useCallback(async () => {
+    const headers = {
+      Authorization: "Bearer " + localStorage.getItem("tokenId"),
+    };
+
+    const dataTransaksi = {
+      status: "Belum Dibayar",
+      kursusId: Number(param.kursusId),
+      siswaId: userId,
+    };
+
+    const res = await axios.post(`${TAMBAH_TRANSAKSI}`, dataTransaksi, {
+      headers,
+    });
+    if (res.status === 200) {
+      toast({
+        title: "Berhasil",
+        description: "Berhasil membuat transaksi",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      });
+      setRedirect(res.data.transaksi.id);
+    }
+  }, [param.kursusId, toast, userId]);
 
   const getKursusInfo = useCallback(async () => {
     const headers = {
@@ -65,6 +97,10 @@ export default function DetailMentor() {
     });
     setDataKomentar(res4.data);
   }, [param.mentorId, param.kursusId]);
+
+  useEffect(() => {
+    redirect && navigate(`/dashboard/transaksi/${redirect}`);
+  }, [redirect, navigate, param.mentorId, param.kursusId]);
 
   useEffect(() => {
     getKursusInfo()
@@ -113,13 +149,12 @@ export default function DetailMentor() {
             alt="avatar"
           />
           <Box>
-            <Link
+            <Text
               color={useColorModeValue("gray.700", "gray.200")}
               fontWeight="700"
-              cursor="pointer"
             >
               {props.nama_depan} {props.nama_belakang}
-            </Link>
+            </Text>
             <HStack>
               <Icon as={BsStarFill} h={3} w={3} />
               <Text fontSize="md" color="gray.500">
@@ -268,12 +303,11 @@ export default function DetailMentor() {
             </Table>
           </TableContainer>
           <Button
-            as={LinkTo}
-            to={`1`}
             rounded={"md"}
             w={"full"}
             size={"lg"}
             py={"3"}
+            onClick={() => HandleTransaksi()}
             {...stylebutton}
           >
             Buat Transaksi

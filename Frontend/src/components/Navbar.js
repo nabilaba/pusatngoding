@@ -20,7 +20,7 @@ import {
   MenuItem,
   Avatar,
 } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, CloseIcon, RepeatClockIcon } from "@chakra-ui/icons";
 import { MoonIcon, SunIcon, EditIcon, ArrowBackIcon } from "@chakra-ui/icons";
 import { Link as LinkTo, useNavigate } from "react-router-dom";
 import Logo from "../assets/logo.svg";
@@ -211,6 +211,9 @@ export default function Navbar() {
                           Akun Saya
                         </MenuItem>
                       )}
+                      <MenuItem as={LinkTo} to={'dashboard/transaksi'} icon={<RepeatClockIcon />}>
+                        Riwayat Transaksi
+                      </MenuItem>
                       <MenuItem icon={<ArrowBackIcon />} onClick={() => HandleLogOut()}>
                         Keluar
                       </MenuItem>
