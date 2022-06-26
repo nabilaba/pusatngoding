@@ -11,65 +11,12 @@ import {
 } from "@chakra-ui/react";
 import { Link as LinkTo, useParams } from "react-router-dom";
 import OpenWhatsApp from "./OpenWhatsApp";
-import { MENTOR, KURSUS, SISWA, TRANSAKSI } from "../../../../api/API";
 import { useState, useEffect } from "react";
-import LoadingFetchEffect from "../../../../components/LoadingFetchEffect";
-import axios from "axios";
+import LoadingFetchEffect from "../../../components/LoadingFetchEffect";
 
 export default function Transaksi() {
   const param = useParams();
-  const [mentor, setMentor] = useState([]);
-  const [kursus, setKursus] = useState([]);
-  const [siswa, setSiswa] = useState([]);
-  const [transaksi, setTransaksi] = useState([]);
   const [isLoading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const getData = async () => {
-      const headers = {
-        Authorization: "Bearer " + localStorage.getItem("tokenId"),
-      };
-      const response = await axios
-        .get(`${TRANSAKSI}/${param.transaksiId}`, {
-          headers,
-        })
-        .then((res) => {
-          const data = res.data;
-          const responseKursus = axios.get(`${KURSUS}/${data.kursusId}`, {
-            headers,
-          });
-
-          responseKursus.then((res) => {
-            const dataKursus = res.data;
-            const responseMentor = axios.get(
-              `${MENTOR}/${dataKursus.mentorId}`,
-              {
-                headers,
-              }
-            );
-
-            Promise.all([responseMentor]).then((res) => {
-              const dataMentor = res[0].data;
-              setMentor(dataMentor);
-            });
-          });
-
-          const responseSiswa = axios.get(`${SISWA}/${data.siswaId}`, {
-            headers,
-          });
-
-          Promise.all([responseKursus, responseSiswa]).then((res) => {
-            setKursus(res[0].data);
-            setSiswa(res[1].data);
-            setTransaksi(data);
-          });
-        });
-    };
-
-    getData().then(() => {
-      setLoading(false);
-    });
-  }, [param.transaksiId]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -110,11 +57,11 @@ export default function Transaksi() {
           </Heading>
           <Details
             kiri="Nama Pemesan"
-            kanan={`${siswa.nama_depan} ${siswa.nama_belakang}`}
+            kanan={"Dummy"}
           />
           <Details
             kiri="Nama Mentor"
-            kanan={`${mentor.nama_depan} ${mentor.nama_belakang}`}
+            kanan={"Dummy2"}
           />
           <Details kiri="Biaya Kursus" kanan="Rp.100.000 / Jam" />
           <Details kiri="Status" kanan="Lunas" />

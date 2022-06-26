@@ -24,8 +24,8 @@ import TambahKursus from "./routes/dashboard/admin/kursus/TambahKursus";
 import InformasiAkunSiswa from "./routes/dashboard/admin/siswa/InformasiAkunSiswa";
 import InformasiAkunMentor from "./routes/dashboard/admin/mentor/InformasiAkunMentor";
 import InformasiKursus from "./routes/dashboard/admin/kursus/InformasiKursus";
-import TransaksiSiswa from "./routes/dashboard/siswa/transaksi/Transaksi";
-import SiswaListTransaksi from "./routes/dashboard/siswa/transaksi/ListTransaksi";
+import TransaksiSiswa from "./routes/dashboard/siswa/Transaksi";
+import SiswaListTransaksi from "./routes/dashboard/siswa/ListTransaksi";
 import AdminListTransaksi from "./routes/dashboard/admin/transaksi/ListTransaksi";
 import TransaksiAdmin from "./routes/dashboard/admin/transaksi/Transaksi";
 

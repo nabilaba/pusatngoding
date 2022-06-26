@@ -1,5 +1,5 @@
 import { Container, Stack, Text } from "@chakra-ui/react";
-import { TRANSAKSI } from "../../../../api/API";
+import { TRANSAKSI } from "../../../api/API";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
