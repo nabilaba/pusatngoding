@@ -8,17 +8,23 @@ import Siswa from "./routes/dashboard/siswa/Siswa";
 import NotFound from "./routes/NotFound/NotFound";
 import Event from "./routes/event/Event";
 import Roadmap from "./routes/roadmap/Roadmap";
-import InformasiAkunMentor from "./routes/dashboard/mentor/InformasiAkunMentor";
+import AkunMentor from "./routes/dashboard/mentor/AkunMentor";
 import EmailPasswordMentor from "./routes/dashboard/mentor/EmailPasswordMentor";
-import InformasiAkunSiswa from "./routes/dashboard/siswa/InformasiAkunSiswa";
+import AkunSiswa from "./routes/dashboard/siswa/AkunSiswa";
 import EmailPasswordSiswa from "./routes/dashboard/siswa/EmailPasswordSiswa";
 import Transaksi from "./routes/dashboard/siswa/Transaksi/Transaksi";
 import DetailMentor from "./routes/dashboard/siswa/DetailMentor";
 import RoutesOutlet from "./routes/RoutesOutlet";
 import Admin from "./routes/dashboard/admin/Admin";
 import useLoginState from "./zustand/todoLogin";
-import SignUpMentor from "./routes/signup/SignUpMentor";
+import CaraMendaftarMentor from "./routes/caramendaftarmentor/CaraMendaftarMentor";
 import { Outlet } from "react-router-dom";
+import TambahMentor from "./routes/dashboard/admin/mentor/TambahMentor";
+import TambahAdmin from "./routes/dashboard/admin/TambahAdmin";
+import TambahKursus from "./routes/dashboard/admin/kursus/TambahKursus";
+import InformasiAkunSiswa from "./routes/dashboard/admin/siswa/InformasiAkunSiswa";
+import InformasiAkunMentor from "./routes/dashboard/admin/mentor/InformasiAkunMentor";
+import InformasiKursus from "./routes/dashboard/admin/kursus/InformasiKursus";
 
 export default function App() {
   const { loggedAs } = useLoginState();
@@ -30,12 +36,12 @@ export default function App() {
         <Route path="tentang" element={<About />} />
         <Route path="masuk" element={<Login />} />
         <Route path="mendaftar" element={<SignUp />} />
-        <Route path="mendaftar_mentor" element={<SignUpMentor />} />
+        <Route path="cara_mendaftar_mentor" element={<CaraMendaftarMentor />} />
         {loggedAs === "mentor" ? (
           <Route path="dashboard" element={<Outlet />}>
             <Route index element={<Mentor />} />
             <Route path="akun" element={<Outlet />}>
-              <Route index element={<InformasiAkunMentor />} />
+              <Route index element={<AkunMentor />} />
               <Route path="email-password" element={<EmailPasswordMentor />} />
             </Route>
           </Route>
@@ -43,18 +49,26 @@ export default function App() {
         {loggedAs === "siswa" ? (
           <Route path="dashboard" element={<Outlet />}>
             <Route index element={<Siswa />} />
-            <Route path={"kursusId=:mentorId:kursusId"} element={<Outlet />}>
+            <Route path={":mentorId-:kursusId"} element={<Outlet />}>
               <Route index element={<DetailMentor />} />
               <Route path=":transaksiId" element={<Transaksi />} />
             </Route>
             <Route path="akun" element={<Outlet />}>
-              <Route index element={<InformasiAkunSiswa />} />
+              <Route index element={<AkunSiswa />} />
               <Route path="email-password" element={<EmailPasswordSiswa />} />
             </Route>
           </Route>
         ) : null}
         {loggedAs === "admin" ? (
-          <Route path="dashboard" element={<Admin />} />
+          <Route path="dashboard" element={<Outlet />}>
+            <Route index element={<Admin />} />
+            <Route path="tambah-mentor" element={<TambahMentor />} />
+            <Route path="tambah-kursus" element={<TambahKursus />} />
+            <Route path="tambah-admin" element={<TambahAdmin />} />
+            <Route path="siswa/:id" element={<InformasiAkunSiswa />} />
+            <Route path="mentor/:id" element={<InformasiAkunMentor />} />
+            <Route path="kursus/:id" element={<InformasiKursus />} />
+          </Route>
         ) : null}
         <Route path="acara" element={<Event />} />
         <Route path="roadmap" element={<Roadmap />} />

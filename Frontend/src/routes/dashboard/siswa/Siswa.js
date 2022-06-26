@@ -87,7 +87,7 @@ export default function Siswa() {
     return (
       <Stack
         as={LinkTo}
-        to={`kursusId=${props.id}${props.kursus.id}`}
+        to={`${props.id}-${props.kursus.id}`}
         borderWidth="1px"
         borderRadius="2xl"
         bg={useColorModeValue("white", "gray.700")}
@@ -117,20 +117,20 @@ export default function Siswa() {
               color={useColorModeValue("accentLight.500", "accentDark.500")}
             />
             <Text fontSize="sm" fontWeight={"bold"}>
-              {dataKomentar.filter((item) => item.mentorId === props.id)
+              {dataKomentar.filter((item) => item.kursusId === props.kursus.id)
                 .length &&
                 (
                   dataKomentar
-                    .filter((item) => item.mentorId === props.id)
+                    .filter((item) => item.kursusId === props.kursus.id)
                     .map((item) => item.rate)
                     .reduce((a, b) => a + b, 0) /
-                  dataKomentar.filter((item) => item.mentorId === props.id)
+                  dataKomentar.filter((item) => item.kursusId === props.kursus.id)
                     .length
                 ).toFixed(2)}
             </Text>
             <Text fontSize="xs" fontWeight={"bold"} color="gray.500">
               (
-              {dataKomentar.filter((item) => item.mentorId === props.id).length}{" "}
+              {dataKomentar.filter((item) => item.kursusId === props.kursus.id).length}{" "}
               feedback)
             </Text>
           </HStack>

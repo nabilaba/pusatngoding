@@ -18,19 +18,18 @@ import {
 import { SmallCloseIcon } from "@chakra-ui/icons";
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
-import { BASE_URL } from "../../../api/API";
-import useLoginState from "../../../zustand/todoLogin";
-import LoadingFetchEffect from "../../../components/LoadingFetchEffect";
-import { useNavigate } from "react-router-dom";
-import Inputan from "../../../components/Inputan";
-import { Link as LinkTo } from "react-router-dom";
+import { BASE_URL } from "../../../../api/API";
+import useLoginState from "../../../../zustand/todoLogin";
+import LoadingFetchEffect from "../../../../components/LoadingFetchEffect";
+import { useNavigate, useParams } from "react-router-dom";
+import Inputan from "../../../../components/Inputan";
 
-export default function SuntingProfilMentor() {
+export default function InformasiAkunMentor() {
+  const param = useParams();
   const navigate = useNavigate();
   const [isLoading, setLoading] = useState(true);
   const [user, setUser] = useState({});
-  const { userId, loggedAs, setIsLoggedOut, setUserId, setLoggedAs } =
-    useLoginState();
+  const { setIsLoggedOut, setUserId, setLoggedAs } = useLoginState();
   const [nama_depan, setNamaDepan] = useState("");
   const [nama_belakang, setNamaBelakang] = useState("");
   const [no_telp, setNoTelp] = useState("");
@@ -38,6 +37,8 @@ export default function SuntingProfilMentor() {
   const [pendidikan, setPendidikan] = useState("");
   const [price, setPrice] = useState("");
   const [status, setStatus] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const toast = useToast();
 
@@ -45,28 +46,23 @@ export default function SuntingProfilMentor() {
     const headers = {
       Authorization: "Bearer " + localStorage.getItem("tokenId"),
     };
-    const res = await axios.get(`${BASE_URL}/${loggedAs}/${userId}`, {
+    const res = await axios.get(`${BASE_URL}/mentor/${param.id}`, {
       headers,
     });
     setUser(res.data);
-  }, [userId, loggedAs]);
+  }, [param.id]);
 
   const HandleDelete = useCallback(async () => {
     const headers = {
       Authorization: "Bearer " + localStorage.getItem("tokenId"),
     };
-    const res = await axios.delete(`${BASE_URL}/${loggedAs}/${userId}`, {
+    const res = await axios.delete(`${BASE_URL}/mentor/${param.id}`, {
       headers,
     });
     if (res.status === 200) {
-      navigate("/");
-      setLoggedAs("");
-      setUserId("");
-      setIsLoggedOut();
-      useLoginState.persist.clearStorage();
-      localStorage.removeItem("tokenId");
+      navigate("/dashboard");
     }
-  }, [navigate, userId, loggedAs, setIsLoggedOut, setLoggedAs, setUserId]);
+  }, [navigate, param.id]);
 
   const HandleSubmit = (e, name, field) => {
     e.preventDefault();
@@ -81,7 +77,7 @@ export default function SuntingProfilMentor() {
     };
 
     axios
-      .put(`${BASE_URL}/${loggedAs}/${userId}`, data, { headers })
+      .put(`${BASE_URL}/mentor/${param.id}`, data, { headers })
       .then((response) => {
         toast({
           title: "Berhasil menyunting.",
@@ -120,11 +116,6 @@ export default function SuntingProfilMentor() {
   const stylecontainer = {
     bg: useColorModeValue("white", "gray.700"),
     borderColor: useColorModeValue("gray.200", "gray.500"),
-  };
-
-  const stylechange = {
-    bg: "accentLight.400",
-    color: useColorModeValue("white", "black"),
   };
 
   const stylewarn = {
@@ -217,34 +208,20 @@ export default function SuntingProfilMentor() {
             onSubmit={(e) => HandleSubmit(e, "no_telp", no_telp)}
             type="text"
           />
-        </Stack>
-        <Divider />
-        <Stack
-          spacing={4}
-          w={"full"}
-          rounded={"xl"}
-          border="1px"
-          {...stylecontainer}
-          p={6}
-          my={12}
-        >
-          <Heading lineHeight={1.1} fontSize={{ base: "2xl", sm: "3xl" }}>
-            Ubah Email & Kata Sandi
-          </Heading>
-          <Text>Harap selalu ingat kata sandi yang digunakan.</Text>
-          <Button
-            as={LinkTo}
-            to="email-password"
-            w="max-content"
-            _hover={{
-              transform: "translateY(-2px)",
-              boxShadow: "lg",
-              bg: "accentLight.500",
-            }}
-            {...stylechange}
-          >
-            Ubah Email & Kata Sandi
-          </Button>
+          <Inputan
+            judul="Email"
+            change={setEmail}
+            plc={email || user.email}
+            onSubmit={(e) => HandleSubmit(e, "email", email)}
+            type="text"
+          />
+          <Inputan
+            judul="Kata Sandi"
+            change={setPassword}
+            plc={password || user.password}
+            onSubmit={(e) => HandleSubmit(e, "password", password)}
+            type="password"
+          />
         </Stack>
         <Divider />
         <Stack

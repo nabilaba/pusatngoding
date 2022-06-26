@@ -192,14 +192,14 @@ export default function DetailMentor() {
             <HStack spacing={"1"}>
               <StarIcon {...stylestaricon} />
               <Text fontSize="sm" fontWeight={"bold"}>
-                {dataKomentar.filter((item) => item.mentorId === mentor.id)
+                {dataKomentar.filter((item) => item.kursusId === kursus.id)
                   .length &&
                   (
                     dataKomentar
-                      .filter((item) => item.mentorId === mentor.id)
+                      .filter((item) => item.kursusId === kursus.id)
                       .map((item) => item.rate)
                       .reduce((a, b) => a + b, 0) /
-                    dataKomentar.filter((item) => item.mentorId === mentor.id)
+                    dataKomentar.filter((item) => item.kursusId === kursus.id)
                       .length
                   ).toFixed(2)}
               </Text>
@@ -224,7 +224,7 @@ export default function DetailMentor() {
             </HStack>
           </Box>
           <Heading fontSize={"lg"}>
-            {dataKomentar.filter((item) => item.mentorId === mentor.id).length}{" "}
+            {dataKomentar.filter((item) => item.kursusId === kursus.id).length}{" "}
             Feedback Pengguna
           </Heading>
           <SimpleGrid w="full" autoRows={"1fr"} spacing={2}>
@@ -232,7 +232,7 @@ export default function DetailMentor() {
               dataKomentar
                 .filter(
                   (item2) =>
-                    item2.siswaId === item.id && item2.mentorId === mentor.id
+                    item2.siswaId === item.id && item2.kursusId === kursus.id
                 )
                 .map((item3, index) => (
                   <Komen key={index} {...item} komentar={item3} />

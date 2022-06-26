@@ -12,7 +12,7 @@ import {
   HStack,
 } from "@chakra-ui/react";
 import { MdEmail, MdLocationOn, MdSchool } from "react-icons/md";
-import { BsFillBriefcaseFill, BsStarFill } from "react-icons/bs";
+import { BsFillBriefcaseFill } from "react-icons/bs";
 import { FaChalkboardTeacher, FaDollarSign } from "react-icons/fa";
 
 export default function Akun(props) {
@@ -73,21 +73,6 @@ export default function Akun(props) {
               {props.motivasi}
             </Text>
             <Stack spacing={4} py={2}>
-              <Profile
-                dataName={
-                  props.komentar.filter((item) => item.mentorId === props.id)
-                    .length &&
-                  (
-                    props.komentar
-                      .filter((item) => item.mentorId === props.id)
-                      .map((item) => item.rate)
-                      .reduce((a, b) => a + b, 0) /
-                    props.komentar.filter((item) => item.mentorId === props.id)
-                      .length
-                  ).toFixed(2)
-                }
-                dataIcon={BsStarFill}
-              />
               <Profile
                 dataName={props.keahlian}
                 dataIcon={BsFillBriefcaseFill}

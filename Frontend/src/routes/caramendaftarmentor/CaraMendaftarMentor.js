@@ -44,7 +44,7 @@ const syarats = [
   },
 ];
 
-export default function SignUpMentor() {
+export default function CaraMendaftarMentor() {
   const ContainerSyarat = (props) => {
     return (
       <Stack
