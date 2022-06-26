@@ -5,7 +5,10 @@ exports.MENTOR = exports.BASE_URL + "/mentor";
 exports.SISWA = exports.BASE_URL + "/siswa";
 exports.KURSUS = exports.BASE_URL + "/kursus";
 exports.KOMENTAR = exports.BASE_URL + "/komentar";
+exports.TRANSAKSI = exports.BASE_URL + "/transaksi";
 
-// AUTHENTICATION
+// SERVER SIDE
 exports.LOGIN_AUTH = exports.BASE_URL + "/login";
 exports.REGISTER_AUTH = exports.BASE_URL + "/register";
+exports.TAMBAH_KURSUS = exports.BASE_URL + "/tambah-kursus";
+exports.TAMBAH_TRANSAKSI = exports.BASE_URL + "/tambah-transaksi";

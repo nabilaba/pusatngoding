@@ -80,18 +80,17 @@ export default function ListKomen(props) {
       </Stack>
     );
   };
-
   return (
     <Stack>
       <Heading size={"md"}>
         Anda Mendapat{" "}
-        {props.komentar.filter((item) => item.mentorId === props.mentor.id).length &&
+        {props.komentar.filter((item) => item.kursusId === props.kursus.id).length &&
           (
             props.komentar
-              .filter((item) => item.mentorId === props.mentor.id)
+              .filter((item) => item.kursusId === props.kursus.id)
               .map((item) => item.rate)
               .reduce((a, b) => a + b, 0) /
-            props.komentar.filter((item) => item.mentorId === props.mentor.id).length
+            props.komentar.filter((item) => item.kursusId === props.kursus.id).length
           ).toFixed(2)}{" "}
         Rating di Akhir-Akhir ini
       </Heading>
@@ -100,7 +99,7 @@ export default function ListKomen(props) {
           props.komentar
             .filter(
               (item2) =>
-                item2.siswaId === item.id && item2.mentorId === props.mentor.id
+                item2.siswaId === item.id && item2.kursusId === props.kursus.id
             )
             .map((item3, index) => (
               <Komen key={index} {...item} komentar={item3} />

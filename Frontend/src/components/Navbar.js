@@ -20,11 +20,14 @@ import {
   MenuItem,
   Avatar,
 } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, CloseIcon, RepeatClockIcon } from "@chakra-ui/icons";
 import { MoonIcon, SunIcon, EditIcon, ArrowBackIcon } from "@chakra-ui/icons";
 import { Link as LinkTo, useNavigate } from "react-router-dom";
 import Logo from "../assets/logo.svg";
 import useLoginState from "../zustand/todoLogin";
+import { useState, useEffect, useCallback } from "react";
+import axios from "axios";
+import { BASE_URL } from "../api/API";
 
 const Links = [
   { nama: "Roadmap", link: "/roadmap" },
@@ -50,8 +53,9 @@ const NavLink = ({ nama, link, onClick }) => (
 );
 
 export default function Navbar() {
+  const [user, setUser] = useState({});
   const navigate = useNavigate();
-  const { isLoggedIn, setIsLoggedOut, loggedAs, setLoggedAs, setUserId } =
+  const { isLoggedIn, setIsLoggedOut, loggedAs, setLoggedAs, setUserId, userId } =
     useLoginState();
 
   const bgnavbar = useColorModeValue(
@@ -76,6 +80,20 @@ export default function Navbar() {
     useLoginState.persist.clearStorage();
     localStorage.removeItem("tokenId");
   };
+
+  const getUser = useCallback(async () => {
+    const headers = {
+      Authorization: "Bearer " + localStorage.getItem("tokenId"),
+    };
+    const res = await axios.get(`${BASE_URL}/${loggedAs}/${userId}`, {
+      headers,
+    });
+    setUser(res.data);
+  }, [userId, loggedAs]);
+
+  useEffect(() => {
+    getUser()
+  }, [getUser]);
 
   return (
     <>
@@ -179,7 +197,8 @@ export default function Navbar() {
                     >
                       <Avatar
                         size={"sm"}
-                        name="user"
+                        name={`${user.nama_depan} ${user.nama_belakang}`}
+                        src={user.avatar}
                       />
                     </MenuButton>
                     <MenuList>
@@ -187,11 +206,14 @@ export default function Navbar() {
                         <MenuItem
                           icon={<EditIcon />}
                           as={LinkTo}
-                          to="sunting-akun"
+                          to="dashboard/akun"
                         >
-                          Sunting Akun
+                          Akun Saya
                         </MenuItem>
                       )}
+                      <MenuItem as={LinkTo} to={'dashboard/transaksi'} icon={<RepeatClockIcon />}>
+                        Riwayat Transaksi
+                      </MenuItem>
                       <MenuItem icon={<ArrowBackIcon />} onClick={() => HandleLogOut()}>
                         Keluar
                       </MenuItem>

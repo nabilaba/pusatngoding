@@ -4,10 +4,9 @@ import AkunMobile from "./AkunMobile";
 import ListKomen from "./ListKomen";
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
-import { BASE_URL, KOMENTAR, SISWA } from "../../../api/API";
+import { BASE_URL, KOMENTAR, SISWA, KURSUS } from "../../../api/API";
 import useLoginState from "../../../zustand/todoLogin";
 import LoadingFetchEffect from "../../../components/LoadingFetchEffect";
-
 
 export default function Mentor(props) {
   const { userId, loggedAs } = useLoginState();
@@ -15,6 +14,7 @@ export default function Mentor(props) {
   const [mentor, setMentor] = useState({});
   const [komentar, setKomentar] = useState([]);
   const [siswa, setSiswa] = useState([]);
+  const [kursus, setKursus] = useState([]);
 
   const getUser = useCallback(async () => {
     const headers = {
@@ -32,6 +32,11 @@ export default function Mentor(props) {
       headers,
     });
     setKomentar(res3.data);
+
+    const res4 = await axios.get(`${KURSUS}`, {
+      headers,
+    });
+    res4.data.filter((item) => ((item.mentorId === userId) ? setKursus(item) : null));
   }, [userId, loggedAs]);
 
   useEffect(() => {
@@ -58,7 +63,7 @@ export default function Mentor(props) {
           <AkunMobile {...mentor} komentar={komentar} />
         </Hide>
         <Box flex="1">
-          <ListKomen mentor={mentor} siswa={siswa} komentar={komentar} />
+          <ListKomen kursus={kursus} siswa={siswa} komentar={komentar} />
         </Box>
       </Stack>
     </Stack>

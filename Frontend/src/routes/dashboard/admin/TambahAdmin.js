@@ -1,6 +1,4 @@
-import "./SignUp.css";
-import { useEffect } from "react";
-import { Link as LinkTo, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Container,
   Box,
@@ -8,10 +6,8 @@ import {
   FormLabel,
   Input,
   Stack,
-  Link,
   Button,
   Heading,
-  Text,
   useColorModeValue,
   HStack,
   useToast,
@@ -19,24 +15,21 @@ import {
   InputRightElement,
   IconButton,
 } from "@chakra-ui/react";
-import useLoginState from "../../zustand/todoLogin";
 import axios from "axios";
-import { REGISTER_AUTH } from "../../api/API";
+import { REGISTER_AUTH } from "../../../api/API";
 import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
-export default function SignUp() {
+export default function SignUpMentor() {
   const [passwordType, setPasswordType] = useState(false);
   const [passwordType2, setPasswordType2] = useState(false);
-  const { isLoggedIn } = useLoginState();
   const navigate = useNavigate();
   const [nama_depan, setNamaDepan] = useState("");
   const [nama_belakang, setNamaBelakang] = useState("");
   const [email, setEmail] = useState("");
-  const [no_telp, setNoTelp] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
-  const role = "siswa";
+  const role = "admin";
   const toast = useToast();
 
   const HandleSubmit = (e) => {
@@ -58,7 +51,6 @@ export default function SignUp() {
       nama_depan,
       nama_belakang,
       email,
-      no_telp,
       password,
       role,
     };
@@ -72,13 +64,13 @@ export default function SignUp() {
       })
       .then((response) => {
         toast({
-          title: "Berhasil mendaftar.",
+          title: "Berhasil membuat akun.",
           status: "success",
           duration: 2000,
           isClosable: true,
           position: "top",
         });
-        navigate("/masuk");
+        navigate("/dashboard");
       })
       .catch((err) => {
         toast({
@@ -91,19 +83,13 @@ export default function SignUp() {
       });
   };
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      navigate("/dashboard");
-    }
-  }, [isLoggedIn, navigate]);
-
   return (
     <Container
       pt={4}
       pb={4}
       align={"center"}
       justify={"center"}
-      maxW={"lg"}
+      maxW={"2xl"}
       data-aos="fade-up"
     >
       <Box
@@ -113,16 +99,16 @@ export default function SignUp() {
         p={8}
       >
         <Heading fontSize={"4xl"} textAlign={"center"}>
-          Membuat Akun Baru
+          Buat Akun Admin Baru
         </Heading>
         <Stack
           spacing={2}
-          my={10}
+          mt={10}
           as={"form"}
           onSubmit={(e) => HandleSubmit(e)}
         >
-          <HStack>
-            <Box>
+          <HStack w='full'>
+            <Box w='full'>
               <FormControl id="firstName" isRequired>
                 <FormLabel>Nama Depan</FormLabel>
                 <Input
@@ -136,7 +122,7 @@ export default function SignUp() {
                 />
               </FormControl>
             </Box>
-            <Box>
+            <Box w='full'>
               <FormControl id="lastName" isRequired>
                 <FormLabel>Nama Belakang</FormLabel>
                 <Input
@@ -161,18 +147,6 @@ export default function SignUp() {
               )}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-            />
-          </FormControl>
-          <FormControl id="nomer" isRequired>
-            <FormLabel>Nomer Telepon</FormLabel>
-            <Input
-              type="text"
-              focusBorderColor={useColorModeValue(
-                "accentLight.400",
-                "accentDark.400"
-              )}
-              value={no_telp}
-              onChange={(e) => setNoTelp(e.target.value)}
             />
           </FormControl>
           <FormControl id="password" isRequired>
@@ -228,16 +202,6 @@ export default function SignUp() {
             </Button>
           </Stack>
         </Stack>
-        <Text textAlign={"center"}>
-          Sudah memiliki akun?{" "}
-          <Link
-            as={LinkTo}
-            to="/masuk"
-            color={useColorModeValue("accentLight.400", "accentDark.400")}
-          >
-            Masuk
-          </Link>
-        </Text>
       </Box>
     </Container>
   );

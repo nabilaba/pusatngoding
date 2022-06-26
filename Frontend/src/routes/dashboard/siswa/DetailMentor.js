@@ -13,13 +13,13 @@ import {
   Icon,
   TagLabel,
   Tag,
-  Link,
   Avatar,
   TableContainer,
   Tbody,
   Tr,
   Td,
   Table,
+  useToast,
 } from "@chakra-ui/react";
 import { FaChalkboardTeacher, FaDollarSign } from "react-icons/fa";
 import { StarIcon } from "@chakra-ui/icons";
@@ -27,17 +27,57 @@ import { BsStarFill } from "react-icons/bs";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect, useCallback } from "react";
-import { MENTOR, KURSUS, SISWA, KOMENTAR } from "../../../api/API";
+import {
+  MENTOR,
+  KURSUS,
+  SISWA,
+  KOMENTAR,
+  TAMBAH_TRANSAKSI,
+} from "../../../api/API";
 import LoadingFetchEffect from "../../../components/LoadingFetchEffect";
+import { useNavigate } from "react-router-dom";
+import useLoginState from "../../../zustand/todoLogin";
 
 export default function DetailMentor() {
   const param = useParams();
   const [isLoading, setLoading] = useState(true);
+  const [redirect, setRedirect] = useState(0);
 
   const [mentor, setMentor] = useState([]);
   const [kursus, setKursus] = useState([]);
   const [siswa, setSiswa] = useState([]);
   const [dataKomentar, setDataKomentar] = useState([]);
+
+  const { setIsLoggedOut, setLoggedAs, setUserId, userId } = useLoginState();
+
+  const toast = useToast();
+  const navigate = useNavigate();
+
+  const HandleTransaksi = useCallback(async () => {
+    const headers = {
+      Authorization: "Bearer " + localStorage.getItem("tokenId"),
+    };
+
+    const dataTransaksi = {
+      status: "Belum Dibayar",
+      kursusId: Number(param.kursusId),
+      siswaId: userId,
+    };
+
+    const res = await axios.post(`${TAMBAH_TRANSAKSI}`, dataTransaksi, {
+      headers,
+    });
+    if (res.status === 200) {
+      toast({
+        title: "Berhasil",
+        description: "Berhasil membuat transaksi",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      });
+      setRedirect(res.data.transaksi.id);
+    }
+  }, [param.kursusId, toast, userId]);
 
   const getKursusInfo = useCallback(async () => {
     const headers = {
@@ -59,9 +99,29 @@ export default function DetailMentor() {
   }, [param.mentorId, param.kursusId]);
 
   useEffect(() => {
-    setLoading(true);
-    getKursusInfo().finally(() => setLoading(false));
-  }, [getKursusInfo]);
+    redirect && navigate(`/dashboard/transaksi/${redirect}`);
+  }, [redirect, navigate, param.mentorId, param.kursusId]);
+
+  useEffect(() => {
+    getKursusInfo()
+      .then(() => setLoading(false))
+      .catch((err) => {
+        if (err.response.status === 401) {
+          toast({
+            title: "Anda harus login ulang.",
+            status: "error",
+            duration: 2000,
+            isClosable: true,
+          });
+          setLoggedAs("");
+          setUserId("");
+          setIsLoggedOut();
+          navigate("/");
+          useLoginState.persist.clearStorage();
+          localStorage.removeItem("tokenId");
+        }
+      });
+  }, [getKursusInfo, setIsLoggedOut, setLoggedAs, setUserId, navigate, toast]);
 
   const Komen = (props) => {
     return (
@@ -89,13 +149,12 @@ export default function DetailMentor() {
             alt="avatar"
           />
           <Box>
-            <Link
+            <Text
               color={useColorModeValue("gray.700", "gray.200")}
               fontWeight="700"
-              cursor="pointer"
             >
               {props.nama_depan} {props.nama_belakang}
-            </Link>
+            </Text>
             <HStack>
               <Icon as={BsStarFill} h={3} w={3} />
               <Text fontSize="md" color="gray.500">
@@ -168,14 +227,14 @@ export default function DetailMentor() {
             <HStack spacing={"1"}>
               <StarIcon {...stylestaricon} />
               <Text fontSize="sm" fontWeight={"bold"}>
-                {dataKomentar.filter((item) => item.mentorId === mentor.id)
+                {dataKomentar.filter((item) => item.kursusId === kursus.id)
                   .length &&
                   (
                     dataKomentar
-                      .filter((item) => item.mentorId === mentor.id)
+                      .filter((item) => item.kursusId === kursus.id)
                       .map((item) => item.rate)
                       .reduce((a, b) => a + b, 0) /
-                    dataKomentar.filter((item) => item.mentorId === mentor.id)
+                    dataKomentar.filter((item) => item.kursusId === kursus.id)
                       .length
                   ).toFixed(2)}
               </Text>
@@ -200,7 +259,7 @@ export default function DetailMentor() {
             </HStack>
           </Box>
           <Heading fontSize={"lg"}>
-            {dataKomentar.filter((item) => item.mentorId === mentor.id).length}{" "}
+            {dataKomentar.filter((item) => item.kursusId === kursus.id).length}{" "}
             Feedback Pengguna
           </Heading>
           <SimpleGrid w="full" autoRows={"1fr"} spacing={2}>
@@ -208,7 +267,7 @@ export default function DetailMentor() {
               dataKomentar
                 .filter(
                   (item2) =>
-                    item2.siswaId === item.id && item2.mentorId === mentor.id
+                    item2.siswaId === item.id && item2.kursusId === kursus.id
                 )
                 .map((item3, index) => (
                   <Komen key={index} {...item} komentar={item3} />
@@ -248,9 +307,10 @@ export default function DetailMentor() {
             w={"full"}
             size={"lg"}
             py={"3"}
+            onClick={() => HandleTransaksi()}
             {...stylebutton}
           >
-            Reservasi
+            Buat Transaksi
           </Button>
         </Stack>
       </Stack>
