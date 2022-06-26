@@ -21,23 +21,26 @@ const data = [
     text: `"Just listening to Lil Peep and you will knowing who i am"`,
     avatar: "https://avatars.githubusercontent.com/u/45154878?v=4",
     sbg: "Frontend Developer",
-    github: "https://github.com/nabilaba"
+    github: "https://github.com/nabilaba",
+    warna: "yellow.600"
   },
   {
     nama: "Anggun Lenteraningati",
-    status: "Univ. Ruangguru Indonesia",
-    text: `"Salah satu dari sekian hal yang membuat saya memilih untuk menjadi programmer adalah karena pekerjaan ini penuh dengan tantangan"`,
+    status: "Univ. Singaperbangsa Karawang",
+    text: `"Keep trying until your dreams come true and make the failures you experience as motivation to try to be even better"`,
     avatar: "https://avatars.githubusercontent.com/u/90821767?v=4",
     sbg: "Frontend Developer",
-    github: "https://github.com/AnggunLntra"
+    github: "https://github.com/AnggunLntra",
+    warna: "red.600"
   },
   {
     nama: "Soultan Ali Hadji",
-    status: "Univ. Ruangguru Indonesia",
-    text: `"Salah satu dari sekian hal yang membuat saya memilih untuk menjadi programmer adalah karena pekerjaan ini penuh dengan tantangan"`,
+    status: "Institut Teknologi Telkom Purwokerto",
+    text: `"The best way to predict the future is to invent it"`,
     avatar: "https://avatars.githubusercontent.com/u/79008954?v=4",
     sbg: "Frontend Developer",
-    github: "https://github.com/SoultanAliHadji"
+    github: "https://github.com/SoultanAliHadji",
+    warna: "purple.600"
   },
   {
     nama: "Achmad Izhar",
@@ -45,7 +48,8 @@ const data = [
     text: `"Salah satu dari sekian hal yang membuat saya memilih untuk menjadi programmer adalah karena pekerjaan ini penuh dengan tantangan"`,
     avatar: "https://avatars.githubusercontent.com/u/72540494?v=4",
     sbg: "Backend Developer",
-    github: "https://github.com/Zharonk"
+    github: "https://github.com/Zharonk",
+    warna: "green.600"
   },
   {
     nama: "Irsan Nur Hidayat",
@@ -53,7 +57,8 @@ const data = [
     text: `"Salah satu dari sekian hal yang membuat saya memilih untuk menjadi programmer adalah karena pekerjaan ini penuh dengan tantangan"`,
     avatar: "https://avatars.githubusercontent.com/u/84580327?v=4",
     sbg: "Backend Developer",
-    github: "https://github.com/irsannh"
+    github: "https://github.com/irsannh",
+    warna: "blue.600"
   },
   {
     nama: "Sean Sebastian",
@@ -61,7 +66,8 @@ const data = [
     text: `"Salah satu dari sekian hal yang membuat saya memilih untuk menjadi programmer adalah karena pekerjaan ini penuh dengan tantangan"`,
     avatar: "https://avatars.githubusercontent.com/u/100177839?v=4",
     sbg: "Backend Developer",
-    github: "https://github.com/seanlim12"
+    github: "https://github.com/seanlim12",
+    warna: "teal.600"
   },
 ];
 
@@ -87,9 +93,8 @@ export default function About() {
         borderWidth="1px"
         borderRadius="lg"
         justifyContent={"center"}
-        borderColor={useColorModeValue('rgba(107, 222, 255, 1)','rgba(97, 210, 242, 1)')}
-        boxShadow={useColorModeValue('5px 5px 5px 0 rgba(208, 245, 255, 1)', '5px 5px 5px 0 rgba(97, 210, 242, 0.15)')
-        }
+        bg={useColorModeValue("rgba(0,0,0,.05)", "rgba(255,255,255,.05)")}
+        boxShadow={{base: useColorModeValue('2px 2px 2px 0 rgba(208, 245, 255, 0.5)', '5px 5px 5px 0 rgba(97, 210, 242, .05)'), sm: "md"}}
       >
         <Avatar
           size={"xl"}
@@ -112,7 +117,7 @@ export default function About() {
               direction={{ base: "column", lg: "row" }}
             >
               <Box>
-                <Heading size={"sm"}>{props.nama}</Heading>
+                <Heading size={"sm"} color={props.warna}>{props.nama}</Heading>
                 <Text as={"span"} fontWeight={"normal"}>
                   {props.status}
                 </Text>
