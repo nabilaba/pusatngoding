@@ -11,7 +11,7 @@ export default function Testimonials() {
           </chakra.span>
         </Flex>
         <Flex justify={'flex-start'} data-aos="fade-up-right">
-          <Box maxW={'4xl'} rounded={{base: "20", sm: "40"}} p={8} my='5' borderWidth={1} 
+          <Box maxW={'4xl'} rounded={{base: "20", sm: "40"}} p={8} my='5' borderWidth={1} boxShadow={"md"}
           bg={useColorModeValue("rgba(0,0,0,.05)", "rgba(255,255,255,.05)")}>
             <Flex justify={'space-around'} wrap={{base: 'wrap', md: 'nowrap'}}>
               <Box maxW='sm' display='flex' alignItems={'center'}>
@@ -71,7 +71,7 @@ export default function Testimonials() {
           </Box>
         </Flex>
         <Flex justify={'flex-start'} data-aos="fade-up-right">
-          <Box maxW={'4xl'} rounded={{base: "20", sm: "40"}} p={8} my='5' borderWidth={1}
+          <Box maxW={'4xl'} rounded={{base: "20", sm: "40"}} p={8} my='5' borderWidth={1} boxShadow={"md"}
           bg={useColorModeValue("rgba(0,0,0,.05)", "rgba(255,255,255,.05)")}>
             <Flex justify={'space-around'} wrap={{base: 'wrap', md: 'nowrap'}}>
               <Box maxW='sm' display='flex' alignItems={'center'}>
