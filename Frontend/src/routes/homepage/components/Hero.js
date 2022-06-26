@@ -48,26 +48,37 @@ export default function Hero() {
             ya dimana lagi selain di Pusat Ngoding!
           </Text>
           <Stack
-            direction={{ base: "row", md: "row" }}
-            spacing={4}
+            direction={{ base: "column-reverse", sm: "row", md: "row" }}
             align={"center"}
-            justifyContent={"space-between"}
+            justifyContent={{base: "space-around", sm: "space-between"}}
+            spacing={{sm: "20"}}
           >
-            <Button
+            <Box>
+            <Button              
               as={LinkTo}
               to="/mendaftar"
               size={{ base: "md", md: "lg" }}
+              w={{base: 'xs', sm: "full"}}
               rounded={"full"}
-              color={useColorModeValue("white", "black")}
-              bg={useColorModeValue("rgba(97, 210, 242, 0.7)", "accentDark.400")}
+              color={useColorModeValue("white","black")}
+              bg={useColorModeValue("accentLight.400", "accentDark.400")}
               _hover={{
-                bg: useColorModeValue("rgba(97, 210, 242, 1)", "accentDark.500"),
+                bg: useColorModeValue("accentLight.500", "accentDark.500"),
                 transform: "translateY(2px)",
                 boxShadow: "lg",
               }}
             >
               Daftar Sekarang
             </Button>
+            </Box>
+            <Stack
+              // border={"1px solid black"}
+              direction={{ base: "row", md: "row"}}
+              spacing={{base:'12', md: '16'}}
+              align={"center"}
+              justifyContent={"space-between"}
+              w={{md:"full"}}
+            >
             <Box>
               <Heading>300+</Heading>
               <Text color="gray.500" as={"span"} fontSize={"md"}>
@@ -80,6 +91,7 @@ export default function Hero() {
                 Ulasan Positif Siswa
               </Text>
             </Box>
+            </Stack>
           </Stack>
         </Stack>
       </Flex>
