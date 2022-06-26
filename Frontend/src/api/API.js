@@ -12,3 +12,4 @@ exports.LOGIN_AUTH = exports.BASE_URL + "/login";
 exports.REGISTER_AUTH = exports.BASE_URL + "/register";
 exports.TAMBAH_KURSUS = exports.BASE_URL + "/tambah-kursus";
 exports.TAMBAH_TRANSAKSI = exports.BASE_URL + "/tambah-transaksi";
+exports.TAMBAH_KOMENTAR = exports.BASE_URL + "/tambah-komentar";

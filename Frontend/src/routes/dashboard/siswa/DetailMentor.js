@@ -20,9 +20,12 @@ import {
   Td,
   Table,
   useToast,
+  Textarea,
+  RadioGroup,
+  Radio,
 } from "@chakra-ui/react";
 import { FaChalkboardTeacher, FaDollarSign } from "react-icons/fa";
-import { StarIcon } from "@chakra-ui/icons";
+import { StarIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 import { BsStarFill } from "react-icons/bs";
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -33,6 +36,7 @@ import {
   SISWA,
   KOMENTAR,
   TAMBAH_TRANSAKSI,
+  TAMBAH_KOMENTAR,
 } from "../../../api/API";
 import LoadingFetchEffect from "../../../components/LoadingFetchEffect";
 import { useNavigate } from "react-router-dom";
@@ -67,6 +71,7 @@ export default function DetailMentor() {
     const res = await axios.post(`${TAMBAH_TRANSAKSI}`, dataTransaksi, {
       headers,
     });
+
     if (res.status === 200) {
       toast({
         title: "Berhasil",
@@ -97,6 +102,39 @@ export default function DetailMentor() {
     });
     setDataKomentar(res4.data);
   }, [param.mentorId, param.kursusId]);
+
+  const [komentarBaru, setKomentarBaru] = useState("");
+  const [ratingBaru, setRatingBaru] = useState(0);
+
+  const HandleKomentarBaru = useCallback(
+    async (e) => {
+      e.preventDefault();
+      const headers = {
+        Authorization: "Bearer " + localStorage.getItem("tokenId"),
+      };
+
+      const data = {
+        content: komentarBaru,
+        rate: Number(ratingBaru),
+        siswaId: Number(userId),
+        kursusId: Number(param.kursusId),
+        commented: true,
+      };
+
+      const res = await axios.post(TAMBAH_KOMENTAR, data, { headers });
+      if (res.status === 200) {
+        toast({
+          title: "Berhasil menambahkan komentar.",
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+          position: "top",
+        });
+        setDataKomentar([...dataKomentar, res.data.komentar]);
+      }
+    },
+    [komentarBaru, ratingBaru, toast, param.kursusId, userId, dataKomentar]
+  );
 
   useEffect(() => {
     redirect && navigate(`/dashboard/transaksi/${redirect}`);
@@ -129,12 +167,9 @@ export default function DetailMentor() {
         h={"full"}
         w="full"
         mx="auto"
-        px={4}
-        py={4}
+        p={4}
         rounded="xl"
-        border="1px"
-        borderColor={useColorModeValue("gray.200", "gray.500")}
-        bg={useColorModeValue("white", "gray.800")}
+        borderWidth={1}
         justify={"space-between"}
       >
         <Flex alignItems="center">
@@ -258,6 +293,45 @@ export default function DetailMentor() {
               </Tag>
             </HStack>
           </Box>
+          <Stack
+            w="full"
+            as={"form"}
+            rounded="xl"
+            borderWidth={1}
+            p={4}
+            onSubmit={(e) => {
+              HandleKomentarBaru(e);
+            }}
+          >
+            <Text fontWeight="bold">Kolom Feedback</Text>
+            <HStack>
+              <StarIcon {...stylestaricon} />
+              <RadioGroup onChange={setRatingBaru}>
+                <Stack direction="row">
+                  <Radio value="1">1</Radio>
+                  <Radio value="2">2</Radio>
+                  <Radio value="3">3</Radio>
+                  <Radio value="4">4</Radio>
+                  <Radio value="5">5</Radio>
+                </Stack>
+              </RadioGroup>
+            </HStack>
+            <Textarea
+              placeholder="Tulis feedback mu disini"
+              onChange={(e) => {
+                setKomentarBaru(e.target.value);
+              }}
+            />
+            <Button
+              type="submit"
+              alignSelf="end"
+              rightIcon={<ArrowForwardIcon />}
+              colorScheme="teal"
+              size={"md"}
+            >
+              Kirim
+            </Button>
+          </Stack>
           <Heading fontSize={"lg"}>
             {dataKomentar.filter((item) => item.kursusId === kursus.id).length}{" "}
             Feedback Pengguna
@@ -275,7 +349,7 @@ export default function DetailMentor() {
             )}
           </SimpleGrid>
         </Stack>
-        <Stack>
+        <Stack flex={1 / 2}>
           <Image
             rounded={"md"}
             alt={"product image"}
@@ -296,7 +370,7 @@ export default function DetailMentor() {
                   <Td>Oxford University</Td>
                 </Tr>
                 <Tr>
-                  <Td>TANGGAL BERGABUNG</Td>
+                  <Td>BERGABUNG</Td>
                   <Td>{mentor.created_at}</Td>
                 </Tr>
               </Tbody>
