@@ -26,6 +26,7 @@ type KomentarResp struct {
 type KomentarRepository interface {
 	GetAll(ctx context.Context) ([]KomentarResp, error)
 	GetById(ctx context.Context, id int64) (KomentarResp, error)
+	GetByIdKursus(ctx context.Context, idKursus int64) ([]KomentarResp, error)
 	Store(ctx context.Context, komen *Komentar) (KomentarResp, error)
 	Update(ctx context.Context, id int64, komen *Komentar) (KomentarResp, error)
 	Delete(ctx context.Context, id int64) error
@@ -34,6 +35,7 @@ type KomentarRepository interface {
 type KomentarUseCase interface {
 	GetAll(ctx context.Context) ([]KomentarResp, error)
 	GetById(ctx context.Context, id int64) (KomentarResp, error)
+	GetByIdKursus(ctx context.Context, idKursus int64) ([]KomentarResp, error)
 	Store(ctx context.Context, komen *Komentar) (KomentarResp, error)
 	Update(ctx context.Context, id int64, komen *Komentar) (KomentarResp, error)
 	Delete(ctx context.Context, id int64) error
