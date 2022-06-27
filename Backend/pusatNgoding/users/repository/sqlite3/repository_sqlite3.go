@@ -3,6 +3,7 @@ package sqlite3
 import (
 	"context"
 	"database/sql"
+	"os"
 	"pusat-ngoding/domain"
 	"pusat-ngoding/utility/hash"
 )
@@ -78,11 +79,11 @@ func (u *userRepo) GetById(ctx context.Context, id int64) (domain.User, error) {
 }
 
 func (u *userRepo) Store(ctx context.Context, user *domain.User) (domain.User, error) {
-	sqlStmt := `INSERT INTO users(nama_depan, nama_belakang, email, no_telp, password) VALUES(?, ?, ?, ?, ?)`
+	sqlStmt := `INSERT INTO users(nama_depan, nama_belakang, email, no_telp, password, avatar) VALUES(?, ?, ?, ?, ?, ?)`
 
 	user.Password, _ = hash.GeneratePassword(user.Password)
 
-	res, err := u.db.ExecContext(ctx, sqlStmt, user.NamaDepan, user.NamaBelakang, user.Email, user.NoTelp, user.Password)
+	res, err := u.db.ExecContext(ctx, sqlStmt, user.NamaDepan, user.NamaBelakang, user.Email, user.NoTelp, user.Password, user.Avatar)
 	if err != nil {
 		return domain.User{}, err
 	}
@@ -102,10 +103,15 @@ func (u *userRepo) Update(ctx context.Context, id int64, user *domain.User) (dom
 
 	sqlStmt := `UPDATE users SET nama_depan = ?, nama_belakang = ?, email = ?, no_telp = ?, password = ?, kota = ?, tgl_lahir = ?, pendidikan = ?, avatar = ? WHERE id = ?`
 
-	if user.Password == userOld.Password {
-		user.Password = userOld.Password
-	} else {
+	if user.Password != userOld.Password {
 		user.Password, _ = hash.GeneratePassword(user.Password)
+	}
+
+	if user.Avatar != userOld.Avatar {
+		err := os.Remove(userOld.Avatar)
+		if err != nil {
+			return domain.User{}, err
+		}
 	}
 
 	_, err := u.db.ExecContext(ctx, sqlStmt, user.NamaDepan, user.NamaBelakang, user.Email, user.NoTelp, user.Password, user.Kota, user.TglLahir, user.Pendidikan, user.Avatar, id)
@@ -124,15 +130,20 @@ func (u *userRepo) Update(ctx context.Context, id int64, user *domain.User) (dom
 func (u *userRepo) UpdateRole(ctx context.Context, id int64, user *domain.User) (domain.User, error) {
 	userOld, _ := u.GetById(ctx, id)
 
-	sqlStmt := `UPDATE users SET nama_depan = ?, nama_belakang = ?, email = ?, no_telp = ?, password = ?, role = ?, kota = ?, tgl_lahir = ?, pendidikan = ?, avatar = ? WHERE id = ?`
+	sqlStmt := `UPDATE users SET nama_depan = ?, nama_belakang = ?, email = ?, no_telp = ?, password = ?, role = ? WHERE id = ?`
 
-	if user.Password == userOld.Password {
-		user.Password = userOld.Password
-	} else {
+	if user.Password != userOld.Password {
 		user.Password, _ = hash.GeneratePassword(user.Password)
 	}
 
-	_, err := u.db.ExecContext(ctx, sqlStmt, user.NamaDepan, user.NamaBelakang, user.Email, user.NoTelp, user.Password, user.Role, user.Kota, user.TglLahir, user.Pendidikan, user.Avatar, id)
+	if user.Avatar != userOld.Avatar {
+		err := os.Remove(userOld.Avatar)
+		if err != nil {
+			return domain.User{}, err
+		}
+	}
+
+	_, err := u.db.ExecContext(ctx, sqlStmt, user.NamaDepan, user.NamaBelakang, user.Email, user.NoTelp, user.Password, user.Role, id)
 	if err != nil {
 		return domain.User{}, err
 	}
@@ -146,7 +157,12 @@ func (u *userRepo) UpdateRole(ctx context.Context, id int64, user *domain.User) 
 }
 
 func (u *userRepo) Delete(ctx context.Context, id int64) error {
-	_, err := u.GetById(ctx, id)
+	user, err := u.GetById(ctx, id)
+	if err != nil {
+		return err
+	}
+
+	err = os.Remove(user.Avatar)
 	if err != nil {
 		return err
 	}
