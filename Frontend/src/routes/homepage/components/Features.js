@@ -1,4 +1,3 @@
-import "./Features.css";
 import {
   Container,
   Box,

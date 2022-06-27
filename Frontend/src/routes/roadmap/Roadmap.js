@@ -1,4 +1,3 @@
-import "./Roadmap.css";
 import { useEffect, useState } from "react";
 import {
   Container,

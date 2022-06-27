@@ -1,4 +1,3 @@
-import "./Event.css";
 import { useEffect, useState } from "react";
 import { Container, Heading, useColorModeValue } from "@chakra-ui/react";
 import LoadingFetchEffect from "../../components/LoadingFetchEffect";
