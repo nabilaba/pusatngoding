@@ -1,6 +1,7 @@
 package sqlite3
 
 import (
+	"net/http"
 	"net/http/httptest"
 	"strings"
 	"testing"
@@ -9,24 +10,20 @@ import (
 	"github.com/go-playground/assert/v2"
 )
 
-func SetUpRouter() *gin.Engine {
-	router := gin.Default()
-	return router
-}
-
 func TestLogin(t *testing.T) {
 	w := httptest.NewRecorder()
+	r := gin.Default()
 
-	bodrReader := strings.NewReader(`{
+	bodyReader := strings.NewReader(`{
 		"email": "admin@gmail.com",
 		"password": "admin1234",
 	}`)
 
-	req := httptest.NewRequest("POST", "/login", bodrReader)
+	req := httptest.NewRequest("POST", "http://localhost:8080/login", bodyReader)
 
-	r := SetUpRouter()
+	defer req.Body.Close()
 
-	r.ServeHTTP(w, req)
+	r.Run()
 
-	assert.Equal(t, w.Code, 200)
+	assert.Equal(t, http.StatusOK, w.Code)
 }
