@@ -34,10 +34,13 @@ export default function Hero() {
             fontSize={{ base: "xl", md: "2xl", lg: "3xl" }}
             fontWeight={"bold"}
           >
-            <Text fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }}>
-              Cari Mentor
+            <Text
+              fontWeight="extrabold"
+              fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }}
+            >
+              Pusat Ngoding
             </Text>
-            <Text fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}>
+            <Text fontSize={{ base: "2xl", md: "3xl", lg: "3xl" }}>
               Solusi Untuk Belajar Ngoding dan Raih Mimpimu
             </Text>
           </Heading>
