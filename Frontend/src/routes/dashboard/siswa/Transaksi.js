@@ -67,7 +67,7 @@ export default function Transaksi() {
 
     const data = {
       ...transaksi,
-      status: "Batal",
+      status: "Dibatalkan Siswa",
     };
 
     const response = await axios.put(
@@ -77,7 +77,7 @@ export default function Transaksi() {
     );
     if (response.status === 200) {
       toast({
-        title: "Berhasil menambahkan komentar.",
+        title: "Berhasil membatalkan transaksi.",
         status: "success",
         duration: 2000,
         isClosable: true,
@@ -176,36 +176,48 @@ export default function Transaksi() {
             </ListItem>
           </OrderedList>
         </Stack>
-        <HStack justify="end">
-          <Button
-            w="max-content"
-            _hover={{
-              transform: "translateY(-2px)",
-              boxShadow: "lg",
-              bg: "red.500",
-            }}
-            onClick={() => {
-              HandleBatal(transaksi.id);
-            }}
-            {...stylewarn}
-          >
-            Batal
-          </Button>
-          <Button
-            w="max-content"
-            _hover={{
-              transform: "translateY(-2px)",
-              boxShadow: "lg",
-              bg: "green.500",
-            }}
-            {...stylesuccess}
-            onClick={() => {
-              OpenWhatsApp("+6283146542084", "Lil Peep", param.transaksiId);
-            }}
-          >
-            Bayar Sekarang
-          </Button>
-        </HStack>
+        {transaksi.status === "Dibatalkan Siswa" ||
+        transaksi.status !== "Dibatalkan Mentor" ||
+        transaksi.status !== "Lunas" ? (
+          <HStack justify="end">
+            <Button
+              w="max-content"
+              _hover={{
+                transform: "translateY(-2px)",
+                boxShadow: "lg",
+                bg: "red.500",
+              }}
+              onClick={() => {
+                HandleBatal(transaksi.id);
+              }}
+              {...stylewarn}
+            >
+              Batalkan
+            </Button>
+            <Button
+              w="max-content"
+              _hover={{
+                transform: "translateY(-2px)",
+                boxShadow: "lg",
+                bg: "green.500",
+              }}
+              {...stylesuccess}
+              onClick={() => {
+                OpenWhatsApp({
+                  mobileNumber: "+6283146542084",
+                  namaSiswa: `${siswa.nama_depan} ${siswa.nama_belakang}`,
+                  namaMentor: `${mentor.nama_depan} ${mentor.nama_belakang}`,
+                  namaKursus: `${kursus.nama}`,
+                  modul: `${kursus.modul}`,
+                  price: `${mentor.price}`,
+                  transaksiId: param.transaksiId,
+                });
+              }}
+            >
+              Bayar Sekarang
+            </Button>
+          </HStack>
+        ) : null}
       </Stack>
     </Container>
   );

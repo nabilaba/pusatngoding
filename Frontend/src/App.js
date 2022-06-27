@@ -28,6 +28,7 @@ import TransaksiSiswa from "./routes/dashboard/siswa/Transaksi";
 import SiswaListTransaksi from "./routes/dashboard/siswa/ListTransaksi";
 import AdminListTransaksi from "./routes/dashboard/admin/transaksi/ListTransaksi";
 import TransaksiAdmin from "./routes/dashboard/admin/transaksi/Transaksi";
+import GantiFotoProfil from "./routes/dashboard/GantiFotoProfil";
 
 export default function App() {
   const { loggedAs } = useLoginState();
@@ -45,6 +46,7 @@ export default function App() {
             <Route path="akun" element={<Outlet />}>
               <Route index element={<AkunMentor />} />
               <Route path="email-password" element={<EmailPasswordMentor />} />
+              <Route path="foto-profil" element={<GantiFotoProfil />} />
             </Route>
           </Route>
         ) : null}
@@ -59,6 +61,7 @@ export default function App() {
             <Route path="akun" element={<Outlet />}>
               <Route index element={<AkunSiswa />} />
               <Route path="email-password" element={<EmailPasswordSiswa />} />
+              <Route path="foto-profil" element={<GantiFotoProfil />} />
             </Route>
           </Route>
         ) : null}

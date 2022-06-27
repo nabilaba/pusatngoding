@@ -49,6 +49,7 @@ export default function ListTransaksi() {
       >
         <Box>
           <Text>ID Transaksi: {props.id}</Text>
+          <Text>Status: {props.status}</Text>
           <Text color={useColorModeValue("gray.600", "gray.300")}>
             {props.created_at}
           </Text>
