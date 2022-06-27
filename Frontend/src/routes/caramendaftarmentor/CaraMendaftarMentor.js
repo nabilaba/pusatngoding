@@ -88,7 +88,7 @@ export default function CaraMendaftarMentor() {
         <Box flex={1} w="md" h="md" p={10} align={"center"}>
           <Img
             src={props.img}
-            h="full"
+            h={{base: "48", sm: "full"}}
             fit="cover"
             objectPosition="center"
           ></Img>
@@ -125,9 +125,9 @@ export default function CaraMendaftarMentor() {
         </Stack>
         <Button
           as="a"
-          href="https://docs.google.com/forms/d/e/1FAIpQLSex0ml4hdrempgQ04eu9Sqy5A1kUdfMfQjfywLz74zjDEWOOw/viewform?usp=sf_link"
-          color={useColorModeValue("white", "black")}
-          bg={useColorModeValue("accentLight.400", "accentDark.400")}
+          href="https://docs.google.com/forms/d/e/1FAIpQLScVZLRuGavIoVk6t3y9ZLz3MV_bR71qglHQqwnGAv-_thXj1w/viewform"
+          color={useColorModeValue("white","black")}
+          bg={useColorModeValue('accentLight.400','accentDark.400')}
           _hover={{
             bg: useColorModeValue("accentLight.500", "accentDark.500"),
           }}

@@ -45,7 +45,7 @@ export default function SignUpGuru() {
           p="4"
           mt={4}
         >
-          Baca Selengkapnya
+          Cara Mendaftar
         </Button>
       </Box>
     </Stack>
