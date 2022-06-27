@@ -6,7 +6,11 @@ import {
   ListItem,
   Stack,
   Text,
+  useColorModeValue,
   useToast,
+  Radio,
+  RadioGroup,
+  Button,
 } from "@chakra-ui/react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
@@ -21,6 +25,8 @@ export default function Transaksi() {
   const [kursus, setKursus] = useState({});
   const [siswa, setSiswa] = useState({});
   const [transaksi, setTransaksi] = useState({});
+
+  const [status, setStatus] = useState("");
 
   const navigate = useNavigate();
   const toast = useToast();
@@ -69,6 +75,42 @@ export default function Transaksi() {
       </HStack>
     );
   };
+
+  const HandleUpdateStatus = async () => {
+    const headers = {
+      Authorization: "Bearer " + localStorage.getItem("tokenId"),
+    };
+
+    const data = {
+      ...transaksi,
+      status: status,
+    };
+
+    await axios
+      .put(`${TRANSAKSI}/${param.transaksiId}`, data, {
+        headers,
+      })
+      .then(() => {
+        toast({
+          title: "Berhasil",
+          description: "Status berhasil diubah",
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        });
+        navigate(-1);
+      })
+      .catch((err) => {
+        toast({
+          title: "Gagal",
+          description: "Status gagal diubah",
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+        });
+      });
+  };
+
   return isLoading ? (
     <LoadingFetchEffect />
   ) : (
@@ -132,6 +174,27 @@ export default function Transaksi() {
               Mentor akan mengirimkan konfirmasi ke WhatsApp yang kalian gunakan
             </ListItem>
           </OrderedList>
+        </Stack>
+
+        <Stack
+          as="form"
+          justify="space-between"
+          direction={{ base: "column", xl: "row" }}
+        >
+          <Stack>
+            <Text>Status</Text>
+            <RadioGroup onChange={setStatus} value={status || transaksi.status}>
+              <Stack direction={{ base: "column", xl: "row" }}>
+                <Radio value="Belum Bayar">Belum Bayar</Radio>
+                <Radio value="Menunggu Persetujuan Mentor">Menunggu Persetujuan Mentor</Radio>
+                <Radio value="Dibatalkan Siswa">Dibatalkan Siswa</Radio>
+                <Radio value="Dibatalkan Mentor">Dibatalkan Mentor</Radio>
+                <Radio value="Dibatalkan Admin">Dibatalkan Admin</Radio>
+                <Radio value="Transaksi Sukses">Transaksi Sukses</Radio>
+              </Stack>
+            </RadioGroup>
+          </Stack>
+          <Button onClick={HandleUpdateStatus}>Simpan</Button>
         </Stack>
       </Stack>
     </Container>
