@@ -1,4 +1,3 @@
-import "./SignUpMentor.css";
 import {
   Container,
   Box,

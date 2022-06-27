@@ -1,5 +1,3 @@
-import "./Footer.css";
-
 import {
   Box,
   Text,

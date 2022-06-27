@@ -1,4 +1,3 @@
-import "./SignUp.css";
 import { useEffect } from "react";
 import { Link as LinkTo, useNavigate } from "react-router-dom";
 import {

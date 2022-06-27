@@ -1,5 +1,3 @@
-import "./Navbar.css";
-
 import {
   Box,
   Flex,

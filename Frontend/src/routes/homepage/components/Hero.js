@@ -1,4 +1,3 @@
-import "./Hero.css";
 import ImgHero from "../../../assets/ImgHero.png";
 
 import {
@@ -20,7 +19,7 @@ export default function Hero() {
       as={Container}
       direction={{ base: "column", md: "row" }}
       maxW={"7xl"}
-      style={{ overflow: 'hidden' }}
+      style={{ overflow: "hidden" }}
     >
       <Flex
         py={{ base: 0, md: 8 }}
@@ -38,8 +37,8 @@ export default function Hero() {
             <Text fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }}>
               Cari Mentor
             </Text>
-            <Text fontSize={{base: "2xl", md: "3xl", lg: "4xl"}}>
-              Solusi Untuk Belajar Ngoding dan <Text as={"span"} color={useColorModeValue('rgba(255, 155, 41, 1)','rgba(97, 210, 242, 0.7)')}>Raih Mimpimu</Text>
+            <Text fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}>
+              Solusi Untuk Belajar Ngoding dan Raih Mimpimu
             </Text>
           </Heading>
           <Text fontSize={"md"} color={"gray.500"} align="justify">
@@ -50,59 +49,59 @@ export default function Hero() {
           <Stack
             direction={{ base: "column-reverse", sm: "row", md: "row" }}
             align={"center"}
-            justifyContent={{base: "space-around", sm: "space-between"}}
-            spacing={{sm: "20"}}
+            justifyContent={{ base: "space-around", sm: "space-between" }}
+            spacing={{ sm: "20" }}
           >
             <Box>
-            <Button              
-              as={LinkTo}
-              to="/mendaftar"
-              size={{ base: "md", md: "lg" }}
-              w={{base: 'xs', sm: "full"}}
-              rounded={"full"}
-              color={useColorModeValue("white","black")}
-              bg={useColorModeValue("accentLight.400", "accentDark.400")}
-              _hover={{
-                bg: useColorModeValue("accentLight.500", "accentDark.500"),
-                transform: "translateY(2px)",
-                boxShadow: "lg",
-              }}
-            >
-              Daftar Sekarang
-            </Button>
+              <Button
+                as={LinkTo}
+                to="/mendaftar"
+                size={{ base: "md", md: "lg" }}
+                w={{ base: "xs", sm: "full" }}
+                rounded={"full"}
+                color={useColorModeValue("white", "black")}
+                bg={useColorModeValue("accentLight.400", "accentDark.400")}
+                _hover={{
+                  bg: useColorModeValue("accentLight.500", "accentDark.500"),
+                  transform: "translateY(2px)",
+                  boxShadow: "lg",
+                }}
+              >
+                Daftar Sekarang
+              </Button>
             </Box>
             <Stack
               // border={"1px solid black"}
-              direction={{ base: "row", md: "row"}}
-              spacing={{base:'12', md: '16'}}
+              direction={{ base: "row", md: "row" }}
+              spacing={{ base: "12", md: "16" }}
               align={"center"}
               justifyContent={"space-between"}
-              w={{md:"full"}}
+              w={{ md: "full" }}
             >
-            <Box>
-              <Heading>300+</Heading>
-              <Text color="gray.500" as={"span"} fontSize={"md"}>
-                Mentor Terdaftar
-              </Text>
-            </Box>
-            <Box>
-              <Heading>3k+</Heading>
-              <Text color="gray.500" as={"span"} fontSize={"md"}>
-                Ulasan Positif Siswa
-              </Text>
-            </Box>
+              <Box>
+                <Heading>300+</Heading>
+                <Text color="gray.500" as={"span"} fontSize={"md"}>
+                  Mentor Terdaftar
+                </Text>
+              </Box>
+              <Box>
+                <Heading>3k+</Heading>
+                <Text color="gray.500" as={"span"} fontSize={"md"}>
+                  Ulasan Positif Siswa
+                </Text>
+              </Box>
             </Stack>
           </Stack>
         </Stack>
       </Flex>
       <Flex
-      data-aos="fade-left"
+        data-aos="fade-left"
         h={"90vh"}
         flex={1}
         align={"center"}
         justify={"center"}
         order={{ base: 1, md: 2 }}
-        pl={{md:'40px'}}
+        pl={{ md: "40px" }}
       >
         <Image
           alt={"Login Image"}

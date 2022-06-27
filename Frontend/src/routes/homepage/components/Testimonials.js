@@ -1,4 +1,3 @@
-import './Testimonials.css'
 import { Container, Flex, Box, chakra, Avatar, useColorModeValue, Text } from '@chakra-ui/react';
 
 export default function Testimonials() {

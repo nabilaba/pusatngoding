@@ -1,4 +1,3 @@
-import "./NotFound.css";
 import Img404 from "../../assets/Img404.svg";
 import { Image, Container, Heading, Stack } from "@chakra-ui/react";
 

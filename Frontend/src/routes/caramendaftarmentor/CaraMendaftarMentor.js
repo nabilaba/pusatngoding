@@ -13,6 +13,9 @@ import mendaftarmentor1 from "../../assets/img/mendaftarmentor/1.png";
 import mendaftarmentor2 from "../../assets/img/mendaftarmentor/2.png";
 import mendaftarmentor3 from "../../assets/img/mendaftarmentor/3.png";
 import mendaftarmentor4 from "../../assets/img/mendaftarmentor/4.png";
+import LoadingFetchEffect from "../../components/LoadingFetchEffect";
+import useTimeoutGlobal from "../../zustand/timeoutPindahHalaman";
+import { useEffect, useState } from "react";
 
 const syarats = [
   {
@@ -45,6 +48,14 @@ const syarats = [
 ];
 
 export default function CaraMendaftarMentor() {
+  const { timeout } = useTimeoutGlobal();
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, timeout);
+  });
+
   const ContainerSyarat = (props) => {
     return (
       <Stack
@@ -55,7 +66,7 @@ export default function CaraMendaftarMentor() {
         }}
         direction={{ base: "column", md: props.direction }}
       >
-        <Box flex={1}>
+        <Box flex={1} data-aos="fade-up">
           <Heading
             mb={4}
             fontSize={{
@@ -88,7 +99,7 @@ export default function CaraMendaftarMentor() {
         <Box flex={1} w="md" h="md" p={10} align={"center"}>
           <Img
             src={props.img}
-            h={{base: "48", sm: "full"}}
+            h={{ base: "48", sm: "full" }}
             fit="cover"
             objectPosition="center"
           ></Img>
@@ -97,8 +108,18 @@ export default function CaraMendaftarMentor() {
     );
   };
 
-  return (
-    <Container maxW={"7xl"}>
+  const stylependaftaran = {
+    color: useColorModeValue("white", "black"),
+    bg: useColorModeValue("accentLight.400", "accentDark.400"),
+    _hover: {
+      bg: useColorModeValue("accentLight.500", "accentDark.500"),
+    },
+  };
+
+  return isLoading ? (
+    <LoadingFetchEffect />
+  ) : (
+    <Container maxW={"7xl"} data-aos="fade-up">
       <Stack py={3} spacing={10}>
         <Stack align={"center"} spacing={10}>
           <Stack textAlign={"center"}>
@@ -126,14 +147,10 @@ export default function CaraMendaftarMentor() {
         <Button
           as="a"
           href="https://docs.google.com/forms/d/e/1FAIpQLScVZLRuGavIoVk6t3y9ZLz3MV_bR71qglHQqwnGAv-_thXj1w/viewform"
-          color={useColorModeValue("white","black")}
-          bg={useColorModeValue('accentLight.400','accentDark.400')}
-          _hover={{
-            bg: useColorModeValue("accentLight.500", "accentDark.500"),
-          }}
           p="4"
           w="full"
           target="_blank"
+          {...stylependaftaran}
         >
           Link Pendaftaran
         </Button>
