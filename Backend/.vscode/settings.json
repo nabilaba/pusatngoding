@@ -1,0 +1,17 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 7777,
+            "driver": "MySQL",
+            "name": "MySQLConnection",
+            "database": "rgkm77",
+            "username": "sqluser",
+            "password": "rgkm2022"
+        }
+    ]
+}
