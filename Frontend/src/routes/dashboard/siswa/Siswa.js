@@ -4,7 +4,6 @@ import {
   Container,
   Image,
   Heading,
-  InputLeftElement,
   InputGroup,
   Input,
   Text,
@@ -15,6 +14,7 @@ import {
   Icon,
   Stack,
   useToast,
+  Button,
 } from "@chakra-ui/react";
 import { useEffect, useState, useCallback } from "react";
 import { StarIcon, SearchIcon } from "@chakra-ui/icons";
@@ -33,6 +33,8 @@ export default function Siswa() {
   const toast = useToast();
   const navigate = useNavigate();
   const { setIsLoggedOut, setLoggedAs, setUserId } = useLoginState();
+
+  const [query, setQuery] = useState("");
 
   const getMentor = useCallback(async () => {
     setLoading(true);
@@ -57,6 +59,29 @@ export default function Siswa() {
     });
     setDataKomentar(res.data);
   }, [setMentor]);
+
+  const getMentorSearch = useCallback(async () => {
+    const headers = {
+      Authorization: "Bearer " + localStorage.getItem("tokenId"),
+    };
+    await axios
+      .get(`${MENTOR}?q=${query}`, { headers })
+      .then((res) => {
+        const mentorRequests = res.data.map((todo) =>
+          axios
+            .get(`${MENTOR}/${todo.id}/kursus`, { headers })
+            .then((response) => ({ ...todo, kursus: response.data }))
+        );
+
+        return Promise.all(mentorRequests);
+      })
+      .then((res) => setMentor(res));
+
+    const res = await axios.get(`${KOMENTAR}`, {
+      headers,
+    });
+    setDataKomentar(res.data);
+  }, [setMentor, query]);
 
   useEffect(() => {
     getMentor()
@@ -124,13 +149,17 @@ export default function Siswa() {
                     .filter((item) => item.kursusId === props.kursus.id)
                     .map((item) => item.rate)
                     .reduce((a, b) => a + b, 0) /
-                  dataKomentar.filter((item) => item.kursusId === props.kursus.id)
-                    .length
+                  dataKomentar.filter(
+                    (item) => item.kursusId === props.kursus.id
+                  ).length
                 ).toFixed(2)}
             </Text>
             <Text fontSize="xs" fontWeight={"bold"} color="gray.500">
               (
-              {dataKomentar.filter((item) => item.kursusId === props.kursus.id).length}{" "}
+              {
+                dataKomentar.filter((item) => item.kursusId === props.kursus.id)
+                  .length
+              }{" "}
               feedback)
             </Text>
           </HStack>
@@ -152,18 +181,34 @@ export default function Siswa() {
     );
   };
 
+  const HandleCari = async (e) => {
+    e.preventDefault();
+    getMentorSearch();
+  };
+
   return isLoading ? (
     <LoadingFetchEffect />
   ) : (
     <Stack pt={"4"} data-aos="fade-up">
       <Container maxW={"7xl"}>
-        <InputGroup>
-          <InputLeftElement
-            pointerEvents="none"
-            children={<SearchIcon color="gray.300" />}
-          />
-          <Input type="text" placeholder="Cari Mentor" {...searchstyle} />
-        </InputGroup>
+        <HStack as="form" onSubmit={(e) => HandleCari(e)}>
+          <InputGroup>
+            <Input
+              type="text"
+              placeholder="Cari dengan kata kunci apapun disini..."
+              onChange={(e) => setQuery(e.target.value)}
+              {...searchstyle}
+            />
+          </InputGroup>
+          <Button
+            type="submit"
+            variantColor="blue"
+            variant="outline"
+            rightIcon={<SearchIcon />}
+          >
+            Cari
+          </Button>
+        </HStack>
         <SimpleGrid
           columns={{ base: 1, md: 2, lg: 3 }}
           spacing={5}
