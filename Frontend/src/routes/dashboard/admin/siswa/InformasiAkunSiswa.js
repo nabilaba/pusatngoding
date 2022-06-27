@@ -7,15 +7,11 @@ import {
   useColorModeValue,
   HStack,
   Avatar,
-  AvatarBadge,
-  IconButton,
-  Center,
   Divider,
   Text,
   Container,
   useToast,
 } from "@chakra-ui/react";
-import { SmallCloseIcon } from "@chakra-ui/icons";
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { BASE_URL } from "../../../../api/API";
@@ -67,6 +63,14 @@ export default function InformasiAkunSiswa() {
     e.preventDefault();
 
     const data = {
+      nama_depan,
+      nama_belakang,
+      no_telp,
+      kota,
+      pendidikan,
+      tgl_lahir,
+      email,
+      password,
       ...user,
       [name]: field,
     };
@@ -140,21 +144,7 @@ export default function InformasiAkunSiswa() {
           </Heading>
           <FormControl>
             <FormLabel>Foto Profil</FormLabel>
-            <Stack direction={["column", "row"]} spacing={6}>
-              <Center>
-                <Avatar size="xl" src={user.avatar}>
-                  <AvatarBadge
-                    as={IconButton}
-                    size="sm"
-                    rounded="full"
-                    top="-10px"
-                    colorScheme="red"
-                    aria-label="remove Image"
-                    icon={<SmallCloseIcon />}
-                  />
-                </Avatar>
-              </Center>
-            </Stack>
+            <Avatar size="2xl" src={user.avatar} />
           </FormControl>
           <HStack spacing={4}>
             <Inputan

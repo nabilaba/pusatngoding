@@ -6,30 +6,69 @@ import {
   ListItem,
   Stack,
   Text,
+  useToast,
 } from "@chakra-ui/react";
-import {  useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect, useCallback } from "react";
 import LoadingFetchEffect from "../../../../components/LoadingFetchEffect";
+import { MENTOR, KURSUS, TRANSAKSI, SISWA } from "../../../../api/API";
+import axios from "axios";
 
 export default function Transaksi() {
   const param = useParams();
   const [isLoading, setLoading] = useState(true);
+  const [mentor, setMentor] = useState({});
+  const [kursus, setKursus] = useState({});
+  const [siswa, setSiswa] = useState({});
+  const [transaksi, setTransaksi] = useState({});
+
+  const navigate = useNavigate();
+  const toast = useToast();
+
+  const getKursus = useCallback(async () => {
+    const headers = {
+      Authorization: "Bearer " + localStorage.getItem("tokenId"),
+    };
+
+    const response = await axios.get(`${TRANSAKSI}/${param.transaksiId}`, {
+      headers,
+    });
+    setTransaksi(response.data);
+
+    const responseKursus = await axios.get(
+      `${KURSUS}/${response.data.kursusId}`,
+      {
+        headers,
+      }
+    );
+    setKursus(responseKursus.data);
+
+    const responseSiswa = await axios.get(`${SISWA}/${response.data.siswaId}`, {
+      headers,
+    });
+    setSiswa(responseSiswa.data);
+
+    const responseMentor = await axios.get(
+      `${MENTOR}/${responseKursus.data.mentorId}`,
+      {
+        headers,
+      }
+    );
+    setMentor(responseMentor.data);
+  }, [param.transaksiId]);
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
-  });
+    getKursus().then(() => setLoading(false));
+  }, [getKursus, isLoading]);
 
   const Details = ({ kiri, kanan }) => {
     return (
       <HStack justifyContent="space-between">
         <Text>{kiri}</Text>
-        <Text fontWeight="bold">{kanan}</Text>
+        <Text>{kanan}</Text>
       </HStack>
     );
   };
-
   return isLoading ? (
     <LoadingFetchEffect />
   ) : (
@@ -47,14 +86,17 @@ export default function Transaksi() {
           </Heading>
           <Details
             kiri="Nama Pemesan"
-            kanan={"Dummy"}
+            kanan={`${siswa.nama_depan} ${siswa.nama_belakang}`}
           />
           <Details
             kiri="Nama Mentor"
-            kanan={`Dummy2`}
+            kanan={`${mentor.nama_depan} ${mentor.nama_belakang}`}
           />
-          <Details kiri="Biaya Kursus" kanan="Rp.100.000 / Jam" />
-          <Details kiri="Status" kanan="Lunas" />
+          <Details kiri="Nama Kursus" kanan={`${kursus.nama}`} />
+          <Details kiri="Modul" kanan={`${kursus.modul}`} />
+          <Details kiri="Tanggal Transaksi" kanan={`${kursus.created_at}`} />
+          <Details kiri="Biaya Kursus" kanan={`${mentor.price}`} />
+          <Details kiri="Status" kanan={`${transaksi.status}`} />
         </Stack>
 
         <Stack borderWidth={1} p={5} borderRadius={20}>

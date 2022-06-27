@@ -57,6 +57,9 @@ export default function InformasiKursus() {
     e.preventDefault();
 
     const dataBody = {
+      nama,
+      deskripsi,
+      modul,
       ...data,
       [name]: field,
     };
@@ -160,7 +163,7 @@ export default function InformasiKursus() {
             type="text"
           />
           <Inputan
-            judul="deskripsi"
+            judul="Deskripsi"
             change={setDeskripsi}
             plc={deskripsi || data.deskripsi}
             onSubmit={(e) => HandleSubmit(e, "deskripsi", deskripsi)}
@@ -195,11 +198,11 @@ export default function InformasiKursus() {
           my={12}
         >
           <Heading lineHeight={1.1} fontSize={{ base: "2xl", sm: "3xl" }}>
-            Hapus Akun
+            Hapus Kursus
           </Heading>
           <Text>
-            Penghapusan akun tidak bisa dibatalkan, anda harus mendaftar ulang
-            untuk dapat menjadi parnter kursus kami lagi
+            Penghapusan kursus tidak bisa dibatalkan, anda harus membuat ulang
+            lagi
           </Text>
           <Button
             w="max-content"
@@ -213,7 +216,7 @@ export default function InformasiKursus() {
             }}
             {...stylewarn}
           >
-            Hapus Akun
+            Hapus Kursus
           </Button>
         </Stack>
       </Stack>

@@ -40,6 +40,8 @@ export default function SuntingProfilMentor() {
     e.preventDefault();
 
     const data = {
+      email,
+      password,
       ...user,
       [name]: field,
     };
