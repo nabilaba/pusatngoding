@@ -86,17 +86,44 @@ export default function Transaksi() {
     }
   };
 
+  const HandleSetujui = async () => {
+    const headers = {
+      Authorization: "Bearer " + localStorage.getItem("tokenId"),
+    };
+
+    const data = {
+      ...transaksi,
+      status: "Disetujui Mentor",
+    };
+
+    const response = await axios.put(
+      `${TRANSAKSI}/${param.transaksiId}`,
+      data,
+      { headers }
+    );
+    if (response.status === 200) {
+      toast({
+        title: "Berhasil menyetujui transaksi.",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+        position: "top",
+      });
+      navigate("/dashboard/transaksi");
+    }
+  };
+
   useEffect(() => {
-      getKursus().then(() => {
-        setLoading(false);
-      })
+    getKursus().then(() => {
+      setLoading(false);
+    });
   }, [getKursus, isLoading]);
 
   const stylewarn = {
     bg: "red.400",
     color: useColorModeValue("white", "black"),
   };
-  
+
   const Details = ({ kiri, kanan }) => {
     return (
       <HStack justifyContent="space-between">
@@ -169,9 +196,7 @@ export default function Transaksi() {
             </ListItem>
           </OrderedList>
         </Stack>
-        {transaksi.status === "Dibatalkan Siswa" ||
-        transaksi.status !== "Dibatalkan Mentor" ||
-        transaksi.status !== "Lunas" ? (
+        {transaksi.status === "Menunggu Persetujuan Mentor" ? (
           <HStack justify="end">
             <Button
               w="max-content"
@@ -186,6 +211,20 @@ export default function Transaksi() {
               {...stylewarn}
             >
               Batalkan
+            </Button>
+            <Button
+              w="max-content"
+              _hover={{
+                transform: "translateY(-2px)",
+                boxShadow: "lg",
+                bg: "green.500",
+              }}
+              onClick={() => {
+                HandleSetujui(transaksi.id);
+              }}
+              {...stylewarn}
+            >
+              Setujui
             </Button>
           </HStack>
         ) : null}
