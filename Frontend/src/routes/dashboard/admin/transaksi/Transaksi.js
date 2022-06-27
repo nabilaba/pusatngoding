@@ -186,6 +186,7 @@ export default function Transaksi() {
               <Stack direction={{ base: "column", xl: "row" }}>
                 <Radio value="Belum Bayar">Belum Bayar</Radio>
                 <Radio value="Menunggu Persetujuan Mentor">Menunggu Persetujuan Mentor</Radio>
+                <Radio value="Disetujui Mentor">Disetujui Mentor</Radio>
                 <Radio value="Dibatalkan Siswa">Dibatalkan Siswa</Radio>
                 <Radio value="Dibatalkan Mentor">Dibatalkan Mentor</Radio>
                 <Radio value="Dibatalkan Admin">Dibatalkan Admin</Radio>
