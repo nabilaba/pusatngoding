@@ -15,7 +15,7 @@ CREATE TABLE users(
    price VARCHAR DEFAULT '', -- mentor
    rating VARCHAR DEFAULT '', -- mentor
    lulusan VARCHAR DEFAULT '', -- mentor
-   avatar VARCHAR DEFAULT '', -- siswa & mentor
+   avatar VARCHAR DEFAULT 'avatar.jpg', -- siswa & mentor
    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -35,18 +35,19 @@ CREATE TABLE komentar(
     content TEXT,
     users_id INTEGER NOT NULL,
     kursus_id INTEGER NOT NULL,
-    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (`users_id`) REFERENCES `users` (`id`),
     FOREIGN KEY (`kursus_id`) REFERENCES `kursus` (`id`)
 );
 
 CREATE TABLE transaksi(
-    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     users_id INTEGER NOT NULL,
     kursus_id INTEGER NOT NULL,
     status BOOLEAN,
-    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-    endAt DATETIME,
+    bukti_transaksi VARCHAR NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    end_at DATETIME,
     FOREIGN KEY (`users_id`) REFERENCES `users` (`id`),
     FOREIGN KEY (`kursus_id`) REFERENCES `kursus` (`id`)
 );
