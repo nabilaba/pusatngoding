@@ -20,7 +20,7 @@ export default function Hero() {
       as={Container}
       direction={{ base: "column", md: "row" }}
       maxW={"7xl"}
-      pt={'20'}
+      style={{ overflow: 'hidden' }}
     >
       <Flex
         py={{ base: 0, md: 8 }}

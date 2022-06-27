@@ -62,7 +62,6 @@ export default function Login() {
           duration: 2000,
           isClosable: true,
         });
-        return null;
       });
   };
 
@@ -92,7 +91,7 @@ export default function Login() {
         </Heading>
         <Stack
           spacing={4}
-          my={10}
+          my={4}
           as={"form"}
           onSubmit={(e) => HandleSubmit(e)}
         >
@@ -128,7 +127,7 @@ export default function Login() {
               </InputRightElement>
             </InputGroup>
           </FormControl>
-          <Stack pt={10} spacing={5}>
+          <Stack pt={2} spacing={8}>
             <Button
               type={"submit"}
               color={useColorModeValue("white", "black")}

@@ -26,6 +26,7 @@ func (k *kursus) GetAll(ctx context.Context) ([]domain.KursusResp, error) {
 
 	for rows.Next() {
 		kursus := domain.KursusResp{}
+
 		err := rows.Scan(&kursus.Id, &kursus.Nama, &kursus.User.Id, &kursus.Deskripsi, &kursus.Modul, &kursus.CreatedAt)
 		if err != nil {
 			return []domain.KursusResp{}, err
@@ -55,11 +56,33 @@ func (k *kursus) GetById(ctx context.Context, id int64) (domain.KursusResp, erro
 func (k *kursus) Store(ctx context.Context, kursus *domain.Kursus) (domain.KursusResp, error) {
 	sqlStmt := `INSERT INTO kursus(nama, users_id, deskripsi, modul) VALUES(?, ?, ?, ?)`
 
-	row, _ := k.db.ExecContext(ctx, sqlStmt, kursus.Nama)
+	row, err := k.db.ExecContext(ctx, sqlStmt, kursus.Nama, kursus.UsersId, kursus.Deskripsi, kursus.Modul)
+	if err != nil {
+		return domain.KursusResp{}, err
+	}
 
-	lastId, _ := row.LastInsertId()
+	id, _ := row.LastInsertId()
 
-	res, _ := k.GetById(ctx, lastId)
+	res, err := k.GetById(ctx, id)
+	if err != nil {
+		return domain.KursusResp{}, err
+	}
+
+	return res, nil
+}
+
+func (k *kursus) Update(ctx context.Context, id int64, kursus *domain.Kursus) (domain.KursusResp, error) {
+	sqlStmt := `UPDATE kursus SET nama = ?, users_id = ?, deskripsi = ?, modul = ? WHERE id = ?`
+
+	_, err := k.db.ExecContext(ctx, sqlStmt, kursus.Nama, kursus.UsersId, kursus.Deskripsi, kursus.Modul, id)
+	if err != nil {
+		return domain.KursusResp{}, err
+	}
+
+	res, err := k.GetById(ctx, id)
+	if err != nil {
+		return domain.KursusResp{}, err
+	}
 
 	return res, nil
 }

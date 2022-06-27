@@ -36,9 +36,9 @@ export default function SignUpGuru() {
         </Heading>
         <Button
           as={LinkTo}
-          to={"mendaftar_mentor"}
-          color={useColorModeValue("white","black")}
-          bg={useColorModeValue("accentLight.400",'accentDark.400')}
+          to={"cara_mendaftar_mentor"}
+          color={useColorModeValue("white", "black")}
+          bg={useColorModeValue("accentLight.400", "accentDark.400")}
           _hover={{
             bg: useColorModeValue("accentLight.500", "accentDark.500"),
           }}

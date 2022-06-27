@@ -51,7 +51,7 @@ export default function ListKomen(props) {
             <HStack>
               <Icon as={BsStarFill} h={3} w={3} />
               <Text fontSize="md" color="gray.500">
-                {props.star}
+                {props.komentar.rate}
               </Text>
             </HStack>
           </Box>
@@ -80,16 +80,26 @@ export default function ListKomen(props) {
       </Stack>
     );
   };
-
   return (
     <Stack>
-      <Heading size={"md"}>Anda Mendapat 4.6 Rating di Akhir-Akhir ini</Heading>
+      <Heading size={"md"}>
+        Anda Mendapat{" "}
+        {props.komentar.filter((item) => item.kursusId === props.kursus.id).length &&
+          (
+            props.komentar
+              .filter((item) => item.kursusId === props.kursus.id)
+              .map((item) => item.rate)
+              .reduce((a, b) => a + b, 0) /
+            props.komentar.filter((item) => item.kursusId === props.kursus.id).length
+          ).toFixed(2)}{" "}
+        Rating di Akhir-Akhir ini
+      </Heading>
       <SimpleGrid w="full" autoRows={"1fr"} spacing={2}>
         {props.siswa.map((item) =>
           props.komentar
             .filter(
               (item2) =>
-                item2.siswaId === item.id && item2.mentorId === props.mentor.id
+                item2.siswaId === item.id && item2.kursusId === props.kursus.id
             )
             .map((item3, index) => (
               <Komen key={index} {...item} komentar={item3} />

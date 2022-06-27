@@ -5,7 +5,6 @@ import {
   SimpleGrid,
   chakra,
   Button,
-  Icon,
   IconButton,
   ButtonGroup,
   Container,
@@ -18,28 +17,39 @@ import {
   Hide,
   useToast,
 } from "@chakra-ui/react";
-import { AiTwotoneLock } from "react-icons/ai";
 import { BsFillTrashFill } from "react-icons/bs";
 import { useState, useEffect } from "react";
-import { ADMIN, MENTOR, SISWA } from "../../../api/API";
+import { ADMIN, MENTOR, SISWA, KURSUS } from "../../../api/API";
 import useAdmin from "../../../zustand/todoAdmin";
 import LoadingFetchEffect from "../../../components/LoadingFetchEffect";
+import { Link as LinkTo } from "react-router-dom";
+import { ViewIcon } from "@chakra-ui/icons";
 
 export default function Admin() {
   const [isLoading, setLoading] = useState(true);
 
-  const { admin, mentor, siswa, setAdmin, setMentor, setSiswa, remove } =
-    useAdmin();
+  const {
+    admin,
+    mentor,
+    siswa,
+    setAdmin,
+    setMentor,
+    setSiswa,
+    remove,
+    kursus,
+    setKursus,
+  } = useAdmin();
 
   useEffect(() => {
     setLoading(true);
-    setAdmin(ADMIN)
-      .then(() => {
-        setMentor(MENTOR).then(() => {
-          setSiswa(SISWA).finally(() => setLoading(false));
-        });
-      })
-  }, [setAdmin, setMentor, setSiswa]);
+    setAdmin(ADMIN).then(() => {
+      setMentor(MENTOR).then(() => {
+        setSiswa(SISWA)
+          .then(() => setKursus(KURSUS))
+          .finally(() => setLoading(false));
+      });
+    });
+  }, [setAdmin, setMentor, setSiswa, setKursus]);
 
   const textColor = useColorModeValue("accentLight.400", "accentDark.400");
   const bg = useColorModeValue("gray.100", "gray.700");
@@ -122,7 +132,9 @@ export default function Admin() {
           px={10}
           fontWeight="hairline"
         >
-          <span>{props.nama} {props.nama_depan} {props.nama_belakang}</span>
+          <span>
+            {props.nama} {props.nama_depan} {props.nama_belakang}
+          </span>
           <chakra.span
             textOverflow="ellipsis"
             overflow="hidden"
@@ -132,14 +144,14 @@ export default function Admin() {
           </chakra.span>
           <Flex>
             <ButtonGroup variant="solid" size="sm" spacing={3}>
-              <Button
-                size="sm"
-                variant="solid"
-                leftIcon={<Icon as={AiTwotoneLock} />}
-                colorScheme="purple"
-              >
-                Lihat Akun
-              </Button>
+              <IconButton
+                as={LinkTo}
+                to={`${props.judul}/${props.id}`}
+                colorScheme="blue"
+                variant="outline"
+                icon={<ViewIcon />}
+                aria-label="Lihat"
+              />
               <IconButton
                 colorScheme="red"
                 variant="outline"
@@ -165,8 +177,14 @@ export default function Admin() {
         >
           <Heading>List {judul}</Heading>
           {judul !== "Siswa" ? (
-            <Button rounded={"md"} py={"3"} {...setButton}>
-              Tambah Akun {judul}
+            <Button
+              as={LinkTo}
+              to={`tambah-${judul.toLowerCase()}`}
+              rounded={"md"}
+              py={"3"}
+              {...setButton}
+            >
+              Tambah {judul}
             </Button>
           ) : null}
         </Stack>
@@ -184,7 +202,7 @@ export default function Admin() {
           >
             <Hide below="md">{kepalaTabel()}</Hide>
             {data.map((item, index) => {
-              return <IsiTabs {...item} key={index} api={api} />;
+              return <IsiTabs {...item} key={index} api={api} judul={judul} />;
             })}
           </Stack>
         </Flex>
@@ -201,11 +219,13 @@ export default function Admin() {
           <Tab>List Mentor</Tab>
           <Tab>List Siswa</Tab>
           <Tab>List Admin</Tab>
+          <Tab>List Kursus</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>{ContainerTabs("Mentor", mentor, MENTOR)}</TabPanel>
           <TabPanel>{ContainerTabs("Siswa", siswa, SISWA)}</TabPanel>
           <TabPanel>{ContainerTabs("Admin", admin, ADMIN)}</TabPanel>
+          <TabPanel>{ContainerTabs("Kursus", kursus, KURSUS)}</TabPanel>
         </TabPanels>
       </Tabs>
     </Container>

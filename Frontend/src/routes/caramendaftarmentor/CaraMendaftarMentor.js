@@ -43,7 +43,8 @@ const syarats = [
     direction: "row-reverse",
   },
 ];
-export default function SignUpMentor() {
+
+export default function CaraMendaftarMentor() {
   const ContainerSyarat = (props) => {
     return (
       <Stack

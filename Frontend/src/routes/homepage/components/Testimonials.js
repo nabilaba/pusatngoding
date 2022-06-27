@@ -4,7 +4,7 @@ import { Container, Flex, Box, chakra, Avatar, useColorModeValue, Text } from '@
 export default function Testimonials() {
   return (
     <>
-      <Container maxW={'7xl'}>
+      <Container maxW={'7xl'} style={{ overflow: 'hidden' }}>
         <Flex justify={'center'} py='10' data-aos="fade-up">
           <chakra.span textAlign={'center'} fontSize='28' fontWeight={700} lineHeight={10}>
           Bagaimana <br />Kami di Mata Para Siswa?
