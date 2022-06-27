@@ -67,6 +67,13 @@ export default function AkunMentor() {
     e.preventDefault();
 
     const data = {
+      nama_depan,
+      nama_belakang,
+      no_telp,
+      kota,
+      pendidikan,
+      price,
+      status,
       ...user,
       [name]: field,
     };

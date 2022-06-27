@@ -62,10 +62,16 @@ export default function AkunSiswa() {
     }
   }, [navigate, userId, loggedAs, setIsLoggedOut, setLoggedAs, setUserId]);
 
-  const HandleSubmit = (e, name, field) => {
+  const HandleSubmit = async (e, name, field) => {
     e.preventDefault();
 
     const data = {
+      nama_depan,
+      nama_belakang,
+      no_telp,
+      kota,
+      pendidikan,
+      tgl_lahir,
       ...user,
       [name]: field,
     };
@@ -74,7 +80,7 @@ export default function AkunSiswa() {
       Authorization: "Bearer " + localStorage.getItem("tokenId"),
     };
 
-    axios
+    await axios
       .put(`${BASE_URL}/${loggedAs}/${userId}`, data, { headers })
       .then((response) => {
         toast({
