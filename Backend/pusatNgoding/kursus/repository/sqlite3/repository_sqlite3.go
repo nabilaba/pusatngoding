@@ -88,9 +88,14 @@ func (k *kursus) Update(ctx context.Context, id int64, kursus *domain.Kursus) (d
 }
 
 func (k *kursus) Delete(ctx context.Context, id int64) error {
+	_, err := k.GetById(ctx, id)
+	if err != nil {
+		return err
+	}
+
 	sqlStmt := `DELETE FROM kursus WHERE id = ?`
 
-	_, err := k.db.ExecContext(ctx, sqlStmt, id)
+	_, err = k.db.ExecContext(ctx, sqlStmt, id)
 	if err != nil {
 		return err
 	}
