@@ -27,6 +27,8 @@ import InformasiKursus from "./routes/dashboard/admin/kursus/InformasiKursus";
 import TransaksiSiswa from "./routes/dashboard/siswa/Transaksi";
 import SiswaListTransaksi from "./routes/dashboard/siswa/ListTransaksi";
 import AdminListTransaksi from "./routes/dashboard/admin/transaksi/ListTransaksi";
+import MentorListTransaksi from "./routes/dashboard/mentor/ListTransaksi";
+import TransaksiMentor from "./routes/dashboard/mentor/Transaksi";
 import TransaksiAdmin from "./routes/dashboard/admin/transaksi/Transaksi";
 import GantiFotoProfil from "./routes/dashboard/GantiFotoProfil";
 
@@ -43,6 +45,10 @@ export default function App() {
         {loggedAs === "mentor" ? (
           <Route path="dashboard" element={<Outlet />}>
             <Route index element={<Mentor />} />
+            <Route path="transaksi" element={<Outlet />} >
+              <Route index element={<MentorListTransaksi />} />
+              <Route path=":transaksiId" element={<TransaksiMentor />} />
+            </Route>
             <Route path="akun" element={<Outlet />}>
               <Route index element={<AkunMentor />} />
               <Route path="email-password" element={<EmailPasswordMentor />} />

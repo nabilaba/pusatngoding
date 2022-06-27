@@ -6,15 +6,14 @@ import {
   ListItem,
   Stack,
   Text,
-  useToast,
-  Radio,
-  RadioGroup,
+  useColorModeValue,
   Button,
+  useToast,
 } from "@chakra-ui/react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
-import LoadingFetchEffect from "../../../../components/LoadingFetchEffect";
-import { MENTOR, KURSUS, TRANSAKSI, SISWA } from "../../../../api/API";
+import LoadingFetchEffect from "../../../components/LoadingFetchEffect";
+import { MENTOR, KURSUS, TRANSAKSI, SISWA } from "../../../api/API";
 import axios from "axios";
 
 export default function Transaksi() {
@@ -24,8 +23,6 @@ export default function Transaksi() {
   const [kursus, setKursus] = useState({});
   const [siswa, setSiswa] = useState({});
   const [transaksi, setTransaksi] = useState({});
-
-  const [status, setStatus] = useState("");
 
   const navigate = useNavigate();
   const toast = useToast();
@@ -62,10 +59,44 @@ export default function Transaksi() {
     setMentor(responseMentor.data);
   }, [param.transaksiId]);
 
+  const HandleBatal = async () => {
+    const headers = {
+      Authorization: "Bearer " + localStorage.getItem("tokenId"),
+    };
+
+    const data = {
+      ...transaksi,
+      status: "Dibatalkan Mentor",
+    };
+
+    const response = await axios.put(
+      `${TRANSAKSI}/${param.transaksiId}`,
+      data,
+      { headers }
+    );
+    if (response.status === 200) {
+      toast({
+        title: "Berhasil membatalkan transaksi.",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+        position: "top",
+      });
+      navigate("/dashboard/transaksi");
+    }
+  };
+
   useEffect(() => {
-    getKursus().then(() => setLoading(false));
+      getKursus().then(() => {
+        setLoading(false);
+      })
   }, [getKursus, isLoading]);
 
+  const stylewarn = {
+    bg: "red.400",
+    color: useColorModeValue("white", "black"),
+  };
+  
   const Details = ({ kiri, kanan }) => {
     return (
       <HStack justifyContent="space-between">
@@ -74,42 +105,6 @@ export default function Transaksi() {
       </HStack>
     );
   };
-
-  const HandleUpdateStatus = async () => {
-    const headers = {
-      Authorization: "Bearer " + localStorage.getItem("tokenId"),
-    };
-
-    const data = {
-      ...transaksi,
-      status: status,
-    };
-
-    await axios
-      .put(`${TRANSAKSI}/${param.transaksiId}`, data, {
-        headers,
-      })
-      .then(() => {
-        toast({
-          title: "Berhasil",
-          description: "Status berhasil diubah",
-          status: "success",
-          duration: 2000,
-          isClosable: true,
-        });
-        navigate(-1);
-      })
-      .catch((err) => {
-        toast({
-          title: "Gagal",
-          description: "Status gagal diubah",
-          status: "error",
-          duration: 2000,
-          isClosable: true,
-        });
-      });
-  };
-
   return isLoading ? (
     <LoadingFetchEffect />
   ) : (
@@ -174,27 +169,26 @@ export default function Transaksi() {
             </ListItem>
           </OrderedList>
         </Stack>
-
-        <Stack
-          as="form"
-          justify="space-between"
-          direction={{ base: "column", xl: "row" }}
-        >
-          <Stack>
-            <Text>Status</Text>
-            <RadioGroup onChange={setStatus} value={status || transaksi.status}>
-              <Stack direction={{ base: "column", xl: "row" }}>
-                <Radio value="Belum Bayar">Belum Bayar</Radio>
-                <Radio value="Menunggu Persetujuan Mentor">Menunggu Persetujuan Mentor</Radio>
-                <Radio value="Dibatalkan Siswa">Dibatalkan Siswa</Radio>
-                <Radio value="Dibatalkan Mentor">Dibatalkan Mentor</Radio>
-                <Radio value="Dibatalkan Admin">Dibatalkan Admin</Radio>
-                <Radio value="Transaksi Sukses">Transaksi Sukses</Radio>
-              </Stack>
-            </RadioGroup>
-          </Stack>
-          <Button onClick={HandleUpdateStatus}>Simpan</Button>
-        </Stack>
+        {transaksi.status === "Dibatalkan Siswa" ||
+        transaksi.status !== "Dibatalkan Mentor" ||
+        transaksi.status !== "Lunas" ? (
+          <HStack justify="end">
+            <Button
+              w="max-content"
+              _hover={{
+                transform: "translateY(-2px)",
+                boxShadow: "lg",
+                bg: "red.500",
+              }}
+              onClick={() => {
+                HandleBatal(transaksi.id);
+              }}
+              {...stylewarn}
+            >
+              Batalkan
+            </Button>
+          </HStack>
+        ) : null}
       </Stack>
     </Container>
   );
