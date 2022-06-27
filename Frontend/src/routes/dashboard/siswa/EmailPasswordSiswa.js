@@ -17,12 +17,13 @@ import { Link as LinkTo } from "react-router-dom";
 
 export default function SuntingProfilMentor() {
   const navigate = useNavigate();
+  const def = "-----"
   const [isLoading, setLoading] = useState(true);
   const [user, setUser] = useState({});
   const { userId, loggedAs, setIsLoggedOut, setUserId, setLoggedAs } =
     useLoginState();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState(def);
+  const [password, setPassword] = useState(def);
 
   const toast = useToast();
 

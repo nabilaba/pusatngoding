@@ -5,17 +5,12 @@ import {
   Heading,
   Stack,
   useColorModeValue,
-  HStack,
   Avatar,
-  AvatarBadge,
-  IconButton,
-  Center,
   Divider,
   Text,
   Container,
   useToast,
 } from "@chakra-ui/react";
-import { SmallCloseIcon } from "@chakra-ui/icons";
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { BASE_URL } from "../../../api/API";
@@ -140,7 +135,7 @@ export default function AkunSiswa() {
           spacing={4}
           w={"full"}
           rounded={"xl"}
-          border="1px"
+          borderWidth={1}
           p={6}
           {...stylecontainer}
         >
@@ -149,38 +144,22 @@ export default function AkunSiswa() {
           </Heading>
           <FormControl>
             <FormLabel>Foto Profil</FormLabel>
-            <Stack direction={["column", "row"]} spacing={6}>
-              <Center>
-                <Avatar size="xl" src={user.avatar}>
-                  <AvatarBadge
-                    as={IconButton}
-                    size="sm"
-                    rounded="full"
-                    top="-10px"
-                    colorScheme="red"
-                    aria-label="remove Image"
-                    icon={<SmallCloseIcon />}
-                  />
-                </Avatar>
-              </Center>
-            </Stack>
+            <Avatar size="2xl" src={user.avatar} as={LinkTo} to="foto-profil" />
           </FormControl>
-          <HStack spacing={4}>
-            <Inputan
-              judul="Nama Depan"
-              change={setNamaDepan}
-              plc={nama_depan || user.nama_depan}
-              onSubmit={(e) => HandleSubmit(e, "nama_depan", nama_depan)}
-              type="text"
-            />
-            <Inputan
-              judul="Nama Belakang"
-              change={setNamaBelakang}
-              plc={nama_belakang || user.nama_belakang}
-              onSubmit={(e) => HandleSubmit(e, "nama_belakang", nama_belakang)}
-              type="text"
-            />
-          </HStack>
+          <Inputan
+            judul="Nama Depan"
+            change={setNamaDepan}
+            plc={nama_depan || user.nama_depan}
+            onSubmit={(e) => HandleSubmit(e, "nama_depan", nama_depan)}
+            type="text"
+          />
+          <Inputan
+            judul="Nama Belakang"
+            change={setNamaBelakang}
+            plc={nama_belakang || user.nama_belakang}
+            onSubmit={(e) => HandleSubmit(e, "nama_belakang", nama_belakang)}
+            type="text"
+          />
           <Inputan
             judul="Tanggal Lahir"
             change={setTglLahir}
