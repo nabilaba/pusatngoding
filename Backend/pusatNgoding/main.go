@@ -8,12 +8,15 @@ import (
 	komenUseCase "pusat-ngoding/komentar/usecase"
 	kursusRepo "pusat-ngoding/kursus/repository/sqlite3"
 	kursusUseCase "pusat-ngoding/kursus/usecase"
+	transaksiRepo "pusat-ngoding/transaksi/repository/sqlite3"
+	transaksiUseCase "pusat-ngoding/transaksi/usecase"
 	userRepo "pusat-ngoding/users/repository/sqlite3"
 	"time"
 
 	authHandler "pusat-ngoding/auth/delivery/http"
 	komenHandler "pusat-ngoding/komentar/delivery/http"
 	kursusHandler "pusat-ngoding/kursus/delivery/http"
+	transaksiHandler "pusat-ngoding/transaksi/delivery/http"
 	userHandler "pusat-ngoding/users/delivery/http"
 	"pusat-ngoding/users/delivery/http/middleware"
 
@@ -48,6 +51,10 @@ func main() {
 	komenRepo := komenRepo.NewKomentarRepo(db)
 	komenUseCase := komenUseCase.NewKomentarUseCase(komenRepo, userRepo, kursusRepo, ctxTimeout)
 	komenHandler.NewKomentarHandler(r, komenUseCase)
+
+	transaksiRepo := transaksiRepo.NewTransaksiRepo(db)
+	transaksiUseCase := transaksiUseCase.NewTransaksiUseCase(transaksiRepo, userRepo, kursusRepo, ctxTimeout)
+	transaksiHandler.NewTransaksiHandler(r, transaksiUseCase)
 
 	r.Run()
 }

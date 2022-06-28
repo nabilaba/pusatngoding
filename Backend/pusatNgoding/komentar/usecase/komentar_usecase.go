@@ -30,8 +30,8 @@ func (k *komentar) getUsers(ctx context.Context, result []domain.KomentarResp) (
 
 	mapUser := map[int64]domain.User{}
 
-	for _, kursus := range result {
-		mapUser[kursus.User.Id] = domain.User{}
+	for _, komen := range result {
+		mapUser[komen.User.Id] = domain.User{}
 	}
 
 	chanUser := make(chan domain.User)
@@ -176,8 +176,39 @@ func (k *komentar) GetById(ctx context.Context, id int64) (domain.KomentarResp, 
 		return domain.KomentarResp{}, err
 	}
 
+	mentor, err := k.userRepo.GetById(c, kursus.User.Id)
+	if err != nil {
+		return domain.KomentarResp{}, err
+	}
+
+	kursus.User = mentor
+
 	res.User = user
 	res.Kursus = kursus
+
+
+	return res, nil
+}
+
+func (k *komentar) GetByIdKursus(ctx context.Context, idKursus int64) ([]domain.KomentarResp, error) {
+	c, cancel := context.WithTimeout(ctx, k.ctxTimeout)
+
+	defer cancel()
+
+	res, err := k.komenRepo.GetByIdKursus(c, idKursus)
+	if err != nil {
+		return nil, err
+	}
+
+	res, err = k.getUsers(c, res)
+	if err != nil {
+		return nil, err
+	}
+
+	res, err = k.getKursus(c, res)
+	if err != nil {
+		return nil, err
+	}
 
 	return res, nil
 }
@@ -201,6 +232,13 @@ func (k *komentar) Store(ctx context.Context, komen *domain.Komentar) (domain.Ko
 	if err != nil {
 		return domain.KomentarResp{}, err
 	}
+
+	mentor, err := k.userRepo.GetById(c, kursus.User.Id)
+	if err != nil {
+		return domain.KomentarResp{}, err
+	}
+
+	kursus.User = mentor
 
 	res.User = user
 	res.Kursus = kursus
@@ -227,6 +265,13 @@ func (k *komentar) Update(ctx context.Context, id int64, komen *domain.Komentar)
 	if err != nil {
 		return domain.KomentarResp{}, err
 	}
+
+	mentor, err := k.userRepo.GetById(c, kursus.User.Id)
+	if err != nil {
+		return domain.KomentarResp{}, err
+	}
+
+	kursus.User = mentor
 
 	res.User = user
 	res.Kursus = kursus

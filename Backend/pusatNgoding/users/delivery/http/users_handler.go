@@ -1,7 +1,9 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
+	"path/filepath"
 	"pusat-ngoding/domain"
 	"pusat-ngoding/users/delivery/http/middleware"
 	"pusat-ngoding/utility/jwt"
@@ -124,15 +126,39 @@ func (u *usersHandler) getById(c *gin.Context) {
 
 func (u *usersHandler) store(c *gin.Context) {
 	ctx := c.Request.Context()
-	var user domain.User
-
-	err := c.ShouldBind(&user)
+	namaDepan := c.PostForm("nama_depan")
+	namaBelakang := c.PostForm("nama_belakang")
+	email := c.PostForm("email")
+	noTelp := c.PostForm("no_telp")
+	password := c.PostForm("password")
+	avatar, err := c.FormFile("avatar")
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "bad request",
 		})
 
 		return
+	}
+
+	fileName := filepath.Base(namaDepan + "_" + avatar.Filename)
+	filePath := fmt.Sprint("storage/users/" + fileName)
+
+	err = c.SaveUploadedFile(avatar, filePath)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "bad request",
+		})
+
+		return
+	}
+
+	user := &domain.User{
+		NamaDepan:    namaDepan,
+		NamaBelakang: namaBelakang,
+		Email:        email,
+		NoTelp:       noTelp,
+		Password:     password,
+		Avatar:       filePath,
 	}
 
 	// check role
@@ -153,7 +179,7 @@ func (u *usersHandler) store(c *gin.Context) {
 		return
 	}
 
-	res, err := u.usersRepo.Store(ctx, &user)
+	res, err := u.usersRepo.Store(ctx, user)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": "error internal",
@@ -172,9 +198,12 @@ func (u *usersHandler) update(c *gin.Context) {
 	id := c.Param("id")
 	intId, _ := strconv.Atoi(id)
 	ctx := c.Request.Context()
-	user := domain.User{}
-
-	err := c.ShouldBind(&user)
+	namaDepan := c.PostForm("nama_depan")
+	namaBelakang := c.PostForm("nama_belakang")
+	email := c.PostForm("email")
+	noTelp := c.PostForm("no_telp")
+	password := c.PostForm("password")
+	avatar, err := c.FormFile("avatar")
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"message": "bad request",
@@ -183,7 +212,28 @@ func (u *usersHandler) update(c *gin.Context) {
 		return
 	}
 
-	res, err := u.usersRepo.Update(ctx, int64(intId), &user)
+	fileName := filepath.Base(namaDepan + "_" + avatar.Filename)
+	filePath := fmt.Sprint("storage/users/" + fileName)
+
+	err = c.SaveUploadedFile(avatar, filePath)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "bad request",
+		})
+
+		return
+	}
+
+	user := &domain.User{
+		NamaDepan:    namaDepan,
+		NamaBelakang: namaBelakang,
+		Email:        email,
+		NoTelp:       noTelp,
+		Password:     password,
+		Avatar:       filePath,
+	}
+
+	res, err := u.usersRepo.Update(ctx, int64(intId), user)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": "error internal",
