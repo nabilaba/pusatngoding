@@ -15,8 +15,9 @@ export default function Features() {
         Keunggulan <br />
         Pusat Ngoding
       </Heading>
-      <Flex w="auto" justifyContent="center" alignItems="center">
+      <Flex w="full" justifyContent="center" alignItems="center">
         <SimpleGrid
+        w='full'
           columns={{ base: 2, xl: 4 }}
           spacing={{ base: "4", xl: "20" }}
           color={"white"}

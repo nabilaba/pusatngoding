@@ -98,7 +98,6 @@ export default function Hero() {
       </Flex>
       <Flex
         data-aos="fade-left"
-        h={"90vh"}
         flex={1}
         align={"center"}
         justify={"center"}
