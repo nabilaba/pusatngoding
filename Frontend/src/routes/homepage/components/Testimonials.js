@@ -10,7 +10,7 @@ import {
 
 export default function Testimonials() {
   return (
-    <Container maxW={"7xl"} style={{ overflow: "hidden" }}>
+    <Container maxW={"7xl"}>
       <Flex justify={"center"} py="10" data-aos="fade-up">
         <Heading
           textAlign={"center"}
@@ -29,8 +29,7 @@ export default function Testimonials() {
           p={8}
           my="5"
           borderWidth={1}
-          boxShadow={"md"}
-          bg={useColorModeValue("rgba(0,0,0,.05)", "rgba(255,255,255,.05)")}
+          bg={useColorModeValue("gray.50", "rgba(255,255,255,.05)")}
         >
           <Flex justify={"space-around"} wrap={{ base: "wrap", md: "nowrap" }}>
             <Box maxW="sm" display="flex" alignItems={"center"}>
@@ -72,8 +71,7 @@ export default function Testimonials() {
           p={8}
           my="5"
           borderWidth={1}
-          boxShadow={"md"}
-          bg={useColorModeValue("rgba(0,0,0,.05)", "rgba(255,255,255,.05)")}
+          bg={useColorModeValue("gray.50", "rgba(255,255,255,.05)")}
         >
           <Flex
             justify={"space-around"}
@@ -115,8 +113,7 @@ export default function Testimonials() {
           p={8}
           my="5"
           borderWidth={1}
-          boxShadow={"md"}
-          bg={useColorModeValue("rgba(0,0,0,.05)", "rgba(255,255,255,.05)")}
+          bg={useColorModeValue("gray.50", "rgba(255,255,255,.05)")}
         >
           <Flex justify={"space-around"} wrap={{ base: "wrap", md: "nowrap" }}>
             <Box maxW="sm" display="flex" alignItems={"center"}>
@@ -142,9 +139,6 @@ export default function Testimonials() {
                   Thanks Pusat Ngoding sudah mempertemukan saya dengan mentor
                   berkompeten dan profesional.
                 </Text>
-                <br />
-                Nb : Rekomended banget buat kalian yang lagi nyari mentor
-                ngoding.
               </Box>
               <br />
               <chakra.span fontWeight={600} color={"blue.600"}>
