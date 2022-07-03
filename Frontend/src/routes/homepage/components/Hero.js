@@ -17,14 +17,14 @@ export default function Hero() {
   return (
     <Stack
       as={Container}
-      direction={{ base: "column", md: "row" }}
+      direction={{ base: "column", lg: "row" }}
       maxW={"7xl"}
     >
       <Flex
         py={{ base: 0, md: 8 }}
         flex={1}
         align={"center"}
-        order={{ base: 2, md: 1 }}
+        order={{ base: 2, lg: 1 }}
         data-aos="fade-right"
       >
         <Stack spacing={6} w={"full"}>
@@ -101,7 +101,7 @@ export default function Hero() {
         flex={1}
         align={"center"}
         justify={"center"}
-        order={{ base: 1, md: 2 }}
+        order={{ base: 1, lg: 2 }}
         pl={{ md: "40px" }}
       >
         <Image p={5} alt={""} objectFit={"cover"} src={ImgHero} />

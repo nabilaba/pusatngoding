@@ -30,6 +30,7 @@ import { BASE_URL } from "../api/API";
 const Links = [
   { nama: "Roadmap", link: "/roadmap" },
   { nama: "Acara", link: "/acara" },
+  { nama: "Hubungi", link: "/hubungi" },
   { nama: "Tentang", link: "/tentang" },
 ];
 
@@ -53,8 +54,14 @@ const NavLink = ({ nama, link, onClick }) => (
 export default function Navbar() {
   const [user, setUser] = useState({});
   const navigate = useNavigate();
-  const { isLoggedIn, setIsLoggedOut, loggedAs, setLoggedAs, setUserId, userId } =
-    useLoginState();
+  const {
+    isLoggedIn,
+    setIsLoggedOut,
+    loggedAs,
+    setLoggedAs,
+    setUserId,
+    userId,
+  } = useLoginState();
 
   const bgnavbar = useColorModeValue(
     "rgba(255, 255, 255, 0.8)",
@@ -90,7 +97,7 @@ export default function Navbar() {
   }, [userId, loggedAs]);
 
   useEffect(() => {
-    getUser()
+    getUser();
   }, [getUser]);
 
   return (
@@ -209,10 +216,17 @@ export default function Navbar() {
                           Akun Saya
                         </MenuItem>
                       )}
-                      <MenuItem as={LinkTo} to={'dashboard/transaksi'} icon={<RepeatClockIcon />}>
+                      <MenuItem
+                        as={LinkTo}
+                        to={"dashboard/transaksi"}
+                        icon={<RepeatClockIcon />}
+                      >
                         Riwayat Transaksi
                       </MenuItem>
-                      <MenuItem icon={<ArrowBackIcon />} onClick={() => HandleLogOut()}>
+                      <MenuItem
+                        icon={<ArrowBackIcon />}
+                        onClick={() => HandleLogOut()}
+                      >
                         Keluar
                       </MenuItem>
                     </MenuList>
