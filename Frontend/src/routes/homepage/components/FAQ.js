@@ -68,6 +68,7 @@ export default function FAQ() {
     <Stack
       as={Container}
       mt={20}
+      mb={6}
       maxW={"7xl"}
       align="center"
       justifyContent="center"
@@ -75,7 +76,7 @@ export default function FAQ() {
       data-aos="fade-up"
     >
       <Stack
-        p={{base: 5, lg: 10}}
+        p={{ base: 5, lg: 10 }}
         bg={useColorModeValue("gray.100", "gray.900")}
         rounded="xl"
         direction={{ base: "column", md: "row" }}
@@ -90,9 +91,9 @@ export default function FAQ() {
             </Text>
             <Heading as="h2">FAQ</Heading>
             <Text fontSize={"md"} color={"gray.500"} align="justify">
-              Segala sesuatu yang harus anda ketahui dari Pusat Ngoding. Jika
-              ada pertanyaan lainnya yang ingin anda tanyakan, bisa menanyakan
-              kepada kami melalui formulir yang ada pada website ini.
+              Segala pertanyaan yang kerap ditanyakan kepada kami, kami rangkum
+              di dalam komponen FAQ, agar mempermudah pekerjaan tim kami dan
+              menambah pemahaman anda tentang Platform Pusat Ngoding ini.
             </Text>
           </Stack>
         </Stack>

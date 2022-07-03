@@ -32,7 +32,7 @@ export default function Testimonials() {
           Kami di Mata Para Siswa?
         </Heading>
       </Flex>
-      <Stack spacing={20}>
+      <Stack spacing={20} mt={8}>
         <Flex
           justify={"flex-start"}
           data-aos="fade-up-right"
@@ -51,7 +51,7 @@ export default function Testimonials() {
             position: "absolute",
             zIndex: "-1",
             height: "full",
-            maxW: "640px",
+            maxW: "4xl",
             width: "full",
             filter: "blur(40px)",
             transform: "scale(0.98)",
@@ -71,6 +71,7 @@ export default function Testimonials() {
             justifyContent={"space-between"}
             position={"relative"}
             bg={useColorModeValue("white", "gray.800")}
+            borderWidth={1}
           >
             <Flex
               justify={"space-around"}
@@ -126,7 +127,7 @@ export default function Testimonials() {
             position: "absolute",
             zIndex: "-1",
             height: "full",
-            maxW: "640px",
+            maxW: "4xl",
             width: "full",
             filter: "blur(40px)",
             transform: "scale(0.98)",
@@ -146,6 +147,7 @@ export default function Testimonials() {
             justifyContent={"space-between"}
             position={"relative"}
             bg={useColorModeValue("white", "gray.800")}
+            borderWidth={1}
           >
             <Flex
               justify={"space-around"}
@@ -156,7 +158,8 @@ export default function Testimonials() {
                   <Text>
                     Platform ini sangat membantu saya dalam mempelajari berbagai
                     bahasa pemrograman dan hemat dari sisi waktu juga tenaga
-                    dengan mendapatkan mentor yang sangat hebat.
+                    dengan mendapatkan mentor yang sangat hebat. Next Time saya
+                    akan menggunakan platform ini lagi.
                   </Text>
                   <Text>Terima Kasih Pusat Ngoding!</Text>
                 </Box>
@@ -198,7 +201,7 @@ export default function Testimonials() {
             position: "absolute",
             zIndex: "-1",
             height: "full",
-            maxW: "640px",
+            maxW: "4xl",
             width: "full",
             filter: "blur(40px)",
             transform: "scale(0.98)",
@@ -218,6 +221,7 @@ export default function Testimonials() {
             justifyContent={"space-between"}
             position={"relative"}
             bg={useColorModeValue("white", "gray.800")}
+            borderWidth={1}
           >
             <Flex
               justify={"space-around"}
@@ -236,14 +240,11 @@ export default function Testimonials() {
               </Box>
               <Box maxW="100%">
                 <Box textAlign={"justify"}>
-                  <Text>Ini adalah platform yang selama ini dicari-cari.</Text>
                   <Text>
-                    Buat saya yang bukan seorang mahasiswa IT, bahasa
-                    pemrograman cukup sulit untuk dipelajari sendirian, termasuk
-                    belajar melalui bootcamp-bootcamp.
-                  </Text>
-                  <Text>
-                    Thanks Pusat Ngoding sudah mempertemukan saya dengan mentor
+                    Ini adalah platform yang selama ini dicari-cari. Buat saya
+                    yang bukan seorang mahasiswa IT, bahasa pemrograman cukup
+                    sulit untuk dipelajari sendirian, termasuk belajar melalui
+                    bootcamp-bootcamp. Thanks Pusat Ngoding sudah mempertemukan saya dengan mentor
                     berkompeten dan profesional.
                   </Text>
                 </Box>
