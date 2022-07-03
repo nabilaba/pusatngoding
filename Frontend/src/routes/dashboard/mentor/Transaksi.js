@@ -119,6 +119,11 @@ export default function Transaksi() {
     });
   }, [getKursus, isLoading]);
 
+  const stylesetujui = {
+    bg: "green.400",
+    color: useColorModeValue("white", "black"),
+  };
+
   const stylewarn = {
     bg: "red.400",
     color: useColorModeValue("white", "black"),
@@ -184,15 +189,13 @@ export default function Transaksi() {
               Kirimkan nominal uang yang sesuai dengan yang tertera di pesan
             </ListItem>
             <ListItem>
-              Admin akan merubah status pada detail dibawah ke "Pembayaran
-              Diterima"
+              Admin akan merubah status menjadi "Menunggu Persetujuan Mentor"
             </ListItem>
             <ListItem>
-              Admin akan menghubungi mentor sesuai ID Mentor / Kursus yang
-              kalian pesan
+              Mentor akan memutuskan apakah bisa mengajar atau tidak
             </ListItem>
             <ListItem>
-              Mentor akan mengirimkan konfirmasi ke WhatsApp yang kalian gunakan
+              Jika berhasil maka status menjadi "Transaksi Sukses"
             </ListItem>
           </OrderedList>
         </Stack>
@@ -222,7 +225,7 @@ export default function Transaksi() {
               onClick={() => {
                 HandleSetujui(transaksi.id);
               }}
-              {...stylewarn}
+              {...stylesetujui}
             >
               Setujui
             </Button>
