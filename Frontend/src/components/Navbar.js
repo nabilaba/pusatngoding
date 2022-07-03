@@ -29,10 +29,9 @@ import { BASE_URL } from "../api/API";
 
 const Links = [
   { nama: "Roadmap", link: "/roadmap" },
-  { nama: "Acara", link: "/acara" },
   { nama: "Hubungi", link: "/hubungi" },
   { nama: "Tentang", link: "/tentang" },
-  { nama: "Galeri", link: "/galeri" },
+  { nama: "Selebihnya", link: "/selebihnya" },
 ];
 
 const NavLink = ({ nama, link, onClick }) => (

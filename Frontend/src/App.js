@@ -6,7 +6,6 @@ import SignUp from "./routes/signup/SignUp";
 import Mentor from "./routes/dashboard/mentor/Mentor";
 import Siswa from "./routes/dashboard/siswa/Siswa";
 import NotFound from "./routes/NotFound/NotFound";
-import Event from "./routes/event/Event";
 import Roadmap from "./routes/roadmap/Roadmap";
 import AkunMentor from "./routes/dashboard/mentor/AkunMentor";
 import EmailPasswordMentor from "./routes/dashboard/mentor/EmailPasswordMentor";
@@ -87,7 +86,6 @@ export default function App() {
             </Route>
           </Route>
         ) : null}
-        <Route path="acara" element={<Event />} />
         <Route path="roadmap" element={<Roadmap />} />
         <Route path="hubungi" element={<HubungiKami />} />
         <Route path="*" element={<NotFound />} />
