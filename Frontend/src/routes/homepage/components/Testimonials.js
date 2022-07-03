@@ -21,18 +21,23 @@ export default function Testimonials() {
 
   return (
     <Container maxW={"7xl"}>
-      <Flex justify={"center"} py="10" data-aos="fade-up">
-        <Heading
-          textAlign={"center"}
-          fontSize="28"
-          fontWeight={700}
-          lineHeight={10}
-        >
-          Bagaimana <br />
-          Kami di Mata Para Siswa?
-        </Heading>
+      <Flex justify={"center"} data-aos="fade-up">
+        <Stack maxW="xl" textAlign="center">
+          <Heading
+            textAlign={"center"}
+            fontSize="28"
+            fontWeight={700}
+            lineHeight={10}
+          >
+            Tanggapan Para Siswa?
+          </Heading>
+          <Text color={"gray.500"}>
+            Mereka yang pernah mencoba menggunakan jasa kami,
+            menyebutkan bahwa kami menyediakan layanan yang sangat bagus.
+          </Text>
+        </Stack>
       </Flex>
-      <Stack spacing={20} mt={8}>
+      <Stack spacing={20} mt={20}>
         <Flex
           justify={"flex-start"}
           data-aos="fade-up-right"
@@ -244,8 +249,8 @@ export default function Testimonials() {
                     Ini adalah platform yang selama ini dicari-cari. Buat saya
                     yang bukan seorang mahasiswa IT, bahasa pemrograman cukup
                     sulit untuk dipelajari sendirian, termasuk belajar melalui
-                    bootcamp-bootcamp. Thanks Pusat Ngoding sudah mempertemukan saya dengan mentor
-                    berkompeten dan profesional.
+                    bootcamp-bootcamp. Thanks Pusat Ngoding sudah mempertemukan
+                    saya dengan mentor berkompeten dan profesional.
                   </Text>
                 </Box>
                 <br />

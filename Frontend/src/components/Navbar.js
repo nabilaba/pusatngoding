@@ -32,6 +32,7 @@ const Links = [
   { nama: "Acara", link: "/acara" },
   { nama: "Hubungi", link: "/hubungi" },
   { nama: "Tentang", link: "/tentang" },
+  { nama: "Galeri", link: "/galeri" },
 ];
 
 const NavLink = ({ nama, link, onClick }) => (
