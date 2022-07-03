@@ -104,12 +104,7 @@ export default function Hero() {
         order={{ base: 1, md: 2 }}
         pl={{ md: "40px" }}
       >
-        <Image
-          alt={"Login Image"}
-          objectFit={"cover"}
-          src={ImgHero}
-          zIndex={2}
-        />
+        <Image p={5} alt={""} objectFit={"cover"} src={ImgHero} />
       </Flex>
     </Stack>
   );
