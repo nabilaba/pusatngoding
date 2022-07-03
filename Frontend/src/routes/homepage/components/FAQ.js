@@ -67,7 +67,7 @@ export default function FAQ() {
   return (
     <Stack
       as={Container}
-      mt={5}
+      mt={20}
       maxW={"7xl"}
       align="center"
       justifyContent="center"
