@@ -15,9 +15,11 @@ import {
   Stack,
   useToast,
   Button,
+  InputRightElement,
+  IconButton,
 } from "@chakra-ui/react";
 import { useEffect, useState, useCallback } from "react";
-import { StarIcon, SearchIcon } from "@chakra-ui/icons";
+import { StarIcon, SearchIcon, CloseIcon } from "@chakra-ui/icons";
 import { FaChalkboardTeacher, FaDollarSign } from "react-icons/fa";
 import { Link as LinkTo, useNavigate } from "react-router-dom";
 import { MENTOR, KOMENTAR } from "../../../api/API";
@@ -36,72 +38,53 @@ export default function Siswa() {
 
   const [query, setQuery] = useState("");
 
-  const getMentor = useCallback(async () => {
-    setLoading(true);
-    const headers = {
-      Authorization: "Bearer " + localStorage.getItem("tokenId"),
-    };
-    await axios
-      .get(MENTOR, { headers })
-      .then((res) => {
-        const mentorRequests = res.data.map((todo) =>
-          axios
-            .get(`${MENTOR}/${todo.id}/kursus`, { headers })
-            .then((response) => ({ ...todo, kursus: response.data }))
-        );
+  const getMentor = useCallback(
+    async (val) => {
+      setLoading(true);
+      const headers = {
+        Authorization: "Bearer " + localStorage.getItem("tokenId"),
+      };
+      const anu = val ? `?q=${val}` : "";
+      await axios
+        .get(`${MENTOR}${anu}`, { headers })
+        .then((res) => {
+          const mentorRequests = res.data.map((todo) =>
+            axios
+              .get(`${MENTOR}/${todo.id}/kursus`, { headers })
+              .then((response) => ({ ...todo, kursus: response.data }))
+          );
 
-        return Promise.all(mentorRequests);
-      })
-      .then((res) => setMentor(res));
+          return Promise.all(mentorRequests);
+        })
+        .then((res) => setMentor(res));
 
-    const res = await axios.get(`${KOMENTAR}`, {
-      headers,
-    });
-    setDataKomentar(res.data);
-  }, [setMentor]);
+      const res = await axios.get(`${KOMENTAR}`, {
+        headers,
+      });
+      setDataKomentar(res.data);
 
-  const getMentorSearch = useCallback(async () => {
-    const headers = {
-      Authorization: "Bearer " + localStorage.getItem("tokenId"),
-    };
-    await axios
-      .get(`${MENTOR}?q=${query}`, { headers })
-      .then((res) => {
-        const mentorRequests = res.data.map((todo) =>
-          axios
-            .get(`${MENTOR}/${todo.id}/kursus`, { headers })
-            .then((response) => ({ ...todo, kursus: response.data }))
-        );
-
-        return Promise.all(mentorRequests);
-      })
-      .then((res) => setMentor(res));
-
-    const res = await axios.get(`${KOMENTAR}`, {
-      headers,
-    });
-    setDataKomentar(res.data);
-  }, [setMentor, query]);
+      setLoading(false);
+    },
+    [setMentor]
+  );
 
   useEffect(() => {
-    getMentor()
-      .then(() => setLoading(false))
-      .catch((err) => {
-        if (err.response.status === 401) {
-          toast({
-            title: "Anda harus login ulang.",
-            status: "error",
-            duration: 2000,
-            isClosable: true,
-          });
-          setLoggedAs("");
-          setUserId("");
-          setIsLoggedOut();
-          navigate("/");
-          useLoginState.persist.clearStorage();
-          localStorage.removeItem("tokenId");
-        }
-      });
+    getMentor().catch((err) => {
+      if (err.response.status === 401) {
+        toast({
+          title: "Anda harus login ulang.",
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+        });
+        setLoggedAs("");
+        setUserId("");
+        setIsLoggedOut();
+        navigate("/");
+        useLoginState.persist.clearStorage();
+        localStorage.removeItem("tokenId");
+      }
+    });
   }, [getMentor, toast, setLoggedAs, setUserId, setIsLoggedOut, navigate]);
 
   const searchstyle = {
@@ -183,7 +166,7 @@ export default function Siswa() {
 
   const HandleCari = async (e) => {
     e.preventDefault();
-    getMentorSearch();
+    getMentor(query);
   };
 
   return isLoading ? (
@@ -194,20 +177,35 @@ export default function Siswa() {
         <HStack as="form" onSubmit={(e) => HandleCari(e)}>
           <InputGroup>
             <Input
+              rounded="full"
               type="text"
               placeholder="Cari dengan kata kunci apapun disini..."
               onChange={(e) => setQuery(e.target.value)}
+              value={query}
               {...searchstyle}
             />
+            <InputRightElement width="4.75rem">
+              <Button
+                rounded="full"
+                type="submit"
+                colorScheme="blue"
+                rightIcon={<SearchIcon />}
+              >
+                Cari
+              </Button>
+            </InputRightElement>
           </InputGroup>
-          <Button
-            type="submit"
-            variantColor="blue"
-            variant="outline"
-            rightIcon={<SearchIcon />}
-          >
-            Cari
-          </Button>
+          <IconButton
+            rounded="full"
+            colorScheme="red"
+            icon={<CloseIcon />}
+            onClick={
+              () => {
+                setQuery("");
+                getMentor();
+              }
+            }
+          />
         </HStack>
         <SimpleGrid
           columns={{ base: 1, md: 2, lg: 3 }}

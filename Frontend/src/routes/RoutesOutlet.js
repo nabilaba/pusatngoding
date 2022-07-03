@@ -44,7 +44,7 @@ export default function RoutesOutlet() {
   ) : (
     <Flex minH={"100vh"} justifyContent={"space-between"} direction={"column"}>
       <Navbar />
-      <Box my={"auto"} h="full">
+      <Box my={"auto"} h="full" style={{ overflow: "hidden" }}>
         <ScrollToTop />
         <Outlet />
       </Box>
