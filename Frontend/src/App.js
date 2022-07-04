@@ -31,6 +31,7 @@ import TransaksiMentor from "./routes/dashboard/mentor/Transaksi";
 import TransaksiAdmin from "./routes/dashboard/admin/transaksi/Transaksi";
 import GantiFotoProfil from "./routes/dashboard/GantiFotoProfil";
 import HubungiKami from "./routes/hubungi/HubungiKami";
+import Informasi from "./routes/informasi/Informasi";
 
 export default function App() {
   const { loggedAs } = useLoginState();
@@ -88,6 +89,7 @@ export default function App() {
         ) : null}
         <Route path="roadmap" element={<Roadmap />} />
         <Route path="hubungi" element={<HubungiKami />} />
+        <Route path="informasi" element={<Informasi />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
