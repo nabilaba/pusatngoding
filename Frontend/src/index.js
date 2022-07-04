@@ -5,10 +5,10 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { BrowserRouter } from "react-router-dom";
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+import AOS from "aos";
+import "aos/dist/aos.css";
 AOS.init({
-  duration: '800',
+  duration: "800",
 });
 
 const colors = {
@@ -42,11 +42,11 @@ const theme = extendTheme({ colors });
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   // <React.StrictMode>
-    <ChakraProvider theme={theme}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </ChakraProvider>
+  <ChakraProvider theme={theme}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </ChakraProvider>
   // </React.StrictMode>
 );
 
