@@ -5,7 +5,6 @@ import {
   Heading,
   Stack,
   useColorModeValue,
-  HStack,
   Avatar,
   Divider,
   Text,
@@ -146,22 +145,20 @@ export default function InformasiAkunSiswa() {
             <FormLabel>Foto Profil</FormLabel>
             <Avatar size="2xl" src={user.avatar} />
           </FormControl>
-          <HStack spacing={4}>
-            <Inputan
-              judul="Nama Depan"
-              change={setNamaDepan}
-              plc={nama_depan || user.nama_depan}
-              onSubmit={(e) => HandleSubmit(e, "nama_depan", nama_depan)}
-              type="text"
-            />
-            <Inputan
-              judul="Nama Belakang"
-              change={setNamaBelakang}
-              plc={nama_belakang || user.nama_belakang}
-              onSubmit={(e) => HandleSubmit(e, "nama_belakang", nama_belakang)}
-              type="text"
-            />
-          </HStack>
+          <Inputan
+            judul="Nama Depan"
+            change={setNamaDepan}
+            plc={nama_depan || user.nama_depan}
+            onSubmit={(e) => HandleSubmit(e, "nama_depan", nama_depan)}
+            type="text"
+          />
+          <Inputan
+            judul="Nama Belakang"
+            change={setNamaBelakang}
+            plc={nama_belakang || user.nama_belakang}
+            onSubmit={(e) => HandleSubmit(e, "nama_belakang", nama_belakang)}
+            type="text"
+          />
           <Inputan
             judul="Tanggal Lahir"
             change={setTglLahir}
