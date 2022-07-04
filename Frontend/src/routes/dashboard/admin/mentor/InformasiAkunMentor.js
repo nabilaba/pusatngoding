@@ -35,6 +35,7 @@ export default function InformasiAkunMentor() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [motivasi, setMotivasi] = useState("");
+  const [keahlian, setKeahlian] = useState("");
 
   const toast = useToast();
 
@@ -73,6 +74,8 @@ export default function InformasiAkunMentor() {
       status,
       email,
       password,
+      motivasi,
+      keahlian,
       ...user,
       [name]: field,
     };
@@ -167,6 +170,13 @@ export default function InformasiAkunMentor() {
             change={setPrice}
             plc={price || user.price}
             onSubmit={(e) => HandleSubmit(e, "price", price)}
+            type="text"
+          />
+          <Inputan
+            judul="Keahlian"
+            change={setKeahlian}
+            plc={keahlian || user.keahlian}
+            onSubmit={(e) => HandleSubmit(e, "keahlian", keahlian)}
             type="text"
           />
           <Inputan

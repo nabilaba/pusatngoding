@@ -35,6 +35,7 @@ export default function SignUpMentor() {
   const [pendidikan, setPendidikan] = useState("");
   const [price, setPrice] = useState("");
   const [kota, setKota] = useState("");
+  const [keahlian, setKeahlian] = useState("");
 
   const role = "mentor";
   const toast = useToast();
@@ -66,6 +67,7 @@ export default function SignUpMentor() {
       price,
       kota,
       role,
+      keahlian,
     };
 
     axios
@@ -208,6 +210,18 @@ export default function SignUpMentor() {
               )}
               value={kota}
               onChange={(e) => setKota(e.target.value)}
+            />
+          </FormControl>
+          <FormControl id="keahlian" isRequired>
+            <FormLabel>Keahlian</FormLabel>
+            <Input
+              type="text"
+              focusBorderColor={useColorModeValue(
+                "accentLight.400",
+                "accentDark.400"
+              )}
+              value={status}
+              onChange={(e) => setKeahlian(e.target.value)}
             />
           </FormControl>
           <FormControl id="status" isRequired>
