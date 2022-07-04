@@ -33,6 +33,7 @@ export default function AkunMentor() {
   const [pendidikan, setPendidikan] = useState("");
   const [price, setPrice] = useState("");
   const [status, setStatus] = useState("");
+  const [motivasi, setMotivasi] = useState("");
 
   const toast = useToast();
 
@@ -180,6 +181,13 @@ export default function AkunMentor() {
             change={setStatus}
             plc={status || user.status}
             onSubmit={(e) => HandleSubmit(e, "status", status)}
+            type="text"
+          />
+          <Inputan
+            judul="Motivasi"
+            change={setMotivasi}
+            plc={motivasi || user.motivasi}
+            onSubmit={(e) => HandleSubmit(e, "motivasi", motivasi)}
             type="text"
           />
           <Inputan
