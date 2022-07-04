@@ -164,15 +164,13 @@ export default function Transaksi() {
               Kirimkan nominal uang yang sesuai dengan yang tertera di pesan
             </ListItem>
             <ListItem>
-              Admin akan merubah status pada detail dibawah ke "Pembayaran
-              Diterima"
+              Admin akan merubah status menjadi "Menunggu Persetujuan Mentor"
             </ListItem>
             <ListItem>
-              Admin akan menghubungi mentor sesuai ID Mentor / Kursus yang
-              kalian pesan
+              Mentor akan memutuskan apakah bisa mengajar atau tidak
             </ListItem>
             <ListItem>
-              Mentor akan mengirimkan konfirmasi ke WhatsApp yang kalian gunakan
+              Jika berhasil maka status menjadi "Transaksi Sukses"
             </ListItem>
           </OrderedList>
         </Stack>

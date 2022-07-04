@@ -162,15 +162,13 @@ export default function Transaksi() {
               Kirimkan nominal uang yang sesuai dengan yang tertera di pesan
             </ListItem>
             <ListItem>
-              Admin akan merubah status pada detail dibawah ke "Pembayaran
-              Diterima"
+              Admin akan merubah status menjadi "Menunggu Persetujuan Mentor"
             </ListItem>
             <ListItem>
-              Admin akan menghubungi mentor sesuai ID Mentor / Kursus yang
-              kalian pesan
+              Mentor akan memutuskan apakah bisa mengajar atau tidak
             </ListItem>
             <ListItem>
-              Mentor akan mengirimkan konfirmasi ke WhatsApp yang kalian gunakan
+              Jika berhasil maka status menjadi "Transaksi Sukses"
             </ListItem>
           </OrderedList>
         </Stack>
@@ -178,13 +176,12 @@ export default function Transaksi() {
         <Stack
           as="form"
           justify="space-between"
-          direction={{ base: "column", xl: "row" }}
         >
           <Stack>
             <Text>Status</Text>
             <RadioGroup onChange={setStatus} value={status || transaksi.status}>
-              <Stack direction={{ base: "column", xl: "row" }}>
-                <Radio value="Belum Bayar">Belum Bayar</Radio>
+              <Stack>
+                <Radio value="Belum Dibayar">Belum Dibayar</Radio>
                 <Radio value="Menunggu Persetujuan Mentor">Menunggu Persetujuan Mentor</Radio>
                 <Radio value="Disetujui Mentor">Disetujui Mentor</Radio>
                 <Radio value="Dibatalkan Siswa">Dibatalkan Siswa</Radio>
@@ -194,7 +191,7 @@ export default function Transaksi() {
               </Stack>
             </RadioGroup>
           </Stack>
-          <Button onClick={HandleUpdateStatus}>Simpan</Button>
+          <Button onClick={HandleUpdateStatus} w="max-content">Simpan</Button>
         </Stack>
       </Stack>
     </Container>

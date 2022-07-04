@@ -10,25 +10,30 @@ import {
 
 export default function Features() {
   return (
-    <Stack as={Container} maxW={"7xl"} spacing={5} py={10} data-aos="fade-up">
-      <Heading fontSize={{ base: "xl", md: "2xl", lg: "3xl" }}>
-        Keunggulan <br />
-        Pusat Ngoding
-      </Heading>
+    <Stack as={Container} maxW={"7xl"} spacing={10} py={10} data-aos="fade-up" mt={10}>
+      <Stack maxW="lg" textAlign="center" alignSelf="center">
+        <Heading fontSize={{ base: "xl", md: "2xl", lg: "3xl" }}>
+          Keunggulan Pusat Ngoding
+        </Heading>
+        <Text color={"gray.500"}>
+          Beberapa keunggulan Pusat Ngoding yang ada dibandingkan dengan
+          platform yang lainnya
+        </Text>
+      </Stack>
       <Flex w="full" justifyContent="center" alignItems="center">
         <SimpleGrid
           w="full"
           columns={{ base: 2, xl: 4 }}
-          spacing={{ base: "4", xl: "20" }}
+          spacing={4}
           color={"white"}
         >
           <Stack
             justify={"space-between"}
             w="100%"
             rounded={"xl"}
-            bgGradient="linear(to-b, rgba(246, 92, 139, 0.5), rgba(246, 92, 139, 1))"
+            bgGradient="linear(to-b, rgba(246, 92, 139, 1), rgba(246, 92, 139, 1))"
             px="8"
-            py="4"
+            py="8"
           >
             <Text fontSize={{ base: "36", md: "50" }} fontWeight="500">
               #1
@@ -42,9 +47,9 @@ export default function Features() {
             justify={"space-between"}
             w="100%"
             rounded={"xl"}
-            bgGradient="linear(to-b, rgba(158, 138, 252, 0.5), rgba(158, 138, 252, 1))"
+            bgGradient="linear(to-b, rgba(158, 138, 252, 1), rgba(158, 138, 252, 1))"
             px="8"
-            py="4"
+            py="8"
           >
             <Text fontSize={{ base: "36", md: "50" }} fontWeight="500">
               #2
@@ -58,9 +63,9 @@ export default function Features() {
             justify={"space-between"}
             w="100%"
             rounded={"xl"}
-            bgGradient="linear(to-b, rgba(97, 210, 242, 0.5), rgba(97, 210, 242, 1))"
+            bgGradient="linear(to-b, rgba(97, 210, 242, 1), rgba(97, 210, 242, 1))"
             px="8"
-            p="4"
+            py="8"
           >
             <Text fontSize={{ base: "36", md: "50" }} fontWeight="500">
               #3
@@ -74,9 +79,9 @@ export default function Features() {
             justify={"space-between"}
             w="100%"
             rounded={"xl"}
-            bgGradient="linear(to-b, rgba(255, 155, 41, 0.5), rgba(255, 155, 41, 1))"
+            bgGradient="linear(to-b, rgba(255, 155, 41, 1), rgba(255, 155, 41, 1))"
             px="8"
-            p="4"
+            py="8"
           >
             <Text fontSize={{ base: "36", md: "50" }} fontWeight="500">
               #4
