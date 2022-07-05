@@ -220,7 +220,7 @@ export default function SignUpMentor() {
                 "accentLight.400",
                 "accentDark.400"
               )}
-              value={status}
+              value={keahlian}
               onChange={(e) => setKeahlian(e.target.value)}
             />
           </FormControl>

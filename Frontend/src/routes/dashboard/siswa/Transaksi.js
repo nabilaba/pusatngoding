@@ -170,10 +170,13 @@ export default function Transaksi() {
               Mentor akan memutuskan apakah bisa mengajar atau tidak
             </ListItem>
             <ListItem>
-              Jika mentor bisa mengajar, maka admin akan membuatkan grup WhatsApp dengan judul sesuai ID transaksi
+              Jika mentor bisa mengajar, maka admin akan membuatkan grup
+              WhatsApp dengan judul sesuai ID transaksi
             </ListItem>
             <ListItem>
-              Di akhir pembelajaran jika berjalan lancar, maka status menjadi "Transaksi Sukses"
+              Di akhir pembelajaran jika berjalan lancar, maka status menjadi
+              "Transaksi Sukses", dan mentor menerima nominal uang yang telah
+              dibayarkan
             </ListItem>
           </OrderedList>
         </Stack>
