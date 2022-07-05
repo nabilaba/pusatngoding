@@ -200,7 +200,8 @@ export default function Transaksi() {
             </ListItem>
             <ListItem>
               Di akhir pembelajaran jika berjalan lancar, maka status menjadi
-              "Transaksi Sukses"
+              "Transaksi Sukses", dan mentor menerima nominal uang yang telah
+              dibayarkan
             </ListItem>
           </OrderedList>
         </Stack>
